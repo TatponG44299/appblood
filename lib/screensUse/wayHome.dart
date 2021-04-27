@@ -23,7 +23,7 @@ class _SelectWayState extends State<SelectWay> {
               //trRangeSlider()
               SleekCircularSlider(
                 initialValue: 10,
-                min: 1,
+                min: 0,
                 max: 51,
                 appearance: CircularSliderAppearance(
                   size: 250,
@@ -72,6 +72,7 @@ class _SelectWayState extends State<SelectWay> {
         ),
       ),
     );
+    
   }
 
   // RangeSlider trRangeSlider() {
