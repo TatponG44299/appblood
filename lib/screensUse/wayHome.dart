@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
+import 'mapuse/map_search.dart';
+
 class SelectWay extends StatefulWidget {
   @override
   _SelectWayState createState() => _SelectWayState();
@@ -20,7 +22,6 @@ class _SelectWayState extends State<SelectWay> {
         child: Container(
           child: Stack(
             children: <Widget>[
-              
               //trRangeSlider()
               setDis(),
               Container(
@@ -97,7 +98,7 @@ class _SelectWayState extends State<SelectWay> {
   // },
   //         );
   // }
-  // 
+  //
   Widget setDis() {
     return Container(
       margin: EdgeInsets.only(left: 30),
@@ -109,7 +110,7 @@ class _SelectWayState extends State<SelectWay> {
   }
 
   Widget cilckButton() => Container(
-    margin: EdgeInsets.only(top: 350) ,
+      margin: EdgeInsets.only(top: 350),
       width: 250.0,
       child: ClipRRect(
         //ลดเหลี่ยมปุ่ม
@@ -118,7 +119,10 @@ class _SelectWayState extends State<SelectWay> {
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
           color: Colors.redAccent[700],
           onPressed: () {
-            if (km != null) ;
+            Navigator.pop(context);
+            MaterialPageRoute route =
+                MaterialPageRoute(builder: (value) => Mapsearchuse());
+            Navigator.push(context, route);
             Text('km');
             print(km);
           },
@@ -128,5 +132,4 @@ class _SelectWayState extends State<SelectWay> {
           ),
         ),
       ));
-      
 }
