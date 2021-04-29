@@ -9,7 +9,7 @@ class _MapsearchuseState extends State<Mapsearchuse> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Map Search'),),
+      appBar: AppBar(title: Text('Map Search test'),),
        
     );
   }
