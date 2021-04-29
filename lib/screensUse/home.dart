@@ -13,18 +13,16 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  String name,resultQR = '';
+  String name, resultQR = '';
   AccountModel accountModel;
 
-  //กำหนดหน้าแรกของแอพ
+  //กำหนดหน้าแรกของแอพ01
   Widget currentWidget = SelectWay();
 
   @override
@@ -52,10 +50,9 @@ class _HomeState extends State<Home> {
           ),
           IconButton(
             icon: Icon(Icons.center_focus_weak),
-            onPressed: (){
+            onPressed: () {
               print('object');
               scanQR();
-              
             },
           )
         ],
@@ -72,13 +69,12 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Future<Null> scanQR() async{
+  Future<Null> scanQR() async {
     try {
       var qrResult = await BarcodeScanner.scan();
-      resultQR = qrResult.rawContent; 
+      resultQR = qrResult.rawContent;
       print('resultQR====>$resultQR');
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   Container showMap() {
