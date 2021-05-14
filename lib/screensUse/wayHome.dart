@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
-import 'mapuse/map_search.dart';
+import 'map_search.dart';
 
 class SelectWay extends StatefulWidget {
   @override
@@ -123,6 +123,11 @@ class _SelectWayState extends State<SelectWay> {
             MaterialPageRoute route =
                 MaterialPageRoute(builder: (value) => Mapsearchuse());
             Navigator.push(context, route);
+
+            // Navigator.pop(context);
+            // MaterialPageRoute route =
+            //     MaterialPageRoute(builder: (value) => Mapsearchuse());
+            // Navigator.push(context, route);
             Text('km');
             print(km);
           },
