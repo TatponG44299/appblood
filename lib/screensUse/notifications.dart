@@ -14,7 +14,7 @@ class _NotficState extends State<Notfic> {
       context: context,
       initialDate: _date,
       firstDate: DateTime(1980),
-      lastDate: DateTime(2020),
+      lastDate: DateTime.now(),
     );
 
     if (_datePicker != null && _datePicker != _date) {
