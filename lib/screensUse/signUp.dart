@@ -1,4 +1,3 @@
-
 import 'package:appblood/nuility/my_con.dart';
 import 'package:appblood/nuility/normal_Dialog.dart';
 import 'package:appblood/screensUse/login.dart';
@@ -12,7 +11,7 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   //field
-  String  email, password, confpassword;
+  String email, password, confpassword;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,6 @@ class _SignUpState extends State<SignUp> {
       body: ListView(
         children: <Widget>[
           BlackButtonWidget(),
-
 
           //
           SizedBox(
@@ -100,19 +98,17 @@ class _SignUpState extends State<SignUp> {
                 height: 60,
                 child: RaisedButton(
                   onPressed: () {
-                    if (
-                        password == null ||
+                    if (password == null ||
                         password.isEmpty ||
                         email == null ||
                         email.isEmpty ||
                         confpassword == null ||
                         confpassword.isEmpty) {
                       normalDialog(context, 'Please fill in all fields.');
-                    } 
-                    else if (password != confpassword || confpassword != password ){
+                    } else if (password != confpassword ||
+                        confpassword != password) {
                       normalDialog(context, 'Password mismatch.');
-                    }
-                    else {
+                    } else {
                       checkEmail();
                     }
                   },
@@ -131,44 +127,44 @@ class _SignUpState extends State<SignUp> {
         ],
       ),
     );
-  
-}
+  }
 
 //
- Future<Null> checkEmail() async {
-       String url = '${Urlcon().domain}/GGB_BD/getUserWhereUser.php?isAdd=true&Email=$email';
-       try {
-         Response response = await Dio().get(url);
-         if (response.toString()=='null') {
-           registerAccount();
-         } else {
-           normalDialog(context, 'This $email is duplicated. Please change your email address.');
-         }
-       } catch (e) {
-          print(e);
-       }
+  Future<Null> checkEmail() async {
+    String url =
+        '${Urlcon().domain}/GGB_BD/getUserWhereUser.php?isAdd=true&Email=$email';
+    try {
+      Response response = await Dio().get(url);
+      if (response.toString() == 'null') {
+        registerAccount();
+      } else {
+        normalDialog(context,
+            'This $email is duplicated. Please change your email address.');
       }
-
+    } catch (e) {
+      print(e);
+    }
+  }
 
 //จัดการ data
-Future<Null> registerAccount() async{
-    String url = '${Urlcon().domain}/GGB_BD/addRegister.php?isAdd=true&Email=$email&Password=$password';
-       try {
-         Response response = await Dio().get(url);
-         print('res = $response');
+  Future<Null> registerAccount() async {
+    String url =
+        '${Urlcon().domain}/GGB_BD/addRegister.php?isAdd=true&Email=$email&Password=$password';
+    try {
+      Response response = await Dio().get(url);
+      print('res = $response');
 
-         if(response.toString()=='true'){
-          Navigator.pop(context);
-          MaterialPageRoute route = MaterialPageRoute(builder: (value) => Login());
-          Navigator.push(context, route);
-         }
-         else{
-           normalDialog(context, 'Please try again.');
-         }
-       } catch (e) {
-        print(e);
-       }
-         
+      if (response.toString() == 'true') {
+        Navigator.pop(context);
+        MaterialPageRoute route =
+            MaterialPageRoute(builder: (value) => Login());
+        Navigator.push(context, route);
+      } else {
+        normalDialog(context, 'Please try again.');
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }
 

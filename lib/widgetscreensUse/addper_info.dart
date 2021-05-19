@@ -116,24 +116,25 @@ class _AddinfodataState extends State<Addinfodata> {
       ),
     );
   }
+  
+//แผนที่
+  // Container addMap() {
+  //   LatLng latLng = LatLng(19.027820, 99.900087);
+  //   CameraPosition cameraPosition = CameraPosition(
+  //     target: latLng,
+  //     zoom: 16,
+  //   );
 
-  Container addMap() {
-    LatLng latLng = LatLng(19.027820, 99.900087);
-    CameraPosition cameraPosition = CameraPosition(
-      target: latLng,
-      zoom: 16,
-    );
-
-    return Container(
-      margin: EdgeInsets.only(top: 600),
-      height: 300,
-      child: GoogleMap(
-        initialCameraPosition: cameraPosition,
-        mapType: MapType.normal,
-        onMapCreated: (controller) {},
-      ),
-    );
-  }
+  //   return Container(
+  //     margin: EdgeInsets.only(top: 600),
+  //     height: 300,
+  //     child: GoogleMap(
+  //       initialCameraPosition: cameraPosition,
+  //       mapType: MapType.normal,
+  //       onMapCreated: (controller) {},
+  //     ),
+  //   );
+  // }
 
   Widget gimage() {
     return Container(

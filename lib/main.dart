@@ -1,6 +1,8 @@
 import 'package:appblood/screensUse/login.dart';
 import 'package:flutter/material.dart';
 
+import 'screensPro/Addproject.dart';
+
 
 
 //เมื่อโปรเจ็คทงาน Constructor Method หรือเม็ธตอดหลักทำการ call object จากคลาสตัวล่าง
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(theme: ThemeData(primarySwatch: Colors.red),
       debugShowCheckedModeBanner: false,
       title: 'Get&Give Blood',
-      home: Login(),//เริ่มต้นRun
+      home: Addproject(),//เริ่มต้นRun
     );
   }
 }
