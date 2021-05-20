@@ -1,5 +1,7 @@
+import 'package:appblood/nuility/mySty.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class Addproject extends StatefulWidget {
   @override
@@ -9,10 +11,32 @@ class Addproject extends StatefulWidget {
 class _AddprojectState extends State<Addproject> {
   String projecctName, responsible, place;
 
+  //field
+  double lat, lng;
+
   @override
   void initState() {
     super.initState();
-    //readDataUser();
+    findLatLng();
+  }
+
+  Future<Null> findLatLng() async {
+    LocationData locationData = await findLocation();
+    setState(() {
+      lat = locationData.latitude;
+      lng = locationData.longitude;
+    });
+
+    print("lat ============ $lat , lng = $lng");
+  }
+
+  Future<LocationData> findLocation() async {
+    Location location = Location();
+    try {
+      return location.getLocation();
+    } catch (e) {
+      return null;
+    }
   }
 
   @override
@@ -34,7 +58,7 @@ class _AddprojectState extends State<Addproject> {
             SizedBox(
               height: 5,
             ),
-            showmap(),
+            lat == null ? MyStyle().showProgress() : showmap(),
             SizedBox(
               height: 5,
             ),
@@ -56,8 +80,21 @@ class _AddprojectState extends State<Addproject> {
         ));
   }
 
+  Set<Marker> myMarker() {
+    return <Marker>[
+      Marker(
+        markerId: MarkerId('myMarkPJ'),
+        position: LatLng(lat, lng),
+        infoWindow: InfoWindow(
+          title: 'ที่จัดตั้งโครงการของคุณ',
+          snippet: 'ละติจูด = $lat ,ลองติจูด = $lng',
+        )
+      )
+    ].toSet();
+  }
+
   Container showmap() {
-    LatLng latLng = LatLng(19.027820, 99.900087);
+    LatLng latLng = LatLng(lat, lng);
     CameraPosition cameraPosition = CameraPosition(
       target: latLng,
       zoom: 16,
@@ -69,6 +106,7 @@ class _AddprojectState extends State<Addproject> {
         initialCameraPosition: cameraPosition,
         mapType: MapType.normal,
         onMapCreated: (controller) {},
+        markers: myMarker(),
       ),
     );
   }
