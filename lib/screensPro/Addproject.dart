@@ -9,15 +9,34 @@ class Addproject extends StatefulWidget {
 }
 
 class _AddprojectState extends State<Addproject> {
+  
   String projecctName, responsible, place;
 
   //field
   double lat, lng;
 
+  List<Marker> myMarker = [];
+
   @override
   void initState() {
     super.initState();
     findLatLng();
+  }
+
+  _handleTap(LatLng tappedPoint) {
+    setState(() {
+      myMarker = [];
+      myMarker.add(
+        Marker(
+          markerId: MarkerId(tappedPoint.toString()),
+          position: tappedPoint,
+          infoWindow: InfoWindow(
+            title: 'ที่จัดตั้งโครงการของคุณ',
+            snippet: 'ละติจูด = $lat ,ลองติจูด = $lng',
+          ),
+        ),
+      );
+    });
   }
 
   Future<Null> findLatLng() async {
@@ -80,18 +99,18 @@ class _AddprojectState extends State<Addproject> {
         ));
   }
 
-  Set<Marker> myMarker() {
-    return <Marker>[
-      Marker(
-        markerId: MarkerId('myMarkPJ'),
-        position: LatLng(lat, lng),
-        infoWindow: InfoWindow(
-          title: 'ที่จัดตั้งโครงการของคุณ',
-          snippet: 'ละติจูด = $lat ,ลองติจูด = $lng',
-        )
-      )
-    ].toSet();
-  }
+  // Set<Marker> myMarker() {
+  //   return <Marker>[
+  //     Marker(
+  //       markerId: MarkerId('myMarkPJ'),
+  //       position: LatLng(lat, lng),
+  //       infoWindow: InfoWindow(
+  //         title: 'ที่จัดตั้งโครงการของคุณ',
+  //         snippet: 'ละติจูด = $lat ,ลองติจูด = $lng',
+  //       )
+  //     )
+  //   ].toSet();
+  // }
 
   Container showmap() {
     LatLng latLng = LatLng(lat, lng);
@@ -106,7 +125,9 @@ class _AddprojectState extends State<Addproject> {
         initialCameraPosition: cameraPosition,
         mapType: MapType.normal,
         onMapCreated: (controller) {},
-        markers: myMarker(),
+        // markers: myMarker(),
+        markers: Set.from(myMarker),
+        onTap: _handleTap,
       ),
     );
   }
