@@ -1,7 +1,11 @@
 import 'package:appblood/nuility/mySty.dart';
+import 'package:appblood/nuility/my_con.dart';
+import 'package:appblood/nuility/normal_Dialog.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Addproject extends StatefulWidget {
   @override
@@ -9,11 +13,12 @@ class Addproject extends StatefulWidget {
 }
 
 class _AddprojectState extends State<Addproject> {
-  
   String projecctName, responsible, place;
 
   //field
   double lat, lng;
+
+  List<Marker> useMarker = [];
 
   List<Marker> myMarker = [];
 
@@ -24,12 +29,15 @@ class _AddprojectState extends State<Addproject> {
   }
 
   _handleTap(LatLng tappedPoint) {
+    lat = tappedPoint.latitude;
+    lng = tappedPoint.longitude;
     setState(() {
       myMarker = [];
       myMarker.add(
         Marker(
           markerId: MarkerId(tappedPoint.toString()),
-          position: tappedPoint,
+          //position: tappedPoint,
+          position: LatLng(tappedPoint.latitude, tappedPoint.longitude),
           infoWindow: InfoWindow(
             title: 'ที่จัดตั้งโครงการของคุณ',
             snippet: 'ละติจูด = $lat ,ลองติจูด = $lng',
@@ -37,6 +45,7 @@ class _AddprojectState extends State<Addproject> {
         ),
       );
     });
+    print("====================================$lat***$lng");
   }
 
   Future<Null> findLatLng() async {
@@ -56,6 +65,25 @@ class _AddprojectState extends State<Addproject> {
     } catch (e) {
       return null;
     }
+  }
+
+  Future<Null> dataProject() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String id = preferences.getString('id');
+
+    String url =
+        '${Urlcon().domain}/GGB_BD/editProjectuse.php?isAdd=true&Project_Name=$projecctName&Responsible_Name=$responsible&Place=$place&Lat=$lat&Lng=$lng&ID_Use=$id';
+
+    await Dio().get(url).then((data) {
+      //print("================== + $data");
+      if (data.toString() == 'true') {
+        Navigator.pop(context);
+        normalDialog(context, 'ลงข้อมูลสำเร็จ');
+      } else {
+        normalDialog(context, 'ไม่สามารถบันทึกได้ กรุณาลองใหม่');
+        //Navigator.pop(context);
+      }
+    });
   }
 
   @override
@@ -91,7 +119,9 @@ class _AddprojectState extends State<Addproject> {
   RaisedButton saveButton() {
     return RaisedButton.icon(
         color: Colors.red,
-        onPressed: () {},
+        onPressed: () {
+          dataProject();
+        },
         icon: Icon(Icons.save, color: Colors.white),
         label: Text(
           "Save Infomation",

@@ -4,6 +4,7 @@ import 'package:appblood/screensUse/notifications.dart';
 import 'package:appblood/screensUse/personalInfo.dart';
 import 'package:appblood/screensUse/prepare.dart';
 import 'package:appblood/screensUse/project_donate.dart';
+import 'package:appblood/screensPro/Addproject.dart';
 import 'package:appblood/screensUse/query.dart';
 import 'package:appblood/screensUse/statistics.dart';
 import 'package:appblood/screensUse/wayHome.dart';
@@ -105,7 +106,7 @@ class _HomeState extends State<Home> {
             prodonatMenu(),
             notificMenu(),
             statisticsMenu(),
-            prepareMenu(),
+            requestbloodMenu(),
             logoutMenu()
           ],
         ),
@@ -151,7 +152,7 @@ class _HomeState extends State<Home> {
       onTap: () {
         Navigator.pop(context);
         MaterialPageRoute route =
-            MaterialPageRoute(builder: (value) => ProjectDonate());
+            MaterialPageRoute(builder: (value) => Addproject());
         Navigator.push(context, route);
       },
     );
@@ -189,17 +190,17 @@ class _HomeState extends State<Home> {
   }
 
 //แทบเมนูเตรียมตัว
-  ListTile prepareMenu() {
+  ListTile requestbloodMenu() {
     return ListTile(
       leading: Icon(Icons.bookmark_border),
-      title: Text('เตรียมตัวบริจาค'),
+      title: Text('ขอรับบริจาคโลหิตด่วน'),
       onTap: () {
         // setState(() {
         //   currentWidget = Prepare();
         // });
         Navigator.pop(context);
         MaterialPageRoute route =
-            MaterialPageRoute(builder: (value) => Prepare());
+            MaterialPageRoute(builder: (value) => Requestblood());
         Navigator.push(context, route);
       },
     );

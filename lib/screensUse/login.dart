@@ -156,6 +156,7 @@ class _LoginState extends State<Login> {
   Future<Null> routeLoginpage(
       Widget myWidget, AccountModel accountModel) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    //แชร์ข้อมูลไปส่วนต่างๆได้หลังจาก login
     preferences.setString('id', accountModel.iD);
     preferences.setString('email', accountModel.email);
 

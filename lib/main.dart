@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(theme: ThemeData(primarySwatch: Colors.red),
       debugShowCheckedModeBanner: false,
       title: 'Get&Give Blood',
-      home: Addproject(),//เริ่มต้นRun
+      home: Login(),//เริ่มต้นRun
     );
   }
 }
