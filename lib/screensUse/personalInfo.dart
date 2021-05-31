@@ -14,6 +14,7 @@ class Personal extends StatefulWidget {
 }
 
 class _PersonalState extends State<Personal> {
+  
   AccountModel accountModel;
 
   @override
