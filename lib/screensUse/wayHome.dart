@@ -11,7 +11,6 @@ class SelectWay extends StatefulWidget {
 class _SelectWayState extends State<SelectWay> {
   // static double lower = 1.0;
   // static double upper = 50.0;
-
   //RangeValues values = RangeValues(lower ,upper);
   int km = 0;
 
@@ -24,59 +23,62 @@ class _SelectWayState extends State<SelectWay> {
             children: <Widget>[
               //trRangeSlider()
               setDis(),
-              Container(
-                margin: EdgeInsets.only(top: 50),
-                child: SleekCircularSlider(
-                  initialValue: 10,
-                  min: 0,
-                  max: 51,
-                  appearance: CircularSliderAppearance(
-                    size: 250,
-                    customColors: CustomSliderColors(
-                      hideShadow: true,
-                      //shadowColor: Colors.black,
-                      dotColor: Colors.red[700],
-                      progressBarColors: [Colors.red, Colors.red[700]],
-                      progressBarColor: Colors.red[700],
-                      trackColor: Colors.grey[700],
-                    ),
-                    customWidths: CustomSliderWidths(
-                      trackWidth: 8,
-                      progressBarWidth: 10,
-                      //shadowWidth: 20,
-                      handlerSize: 10,
-                    ),
-                    angleRange: 360,
-                    startAngle: 270,
-                  ),
-                  onChange: (v) {
-                    setState(() {
-                      km = (v).floor();
-                    });
-                  },
-                  innerWidget: (v) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text('ระยะทาง'),
-                          Text(
-                            '$km',
-                            style: TextStyle(
-                                fontSize: 54, fontWeight: FontWeight.bold),
-                          ),
-                          Text('กิโลเมตร(กม.)')
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ),
+              slideNum(),
               cilckButton(),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Container slideNum() {
+    return Container(
+      margin: EdgeInsets.only(top: 50),
+      child: SleekCircularSlider(
+        initialValue: 10,
+        min: 0,
+        max: 51,
+        appearance: CircularSliderAppearance(
+          size: 250,
+          customColors: CustomSliderColors(
+            hideShadow: true,
+            //shadowColor: Colors.black,
+            dotColor: Colors.red[700],
+            progressBarColors: [Colors.red, Colors.red[700]],
+            progressBarColor: Colors.red[700],
+            trackColor: Colors.grey[700],
+          ),
+          customWidths: CustomSliderWidths(
+            trackWidth: 8,
+            progressBarWidth: 10,
+            //shadowWidth: 20,
+            handlerSize: 10,
+          ),
+          angleRange: 360,
+          startAngle: 270,
+        ),
+        onChange: (v) {
+          setState(() {
+            km = (v).floor();
+          });
+        },
+        innerWidget: (v) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('ระยะทาง'),
+                Text(
+                  '$km',
+                  style: TextStyle(fontSize: 54, fontWeight: FontWeight.bold),
+                ),
+                Text('กิโลเมตร(กม.)')
+              ],
+            ),
+          );
+        },
       ),
     );
   }

@@ -156,15 +156,6 @@ class _RequestbloodState extends State<Requestblood> {
     return Padding(
       padding:
           const EdgeInsets.only(left: 5, right: 20.0, bottom: 20.0, top: 20.0),
-      //margin: EdgeInsets.only(top: 318, right: 25),
-      //width: 230,
-      // return Padding(
-      //   padding: const EdgeInsets.all(20.0),
-      //   child: Row(children: <Widget>[
-      //     IconButton(icon: Icon(Icons.announcement), onPressed: null),
-      //     //TextButton('วันที่ลงประกาศ: '+ new DateFormat.yMMMd().format(timedate),
-      //     Tile(title: Text(new DateFormat.yMMMd().format(timedate)) ,)
-      //   ]
       child: ListTile(
         leading: IconButton(icon: Icon(Icons.announcement), onPressed: null),
         title: Text(

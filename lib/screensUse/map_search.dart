@@ -6,10 +6,16 @@ class Mapsearchuse extends StatefulWidget {
 }
 
 class _MapsearchuseState extends State<Mapsearchuse> {
+  var array = [];
+
+  double lat, lng;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Map Search'),),
+      appBar: AppBar(
+        title: Text('Map Search'),
+      ),
     );
   }
 }

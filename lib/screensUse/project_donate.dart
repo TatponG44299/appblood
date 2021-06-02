@@ -1,4 +1,6 @@
-import 'package:appblood/model/accout_model.dart';
+import 'dart:convert';
+
+import 'package:appblood/model/project_madel.dart';
 import 'package:appblood/nuility/my_con.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +15,8 @@ class ProjectDonate extends StatefulWidget {
 
 class _ProjectDonateState extends State<ProjectDonate> {
 //เปลี่ยนด้วนนะ อย่าลืม
-  AccountModel pDonateModel;
+  ProjectModel projectModel;
+  var res, projectName, date;
 
   @override
   void initState() {
@@ -22,15 +25,23 @@ class _ProjectDonateState extends State<ProjectDonate> {
   }
 
   Future<Null> readDatapDonate() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String code = preferences.getString('code');
+    // SharedPreferences preferences = await SharedPreferences.getInstance();
+    // String code = preferences.getString('code');
 
     //เปลี่ยนเป็นตารางของ โครงการบริจาคด้วย
-    String url =
-        '${Urlcon().domain}/GGB_BD/getUserWhereUser.php?isAdd=true&Email=$code';
-    await Dio().get(url).then((value) {
-      print('value = $value');
-    });
+    String url = '${Urlcon().domain}/GGB_BD/getdataProject.php?isAdd=true';
+
+    Response response = await Dio().get(url);
+    res = json.decode(response.data);
+    //print(res[0]['ID_Project']);
+
+    for (var index = 0; index < res.length; index++) {
+      //print(res[index]);
+    }
+    //return res;
+    // if(projectModel.projectName != null){
+
+    // }
   }
 
   @override
@@ -44,20 +55,21 @@ class _ProjectDonateState extends State<ProjectDonate> {
   }
 
   ListView listCardshow() {
+    //readDatapDonate();
+    print(res);
+
     return ListView.builder(
-        itemCount: 5,
+        itemCount: res.length,
         itemBuilder: (context, int index) {
           return Card(
             elevation: 5,
             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
             child: ListTile(
-              title: Text("ชื่อโครงการ"),
-              subtitle: Text("วันที่เริ่ม-วันที่จบการรับบริจาค"),
+              title: Text("ชื่อโครงการ: " + res[index]['Project_Name']),
+              subtitle:
+                  Text("วันที่เริ่ม-วันที่จบการรับบริจาค: " + res[index]['Date']),
               onTap: () {
-                Navigator.pop(context);
-                MaterialPageRoute route =
-                    MaterialPageRoute(builder: (value) => ProjectInfo());
-                Navigator.push(context, route);
+
               },
             ),
           );

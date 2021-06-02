@@ -20,7 +20,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String name, resultQR = '';
+  String name, email,resultQR = '';
   AccountModel accountModel;
 
   //กำหนดหน้าแรกของแอพ01
@@ -34,6 +34,7 @@ class _HomeState extends State<Home> {
 
   //จำ User ไม่ต้องไป login  ซ้ำ
   Future<Null> memUse() async {
+    //email =  accountModel.email;
     SharedPreferences preferences = await SharedPreferences.getInstance();
     name = preferences.getString('name');
     String id = preferences.getString('id');
@@ -107,6 +108,9 @@ class _HomeState extends State<Home> {
             notificMenu(),
             statisticsMenu(),
             requestbloodMenu(),
+            Divider(
+              color: Colors.grey[700],
+            ),
             logoutMenu()
           ],
         ),
@@ -152,7 +156,7 @@ class _HomeState extends State<Home> {
       onTap: () {
         Navigator.pop(context);
         MaterialPageRoute route =
-            MaterialPageRoute(builder: (value) => Addproject());
+            MaterialPageRoute(builder: (value) => ProjectDonate());
         Navigator.push(context, route);
       },
     );
@@ -166,7 +170,7 @@ class _HomeState extends State<Home> {
       onTap: () {
         Navigator.pop(context);
         MaterialPageRoute route =
-            MaterialPageRoute(builder: (value) => Notfic());
+            MaterialPageRoute(builder: (value) => Addproject());
         Navigator.push(context, route);
       },
     );
@@ -178,9 +182,9 @@ class _HomeState extends State<Home> {
       leading: Icon(Icons.insert_chart),
       title: Text('สถิติ'),
       onTap: () {
-        setState(() {
-          currentWidget = Statistics();
-        });
+        // setState(() {
+        //   currentWidget = Statistics();
+        // });
         Navigator.pop(context);
         MaterialPageRoute route =
             MaterialPageRoute(builder: (value) => Statistics());
@@ -196,7 +200,7 @@ class _HomeState extends State<Home> {
       title: Text('ขอรับบริจาคโลหิตด่วน'),
       onTap: () {
         // setState(() {
-        //   currentWidget = Prepare();
+        //   currentWidget = Requestblood();
         // });
         Navigator.pop(context);
         MaterialPageRoute route =
@@ -247,6 +251,6 @@ class _HomeState extends State<Home> {
 //UserAccountDrawrHead
   UserAccountsDrawerHeader showDrawerHeader() {
     return UserAccountsDrawerHeader(
-        accountName: Text('Guest'), accountEmail: null);
+        accountName: Text('$name'), accountEmail: Text('$email'));
   }
 }
