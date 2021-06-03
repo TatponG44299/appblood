@@ -4,6 +4,7 @@ import 'package:appblood/nuility/normal_Dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,6 +19,8 @@ class _AddprojectState extends State<Addproject> {
   //field
   double lat, lng;
 
+  DateTime timedate;
+
   List<Marker> useMarker = [];
 
   List<Marker> myMarker = [];
@@ -26,6 +29,7 @@ class _AddprojectState extends State<Addproject> {
   void initState() {
     super.initState();
     findLatLng();
+    timedate = DateTime.now();
   }
 
   _handleTap(LatLng tappedPoint) {
@@ -72,7 +76,7 @@ class _AddprojectState extends State<Addproject> {
     String id = preferences.getString('id');
 
     String url =
-        '${Urlcon().domain}/GGB_BD/editProjectuse.php?isAdd=true&Project_Name=$projecctName&Responsible_Name=$responsible&Place=$place&Lat=$lat&Lng=$lng&ID_Use=$id';
+        '${Urlcon().domain}/GGB_BD/editProjectuse.php?isAdd=true&Project_Name=$projecctName&Responsible_Name=$responsible&Place=$place&Date=$timedate&Lat=$lat&Lng=$lng&ID_Use=$id';
 
     await Dio().get(url).then((data) {
       //print("================== + $data");
@@ -105,6 +109,10 @@ class _AddprojectState extends State<Addproject> {
             SizedBox(
               height: 5,
             ),
+            starttime(),
+            SizedBox(
+              height: 5,
+            ),
             lat == null ? MyStyle().showProgress() : showmap(),
             SizedBox(
               height: 5,
@@ -114,6 +122,36 @@ class _AddprojectState extends State<Addproject> {
         ),
       ),
     );
+  }
+
+  Padding starttime() {
+    return Padding(
+      padding:
+          const EdgeInsets.only(left: 5, right: 20.0, bottom: 20.0, top: 20.0),
+      child: ListTile(
+        leading: IconButton(icon: Icon(Icons.announcement), onPressed: null),
+        title: Text(
+          'วันที่ลงประกาศ: ' + new DateFormat.yMMMd().format(timedate),
+          //style: TextStyle(fontSize: 18.0),
+        ),
+        trailing: Icon(Icons.keyboard_arrow_down),
+        onTap: dateti,
+      ),
+    );
+  }
+
+  dateti() async {
+    DateTime date = await showDatePicker(
+      context: context,
+      initialDate: timedate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(DateTime.now().year + 1),
+    );
+
+    if (date != null && date != timedate)
+      setState(() {
+        timedate = date;
+      });
   }
 
   RaisedButton saveButton() {
