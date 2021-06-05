@@ -159,6 +159,8 @@ class _LoginState extends State<Login> {
     //แชร์ข้อมูลไปส่วนต่างๆได้หลังจาก login
     preferences.setString('id', accountModel.iD);
     preferences.setString('email', accountModel.email);
+    preferences.setString('firstName', accountModel.firstName);
+    preferences.setString('firstName', accountModel.lastName);
 
     MaterialPageRoute route = MaterialPageRoute(
       builder: (value) => myWidget,
