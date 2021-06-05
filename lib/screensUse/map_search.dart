@@ -79,6 +79,7 @@ class _MapsearchuseState extends State<Mapsearchuse> {
           mapType: _currentMapType,
           markers: _makers,
           onCameraMove: _onCameraMove,
+          myLocationEnabled: true,
         ),
         Padding(
           padding: EdgeInsets.all(16.0),
