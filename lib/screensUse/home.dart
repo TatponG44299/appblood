@@ -2,7 +2,7 @@ import 'package:appblood/model/accout_model.dart';
 import 'package:appblood/screensUse/login.dart';
 import 'package:appblood/screensUse/notifications.dart';
 import 'package:appblood/screensUse/personalInfo.dart';
-import 'package:appblood/screensUse/requestblood.dart';
+import 'package:appblood/widgetscreensUse/requestblood.dart';
 import 'package:appblood/screensUse/project_donate.dart';
 import 'package:appblood/screensPro/Addproject.dart';
 import 'package:appblood/screensUse/query.dart';
@@ -137,12 +137,12 @@ class _HomeState extends State<Home> {
   ListTile queryMenu() {
     return ListTile(
       leading: Icon(Icons.book),
-      title: Text('แบบสอบถาม'),
+      title: Text('บริจาคโลหิตด่วน'),
       onTap: () {
         //กดเปลี่ยนหน้า
         Navigator.pop(context);
         MaterialPageRoute route =
-            MaterialPageRoute(builder: (value) => Query());
+            MaterialPageRoute(builder: (value) => FastDonate());
         Navigator.push(context, route);
       },
     );

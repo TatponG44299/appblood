@@ -28,7 +28,7 @@ List<String> _bloodType = <String>[
 class _RequestbloodState extends State<Requestblood> {
   String announceName,
       recipName,
-      //bloodType,
+      phone,
       hospitalname,
       detail,
       endTime;
@@ -89,7 +89,7 @@ class _RequestbloodState extends State<Requestblood> {
     String id = preferences.getString('id');
 
     String url =
-        '${Urlcon().domain}/GGB_BD/bloodrequestUse.php?isAdd=true&AnnounceName=$announceName&ReceiverName=$recipName&BloodType=$selectedType&HospitalName=$hospitalname&Detail=$detail&EndTime=$timedate&Lat=$lat&Lng=$lng&ID_Use=$id';
+        '${Urlcon().domain}/GGB_BD/bloodrequestUse.php?isAdd=true&AnnounceName=$announceName&ReceiverName=$recipName&BloodType=$selectedType&HospitalName=$hospitalname&Detail=$detail&Contact=$phone&EndTime=$timedate&Lat=$lat&Lng=$lng&ID_Use=$id';
 
     await Dio().get(url).then((data) {
       //print("================== + $data");
@@ -111,21 +111,10 @@ class _RequestbloodState extends State<Requestblood> {
         child: ListBody(
           children: <Widget>[
             annoName(),
-            SizedBox(
-              height: 5,
-            ),
             recipientName(),
-            SizedBox(
-              height: 5,
-            ),
             hostalname(),
-            SizedBox(
-              height: 5,
-            ),
             detaildata(),
-            SizedBox(
-              height: 5,
-            ),
+            calluser(),
             bloodTypeDrop(),
             starttime(),
             lat == null ? MyStyle().showProgress() : showmap(),
@@ -243,6 +232,25 @@ class _RequestbloodState extends State<Requestblood> {
         // markers: myMarker(),
         markers: Set.from(useMarker),
         onTap: _handleTap,
+      ),
+    );
+  }
+
+  Padding calluser() {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Row(
+        children: <Widget>[
+          IconButton(icon: Icon(Icons.phone), onPressed: null),
+          Expanded(
+              child: Container(
+            margin: EdgeInsets.only(right: 20, left: 10),
+            child: TextField(
+              onChanged: (value) => phone = value.trim(),
+              decoration: InputDecoration(hintText: 'ติดต่อ'),
+            ),
+          ))
+        ],
       ),
     );
   }

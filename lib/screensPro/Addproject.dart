@@ -19,7 +19,7 @@ class _AddprojectState extends State<Addproject> {
   //field
   double lat, lng;
 
-  DateTime timedate;
+  DateTime startDate, endDate;
 
   //List<Marker> useMarker = [];
 
@@ -29,7 +29,8 @@ class _AddprojectState extends State<Addproject> {
   void initState() {
     super.initState();
     findLatLng();
-    timedate = DateTime.now();
+    startDate = DateTime.now();
+    endDate = DateTime.now();
   }
 
   _handleTap(LatLng tappedPoint) {
@@ -76,7 +77,7 @@ class _AddprojectState extends State<Addproject> {
     String id = preferences.getString('id');
 
     String url =
-        '${Urlcon().domain}/GGB_BD/editProjectuse.php?isAdd=true&Project_Name=$projecctName&Responsible_Name=$responsible&Place=$place&Date=$timedate&Lat=$lat&Lng=$lng&ID_Use=$id';
+        '${Urlcon().domain}/GGB_BD/editProjectuse.php?isAdd=true&Project_Name=$projecctName&Responsible_Name=$responsible&Place=$place&SDate=$startDate&EDate=$endDate&Lat=$lat&Lng=$lng&ID_Use=$id';
 
     await Dio().get(url).then((data) {
       //print("================== + $data");
@@ -93,7 +94,7 @@ class _AddprojectState extends State<Addproject> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('เพิ่ม/แก้ไขข้อมูลโครงการ')),
+      appBar: AppBar(title: Text('เพิ่มข้อมูลโครงการ')),
       body: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
@@ -113,6 +114,10 @@ class _AddprojectState extends State<Addproject> {
             SizedBox(
               height: 5,
             ),
+            endtime(),
+            SizedBox(
+              height: 5,
+            ),
             lat == null ? MyStyle().showProgress() : showmap(),
             SizedBox(
               height: 5,
@@ -124,6 +129,36 @@ class _AddprojectState extends State<Addproject> {
     );
   }
 
+  Padding endtime() {
+    return Padding(
+      padding:
+          const EdgeInsets.only(left: 5, right: 20.0, bottom: 20.0, top: 20.0),
+      child: ListTile(
+        leading: IconButton(icon: Icon(Icons.announcement), onPressed: null),
+        title: Text(
+          'ถึงวันที่: ' + new DateFormat.yMMMd().format(endDate),
+          //style: TextStyle(fontSize: 18.0),
+        ),
+        trailing: Icon(Icons.keyboard_arrow_down),
+        onTap: enddate,
+      ),
+    );
+  }
+
+  enddate() async {
+    DateTime date = await showDatePicker(
+      context: context,
+      initialDate: endDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(DateTime.now().year + 1),
+    );
+
+    if (date != null && date != endDate)
+      setState(() {
+        endDate = date;
+      });
+  }
+
   Padding starttime() {
     return Padding(
       padding:
@@ -131,26 +166,26 @@ class _AddprojectState extends State<Addproject> {
       child: ListTile(
         leading: IconButton(icon: Icon(Icons.announcement), onPressed: null),
         title: Text(
-          'วันที่ลงประกาศ: ' + new DateFormat.yMMMd().format(timedate),
+          'เริ่มวันที่: ' + new DateFormat.yMMMd().format(startDate),
           //style: TextStyle(fontSize: 18.0),
         ),
         trailing: Icon(Icons.keyboard_arrow_down),
-        onTap: dateti,
+        onTap: startdate,
       ),
     );
   }
 
-  dateti() async {
+  startdate() async {
     DateTime date = await showDatePicker(
       context: context,
-      initialDate: timedate,
+      initialDate: startDate,
       firstDate: DateTime.now(),
       lastDate: DateTime(DateTime.now().year + 1),
     );
 
-    if (date != null && date != timedate)
+    if (date != null && date != startDate)
       setState(() {
-        timedate = date;
+        startDate = date;
       });
   }
 

@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'info_project.dart';
+import '../widgetscreensUse/info_project.dart';
 
 class ProjectDonate extends StatefulWidget {
   @override
@@ -26,10 +26,10 @@ class _ProjectDonateState extends State<ProjectDonate> {
   @override
   void initState() {
     super.initState();
-    readDatapDonate();
+    readDataDonate();
   }
 
-  Future<Null> readDatapDonate() async {
+  Future<Null> readDataDonate() async {
     // SharedPreferences preferences = await SharedPreferences.getInstance();
     // String code = preferences.getString('code');
 
@@ -38,7 +38,7 @@ class _ProjectDonateState extends State<ProjectDonate> {
 
     Response response = await Dio().get(url);
     res = json.decode(response.data);
-    //print(res[0]['ID_Project']);
+    print(res[0]['ID_Project']);
     // int inex = 0;
 
     for (var map in res) {
@@ -48,16 +48,7 @@ class _ProjectDonateState extends State<ProjectDonate> {
       });
       //projectModels.add(model);
     }
-    // setState(() {
-    //   for (var index = 0; index < res.length; index++) {
-    //     //ProjectModel model = ProjectModel.fromJson(res);
-    //     //projectModels.add(model);
-    //   }
-    // });
-    //return res;
-    // if(projectModel.projectName != null){
 
-    // }
   }
 
   //  Future<Null> routeLoginpage(
@@ -93,12 +84,11 @@ class _ProjectDonateState extends State<ProjectDonate> {
             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
             child: ListTile(
               title: Text("ชื่อโครงการ: " + res[index]['Project_Name']),
-              subtitle: Text("วันที่รับบริจาค: " + res[index]['Date']),
+              subtitle: Text("วันที่รับบริจาค: " + res[index]['SDate']),
               trailing: Icon(Icons.arrow_forward_ios),
               onTap: () {
-                print('print============$index');
-                //projectModels.add(index);
-                //projectModel= res[index]['iDProject'];
+                //print('print============$index');
+
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -106,10 +96,7 @@ class _ProjectDonateState extends State<ProjectDonate> {
                         ProjectInfo(projectModel: projectModels[index]),
                   ),
                 );
-                //  MaterialPageRoute
-                //    builder: (context) => Detailproject(),
-                //  ),
-                //);
+
               },
             ),
           );

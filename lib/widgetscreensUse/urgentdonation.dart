@@ -1,46 +1,32 @@
 import 'dart:convert';
 
+import 'package:appblood/model/useDonate_modail.dart';
+import 'package:appblood/nuility/mySty.dart';
 import 'package:appblood/nuility/my_con.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:appblood/model/project_madel.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class ProjectInfo extends StatefulWidget {
-  final ProjectModel projectModel;
+class ReadUrgent extends StatefulWidget {
+  final UseDonate useDonate;
 
-  ProjectInfo({Key key, this.projectModel}) : super(key: key);
+  ReadUrgent({Key key, this.useDonate}) : super(key: key);
 
   @override
-  _ProjectInfoState createState() => _ProjectInfoState();
+  _ReadUrgentState createState() => _ReadUrgentState();
 }
 
-class _ProjectInfoState extends State<ProjectInfo> {
+class _ReadUrgentState extends State<ReadUrgent> {
   var res;
 
   int index;
-  ProjectModel model;
+  UseDonate model;
 
   @override
   void initState() {
     super.initState();
     //readDatapDonate();
-    model = widget.projectModel;
-  }
-
-  Future<Null> readDatapDonate() async {
-    // SharedPreferences preferences = await SharedPreferences.getInstance();
-    // String code = preferences.getString('code');
-
-    //เปลี่ยนเป็นตารางของ โครงการบริจาคด้วย
-    String url = '${Urlcon().domain}/GGB_BD/getdataProject.php?isAdd=true';
-
-    Response response = await Dio().get(url);
-    res = json.decode(response.data);
-
-    setState(() {
-      for (var index = 0; index < res.length; index++) {}
-    });
+    model = widget.useDonate;
   }
 
   @override
@@ -48,16 +34,18 @@ class _ProjectInfoState extends State<ProjectInfo> {
     //var args = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text('รายละเอียดโครงการของ'),
+        title: Text('รายละเอียดผู้ขอโลหิต'),
       ),
       body: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
-            proName(),
-            resName(),
+            annoName(),
+            recName(),
             placeOpen(),
-            startDate(),
-            endDate(),
+            detailDonate(),
+            groupBlood(),
+            contactDonate(),
+            askDate(),
             showMap(),
           ],
         ),
@@ -65,7 +53,7 @@ class _ProjectInfoState extends State<ProjectInfo> {
     );
   }
 
-  Padding endDate() {
+  Padding askDate() {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
       child: Row(
@@ -76,11 +64,11 @@ class _ProjectInfoState extends State<ProjectInfo> {
             margin: EdgeInsets.only(right: 20, left: 10),
             child: Text.rich(
               TextSpan(
-                text: 'ถึงวันที่:',
+                text: 'วันที่:',
                 style: TextStyle(fontSize: 18), // default text style
                 children: <TextSpan>[
                   TextSpan(
-                      text: ' ${model.date}',
+                      text: ' ${model.endTime}',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                 ],
@@ -101,7 +89,7 @@ class _ProjectInfoState extends State<ProjectInfo> {
             double.parse(model.lng),
           ),
           infoWindow: InfoWindow(
-              title: 'ตำแหน่งโครงการ',
+              title: 'ผู้ขอรับบริจาค',
               snippet: 'ละติจูด = ${model.lat},ลองติจูด = ${model.lng}'))
     ].toSet();
   }
@@ -126,22 +114,77 @@ class _ProjectInfoState extends State<ProjectInfo> {
     );
   }
 
-  Padding startDate() {
+  Padding contactDonate() {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
       child: Row(
         children: <Widget>[
-          IconButton(icon: Icon(Icons.date_range), onPressed: null),
+          IconButton(icon: Icon(Icons.home), onPressed: null),
           Expanded(
               child: Container(
             margin: EdgeInsets.only(right: 20, left: 10),
             child: Text.rich(
               TextSpan(
-                text: 'เริ่มวันที่:',
+                text: 'ติดต่อ:',
                 style: TextStyle(fontSize: 18), // default text style
                 children: <TextSpan>[
                   TextSpan(
-                      text: ' ${model.date}',
+                      text: '  ${model.contact}',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                ],
+              ),
+            ),
+          ))
+        ],
+      ),
+    );
+  }
+
+  // Padding timeDonate() {
+  //   return Padding(
+  //     padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+  //     child: Row(
+  //       children: <Widget>[
+  //         IconButton(icon: Icon(Icons.home), onPressed: null),
+  //         Expanded(
+  //             child: Container(
+  //           margin: EdgeInsets.only(right: 20, left: 10),
+  //           child: Text.rich(
+  //             TextSpan(
+  //               text: 'วันที่:',
+  //               style: TextStyle(fontSize: 18), // default text style
+  //               children: <TextSpan>[
+  //                 TextSpan(
+  //                     text: '  ${model.endTime}',
+  //                     style:
+  //                         TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+  //               ],
+  //             ),
+  //           ),
+  //         ))
+  //       ],
+  //     ),
+  //   );
+  // }
+
+
+  Padding detailDonate() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+      child: Row(
+        children: <Widget>[
+          IconButton(icon: Icon(Icons.home), onPressed: null),
+          Expanded(
+              child: Container(
+            margin: EdgeInsets.only(right: 20, left: 10),
+            child: Text.rich(
+              TextSpan(
+                text: 'รายละเอียด:',
+                style: TextStyle(fontSize: 18), // default text style
+                children: <TextSpan>[
+                  TextSpan(
+                      text: '  ${model.detail}',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                 ],
@@ -164,11 +207,11 @@ class _ProjectInfoState extends State<ProjectInfo> {
             margin: EdgeInsets.only(right: 20, left: 10),
             child: Text.rich(
               TextSpan(
-                text: 'สถานที่รับบริจาค:',
+                text: 'สถานที่รับโลหิต:',
                 style: TextStyle(fontSize: 18), // default text style
                 children: <TextSpan>[
                   TextSpan(
-                      text: '  ${model.place}',
+                      text: '  ${model.hospitalName}',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                 ],
@@ -180,7 +223,7 @@ class _ProjectInfoState extends State<ProjectInfo> {
     );
   }
 
-  Padding resName() {
+  Padding groupBlood() {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
       child: Row(
@@ -191,11 +234,11 @@ class _ProjectInfoState extends State<ProjectInfo> {
             margin: EdgeInsets.only(right: 20, left: 10),
             child: Text.rich(
               TextSpan(
-                text: 'ผู้รับผิดชอบโครงการ:',
+                text: 'หมู่เลือดที่ต้องการ:',
                 style: TextStyle(fontSize: 18), // default text style
                 children: <TextSpan>[
                   TextSpan(
-                      text: '  ${model.responsibleName}',
+                      text: '  ${model.bloodType}',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                 ],
@@ -207,7 +250,34 @@ class _ProjectInfoState extends State<ProjectInfo> {
     );
   }
 
-  Padding proName() {
+  Padding recName() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+      child: Row(
+        children: <Widget>[
+          IconButton(icon: Icon(Icons.person), onPressed: null),
+          Expanded(
+              child: Container(
+            margin: EdgeInsets.only(right: 20, left: 10),
+            child: Text.rich(
+              TextSpan(
+                text: 'ผู้ที่ได้รับโลหิต:',
+                style: TextStyle(fontSize: 18), // default text style
+                children: <TextSpan>[
+                  TextSpan(
+                      text: '  ${model.receiverName}',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                ],
+              ),
+            ),
+          ))
+        ],
+      ),
+    );
+  }
+
+  Padding annoName() {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
       child: Row(
@@ -218,11 +288,11 @@ class _ProjectInfoState extends State<ProjectInfo> {
               margin: EdgeInsets.only(right: 20, left: 10),
               child: Text.rich(
                 TextSpan(
-                  text: 'ชื่อโครงการ:',
+                  text: 'ชื่อรับบริจาค:',
                   style: TextStyle(fontSize: 18), // default text style
                   children: <TextSpan>[
                     TextSpan(
-                        text: '  ${model.projectName}',
+                        text: '  ${model.announceName}',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18)),
                   ],

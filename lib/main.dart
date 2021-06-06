@@ -1,6 +1,6 @@
 import 'package:appblood/screensUse/home.dart';
 import 'package:appblood/screensUse/login.dart';
-import 'package:appblood/screensUse/map_search.dart';
+import 'package:appblood/widgetscreensUse/map_search.dart';
 import 'package:flutter/material.dart';
 
 //เมื่อโปรเจ็คทงาน Constructor Method หรือเม็ธตอดหลักทำการ call object จากคลาสตัวล่าง

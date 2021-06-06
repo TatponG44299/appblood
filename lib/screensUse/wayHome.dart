@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
-import 'map_search.dart';
+import '../widgetscreensUse/map_search.dart';
 
 class SelectWay extends StatefulWidget {
   @override
