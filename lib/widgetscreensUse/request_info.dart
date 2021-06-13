@@ -8,9 +8,11 @@ import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Requestblood extends StatefulWidget {
+class RequestInfo extends StatefulWidget {
+  //const RequestInfo({ Key? key }) : super(key: key);
+
   @override
-  _RequestbloodState createState() => _RequestbloodState();
+  _RequestInfoState createState() => _RequestInfoState();
 }
 
 var selectedType;
@@ -25,13 +27,8 @@ List<String> _bloodType = <String>[
   'O-'
 ];
 
-class _RequestbloodState extends State<Requestblood> {
-  String announceName,
-      recipName,
-      phone,
-      hospitalname,
-      detail,
-      endTime;
+class _RequestInfoState extends State<RequestInfo> {
+  String announceName, recipName, phone, hospitalname, detail;
 
   List<Marker> useMarker = [];
   double lat, lng;

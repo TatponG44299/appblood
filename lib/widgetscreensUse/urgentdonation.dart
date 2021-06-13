@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:appblood/model/useDonate_modail.dart';
+import 'package:appblood/model/useDonate_model.dart';
 import 'package:appblood/nuility/mySty.dart';
 import 'package:appblood/nuility/my_con.dart';
 import 'package:dio/dio.dart';

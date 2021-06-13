@@ -160,7 +160,7 @@ class _LoginState extends State<Login> {
     preferences.setString('id', accountModel.iD);
     preferences.setString('email', accountModel.email);
     preferences.setString('firstName', accountModel.firstName);
-    preferences.setString('firstName', accountModel.lastName);
+    preferences.setString('lastName', accountModel.lastName);
 
     MaterialPageRoute route = MaterialPageRoute(
       builder: (value) => myWidget,

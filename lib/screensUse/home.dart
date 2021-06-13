@@ -1,10 +1,12 @@
 import 'package:appblood/model/accout_model.dart';
+import 'package:appblood/screensPro/listProject.dart';
 import 'package:appblood/screensUse/login.dart';
 import 'package:appblood/screensUse/notifications.dart';
 import 'package:appblood/screensUse/personalInfo.dart';
-import 'package:appblood/widgetscreensUse/requestblood.dart';
+import 'package:appblood/widgetscreensUse/request_info.dart';
+import 'package:appblood/screensUse/list_requestblood.dart';
 import 'package:appblood/screensUse/project_donate.dart';
-import 'package:appblood/screensPro/Addproject.dart';
+import 'package:appblood/screensPro/addproject.dart';
 import 'package:appblood/screensUse/query.dart';
 import 'package:appblood/screensUse/statistics.dart';
 import 'package:appblood/screensUse/wayHome.dart';
@@ -20,7 +22,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String name, email,resultQR = '';
+  String fname, lname, email, resultQR = '';
   AccountModel accountModel;
 
   //กำหนดหน้าแรกของแอพ01
@@ -36,8 +38,9 @@ class _HomeState extends State<Home> {
   Future<Null> memUse() async {
     //email =  accountModel.email;
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    name = preferences.getString('name');
-    String id = preferences.getString('id');
+    fname = preferences.getString('firstName');
+    lname = preferences.getString('lastName');
+    //String id = preferences.getString('id');
   }
 
   @override
@@ -101,12 +104,15 @@ class _HomeState extends State<Home> {
         child: ListView(
           children: <Widget>[
             showDrawerHeader(),
-            thaimap(),
+            //thaimap(),
             usedataMenu(),
-            queryMenu(),
-            prodonatMenu(),
-            notificMenu(),
             statisticsMenu(),
+            notificMenu(),
+            queryMenu(),
+            Divider(
+              color: Colors.grey[700],
+            ),
+            prodonatMenu(),
             requestbloodMenu(),
             Divider(
               color: Colors.grey[700],
@@ -116,28 +122,28 @@ class _HomeState extends State<Home> {
         ),
       );
 
-  ListTile thaimap() {
-    return ListTile(
-      leading: Icon(Icons.home),
-      title: Text('หน้าหลัก'),
-      onTap: () {
-        setState(() {
-          currentWidget = SelectWay();
-        });
-        //กดเปลี่ยนหน้า
-        Navigator.pop(context);
-        // MaterialPageRoute route =
-        //     MaterialPageRoute(builder: (value) => Query());
-        // Navigator.push(context, route);
-      },
-    );
-  }
+  // ListTile thaimap() {
+  //   return ListTile(
+  //     leading: Icon(Icons.home),
+  //     title: Text('หน้าหลัก'),
+  //     onTap: () {
+  //       setState(() {
+  //         currentWidget = SelectWay();
+  //       });
+  //       //กดเปลี่ยนหน้า
+  //       Navigator.pop(context);
+  //       // MaterialPageRoute route =
+  //       //     MaterialPageRoute(builder: (value) => Query());
+  //       // Navigator.push(context, route);
+  //     },
+  //   );
+  // }
 
 //แทบแบบสอบถาม
   ListTile queryMenu() {
     return ListTile(
       leading: Icon(Icons.book),
-      title: Text('บริจาคโลหิตด่วน'),
+      title: Text('ต้องการบริจาคโลหิตด่วน'),
       onTap: () {
         //กดเปลี่ยนหน้า
         Navigator.pop(context);
@@ -170,7 +176,7 @@ class _HomeState extends State<Home> {
       onTap: () {
         Navigator.pop(context);
         MaterialPageRoute route =
-            MaterialPageRoute(builder: (value) => Addproject());
+            MaterialPageRoute(builder: (value) => ListProject());
         Navigator.push(context, route);
       },
     );
@@ -251,6 +257,6 @@ class _HomeState extends State<Home> {
 //UserAccountDrawrHead
   UserAccountsDrawerHeader showDrawerHeader() {
     return UserAccountsDrawerHeader(
-        accountName: Text('$name'), accountEmail: Text('$email'));
+        accountName: Text('$fname $lname'), accountEmail: Text('$email'));
   }
 }
