@@ -7,7 +7,7 @@ import 'package:appblood/widgetscreensUse/request_info.dart';
 import 'package:appblood/screensUse/list_requestblood.dart';
 import 'package:appblood/screensUse/project_donate.dart';
 import 'package:appblood/screensPro/addproject.dart';
-import 'package:appblood/screensUse/query.dart';
+import 'package:appblood/widgetscreensUse/query.dart';
 import 'package:appblood/screensUse/statistics.dart';
 import 'package:appblood/screensUse/wayHome.dart';
 import 'package:barcode_scan/barcode_scan.dart';
@@ -15,6 +15,8 @@ import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'usebloodDonate.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -143,12 +145,12 @@ class _HomeState extends State<Home> {
   ListTile queryMenu() {
     return ListTile(
       leading: Icon(Icons.book),
-      title: Text('ต้องการบริจาคโลหิตด่วน'),
+      title: Text('ต้องการบริจาคโลหิต'),
       onTap: () {
         //กดเปลี่ยนหน้า
         Navigator.pop(context);
         MaterialPageRoute route =
-            MaterialPageRoute(builder: (value) => FastDonate());
+            MaterialPageRoute(builder: (value) => UseWantDanate());
         Navigator.push(context, route);
       },
     );

@@ -12,7 +12,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class Addinfodata extends StatefulWidget {
   @override
   _AddinfodataState createState() => _AddinfodataState();
@@ -74,16 +73,7 @@ class _AddinfodataState extends State<Addinfodata> {
   //}
 
   var selectedType;
-  List<String> _bloodType = <String>[
-    'A+',
-    'A-',
-    'B+',
-    'B-',
-    'AB+',
-    'AB-',
-    'O+',
-    'O-'
-  ];
+  List<String> _bloodType = <String>['A', 'B+', 'AB', 'O'];
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +106,7 @@ class _AddinfodataState extends State<Addinfodata> {
       ),
     );
   }
-  
+
 //แผนที่
   // Container addMap() {
   //   LatLng latLng = LatLng(19.027820, 99.900087);
@@ -172,15 +162,14 @@ class _AddinfodataState extends State<Addinfodata> {
   Future<Null> chooseImage(ImageSource imageSource) async {
     try {
       var iMage = await ImagePicker.pickImage(
-      source: imageSource,
-      maxHeight: 1000.0,
-      maxWidth: 1000,
-    );
-    setState(() {
-      image = iMage;
-    });
+        source: imageSource,
+        maxHeight: 1000.0,
+        maxWidth: 1000,
+      );
+      setState(() {
+        image = iMage;
+      });
     } catch (e) {}
-    
   }
 
   Widget imagprofile() => Container(
@@ -250,8 +239,8 @@ class _AddinfodataState extends State<Addinfodata> {
                     fname.isEmpty ||
                     lname == null ||
                     lname.isEmpty ||
-                    idCustom == null||
-                    idCustom.isEmpty||
+                    idCustom == null ||
+                    idCustom.isEmpty ||
                     phon == null ||
                     phon.isEmpty ||
                     selectedType == null ||
@@ -309,16 +298,16 @@ class _AddinfodataState extends State<Addinfodata> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String iD = preferences.getString('id');
 
-    String url =//'${Urlcon().domain}/GGB_BD/editProfileuser.php?isAdd=true&ID=$iD&First_name=$fname&Last_name=$lname&Phon=$phon&Blood_type=$selectedType&Add_detail=$address&Tombol=$tumbol&District=$district&County=$county&UrlPicture=$urlimage';
+    String
+        url = //'${Urlcon().domain}/GGB_BD/editProfileuser.php?isAdd=true&ID=$iD&First_name=$fname&Last_name=$lname&Phon=$phon&Blood_type=$selectedType&Add_detail=$address&Tombol=$tumbol&District=$district&County=$county&UrlPicture=$urlimage';
         '${Urlcon().domain}/GGB_BD/editProfileuser.php?isAdd=true&ID=$iD&ID_costom=$idCustom&First_name=$fname&Last_name=$lname&Phon=$phon&Blood_type=$selectedType&Birthday=$timedate&Add_detail=$address&Tombol=$tumbol&District=$district&County=$county&UrlPicture=$urlimage';
-        
+
     await Dio().get(url).then((value) {
-      if (value.toString()=='true'){
+      if (value.toString() == 'true') {
         Navigator.pop(context);
-        MaterialPageRoute route =
-            MaterialPageRoute(builder: (value) => Home());
+        MaterialPageRoute route = MaterialPageRoute(builder: (value) => Home());
         Navigator.push(context, route);
-      }else{
+      } else {
         normalDialog(context, 'กรุณากรอกข้อมูลใหม่');
       }
     });

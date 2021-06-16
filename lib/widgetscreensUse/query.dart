@@ -4,18 +4,19 @@ import 'package:appblood/model/accout_model.dart';
 import 'package:appblood/model/useDonate_model.dart';
 import 'package:appblood/nuility/mySty.dart';
 import 'package:appblood/nuility/my_con.dart';
+import 'package:appblood/nuility/normal_Dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../widgetscreensUse/urgentdonation.dart';
+import 'urgentdonation.dart';
 
 class FastDonate extends StatefulWidget {
-  final AccountModel accountModel;
+  //final AccountModel accountModel;
 
-  FastDonate({Key key, this.accountModel}) : super(key: key);
+  //FastDonate({Key key, this.accountModel}) : super(key: key);
 
   @override
   _FastDonateState createState() => _FastDonateState();
@@ -30,8 +31,8 @@ List<String> _bloodType = <String>[
 ];
 
 class _FastDonateState extends State<FastDonate> {
-  var res;
-  var name, fname, lname;
+  var res, name, contact;
+  //String name ;
 
   double lat, lng;
   List<Marker> myMarker = [];
@@ -42,25 +43,62 @@ class _FastDonateState extends State<FastDonate> {
   void initState() {
     super.initState();
     findLatLng();
-    memUse();
-    accountModel = widget.accountModel;
+    //memUse();
+
+    //accountModel = widget.accountModel;
     //readDataDonate();
   }
 
-  Future<Null> memUse() async {
-    //email =  accountModel.email;
+  Future<Null> addUserDonate() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    fname = preferences.getString('firstName');
-    lname = preferences.getString('lastName');
-    setState(() {
-      name = Text('$fname'+' $lname');
+    String id = preferences.getString('id');
+
+    String url =
+        '${Urlcon().domain}/GGB_BD/userWantDonate.php?isAdd=true&Name_User=$name&Contact=$contact&BloodType=$selectedType&Lat=$lat&Lng=$lng&ID_Use=$id';
+
+    await Dio().get(url).then((data) {
+      //print("================== + $data");
+      if (data.toString() == 'true') {
+        Navigator.pop(context);
+        normalDialog(context, 'ลงข้อมูลสำเร็จ');
+      } else {
+        normalDialog(context, 'ไม่สามารถบันทึกได้ กรุณาลองใหม่');
+        //Navigator.pop(context);
+      }
     });
-    print(
-        '***************************************************************ทัตพงศ์รัตนิวัย');
-    //selectedType = preferences.getString('selectedType');
-    //name = accountModel.lastName;
-    //String id = preferences.getString('id');
+
+    // String url =
+    //     '${Urlcon().domain}/GGB_BD/getUserWhereID.php?isAdd=true&ID=$id';
+    // await Dio().get(url).then((value) {
+    //   // print('Value = $value');
+    //   var result = json.decode(value.data);
+    //   //print('result==$result');
+    //   for (var map in result) {
+    //     //print('fname == ${accountModel.firstName}');
+    //     setState(() {
+    //       accountModel = AccountModel.fromJson(map);
+    //       name = ('${accountModel.firstName}' + ' ${accountModel.lastName}');
+    //     });
+    //   }
+    //   print(
+    //       '***************************************************************$name');
+    // });
   }
+
+  // Future<Null> memUse() async {
+  //   //email =  accountModel.email;
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   fname = preferences.getString('firstName');
+  //   lname = preferences.getString('lastName');
+  //   setState(() {
+  //     name = '$fname' + ' $lname';
+  //   });
+  //   print(
+  //       '***************************************************************$name');
+  //   //selectedType = preferences.getString('selectedType');
+  //   //name = accountModel.lastName;
+  //   //String id = preferences.getString('id');
+  // }
 
   // Future<Null> readDataDonate() async {
   //   // SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -139,7 +177,7 @@ class _FastDonateState extends State<FastDonate> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('บริจาคโลหิตด่วน'),
+        title: Text('เพิ่ม/แก้ไขข้อมุลบริจาคโลหิต'),
       ),
       //body: res == null ? MyStyle().showProgress() : listCardshow(),
       body: SingleChildScrollView(
@@ -149,6 +187,7 @@ class _FastDonateState extends State<FastDonate> {
             contactUse(),
             bloodTypeDrop(),
             lat == null ? MyStyle().showProgress() : showmap(),
+            saveButton(),
             // Stack(
             //   children:
             //     RaisedButton(onPressed: null),
@@ -159,6 +198,19 @@ class _FastDonateState extends State<FastDonate> {
         ),
       ),
     );
+  }
+
+  RaisedButton saveButton() {
+    return RaisedButton.icon(
+        color: Colors.red,
+        onPressed: () {
+          addUserDonate();
+        },
+        icon: Icon(Icons.save, color: Colors.white),
+        label: Text(
+          "Save Infomation",
+          style: TextStyle(color: Colors.white),
+        ));
   }
 
   Container showmap() {
@@ -243,7 +295,7 @@ class _FastDonateState extends State<FastDonate> {
               child: Container(
             margin: EdgeInsets.only(right: 20, left: 10),
             child: TextFormField(
-              //onChanged: (value) => projecctName = value.trim(),
+              onChanged: (value) => contact = value.trim(),
               //initialValue: projectModel.projectName,
               decoration: InputDecoration(hintText: 'ติดต่อ'),
             ),
@@ -263,8 +315,9 @@ class _FastDonateState extends State<FastDonate> {
               child: Container(
             margin: EdgeInsets.only(right: 20, left: 10),
             child: TextFormField(
-              //onChanged: (value) => projecctName = value.trim(),
-              //initialValue: name,
+              onChanged: (value) => name = value.trim(),
+              // initialValue:
+              //     ('${accountModel.firstName}' + ' ${accountModel.lastName}'),
               decoration: InputDecoration(hintText: 'ชื่อ'),
             ),
           ))
