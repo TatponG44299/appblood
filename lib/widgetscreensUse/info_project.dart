@@ -28,27 +28,12 @@ class _ProjectInfoState extends State<ProjectInfo> {
     model = widget.projectModel;
   }
 
-  Future<Null> readDatapDonate() async {
-    // SharedPreferences preferences = await SharedPreferences.getInstance();
-    // String code = preferences.getString('code');
-
-    //เปลี่ยนเป็นตารางของ โครงการบริจาคด้วย
-    String url = '${Urlcon().domain}/GGB_BD/getdataProject.php?isAdd=true';
-
-    Response response = await Dio().get(url);
-    res = json.decode(response.data);
-
-    setState(() {
-      for (var index = 0; index < res.length; index++) {}
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     //var args = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text('รายละเอียดโครงการของ'),
+        title: Text('รายละเอียดโครงการ'),
       ),
       body: SingleChildScrollView(
         child: ListBody(
@@ -80,7 +65,7 @@ class _ProjectInfoState extends State<ProjectInfo> {
                 style: TextStyle(fontSize: 18), // default text style
                 children: <TextSpan>[
                   TextSpan(
-                      text: ' ${model.date}',
+                      text: ' ${model.eDate}',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                 ],
@@ -141,7 +126,7 @@ class _ProjectInfoState extends State<ProjectInfo> {
                 style: TextStyle(fontSize: 18), // default text style
                 children: <TextSpan>[
                   TextSpan(
-                      text: ' ${model.date}',
+                      text: ' ${model.sDate}',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                 ],

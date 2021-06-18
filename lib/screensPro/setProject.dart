@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:appblood/model/project_madel.dart';
 import 'package:appblood/nuility/mySty.dart';
 import 'package:appblood/nuility/my_con.dart';
 import 'package:appblood/nuility/normal_Dialog.dart';
@@ -8,29 +11,41 @@ import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Addproject extends StatefulWidget {
+class EditdataProject extends StatefulWidget {
+  final ProjectModel projectModel;
+
+  EditdataProject({Key key, this.projectModel}) : super(key: key);
+
   @override
-  _AddprojectState createState() => _AddprojectState();
+  _EditdataProjectState createState() => _EditdataProjectState();
 }
 
-class _AddprojectState extends State<Addproject> {
+class _EditdataProjectState extends State<EditdataProject> {
   String projecctName, responsible, place;
 
-  //field
   double lat, lng;
 
   DateTime startDate, endDate;
 
-  //List<Marker> useMarker = [];
-
   List<Marker> myMarker = [];
+  ProjectModel projectModel;
+
+  Location location = Location();
 
   @override
   void initState() {
     super.initState();
+    projectModel = widget.projectModel;
     findLatLng();
-    startDate = DateTime.now();
-    endDate = DateTime.now();
+    startDate = DateTime.parse(projectModel.sDate);
+    endDate = DateTime.parse(projectModel.eDate);
+    // location.onLocationChanged.listen((event) {
+    //   setState(() {
+    //     lat = event.latitude;
+    //     lng = event.longitude;
+    //     print("lat ============ $lat , lng = $lng");
+    //   });
+    // });
   }
 
   _handleTap(LatLng tappedPoint) {
@@ -54,30 +69,57 @@ class _AddprojectState extends State<Addproject> {
   }
 
   Future<Null> findLatLng() async {
-    LocationData locationData = await findLocation();
+    //LocationData locationData = await findLocation();
     setState(() {
-      lat = locationData.latitude;
-      lng = locationData.longitude;
+      // lat = locationData.latitude;
+      // lng = locationData.longitude;
+      lat = double.parse(projectModel.lat);
+      lng = double.parse(projectModel.lng);
     });
 
     print("lat ============ $lat , lng = $lng");
   }
 
-  Future<LocationData> findLocation() async {
-    Location location = Location();
-    try {
-      return location.getLocation();
-    } catch (e) {
-      return null;
-    }
-  }
+  // Future<LocationData> findLocation() async {
+  //   Location location = Location();
+  //   try {
+  //     return location.getLocation();
+  //   } catch (e) {
+  //     return null;
+  //   }
+  // }
+
+  // Future<Null> readDatainfo() async {
+  //   //SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   String id = projectModel.iDProject;
+
+  //   String url =
+  //       '${Urlcon().domain}/GGB_BD/editProjectuse.php?isAdd=true&ID_Project=$id';
+
+  //   Response response = await Dio().get(url);
+
+  //   var result = json.decode(response.data);
+  //   for (var map in result) {
+  //     setState(() {
+  //       projectModel = ProjectModel.fromJson(map);
+  //       projecctName = projectModel.projectName;
+  //       responsible = projectModel.responsibleName;
+  //       place = projectModel.place;
+  //       //  lat = double.parse(projectModel.lat);
+  //       //  lng = double.parse(projectModel.lng);
+  //     });
+  //   }
+  // }
 
   Future<Null> dataProject() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String id = preferences.getString('id');
+    String idp = projectModel.iDProject;
+    print('==========================='+idp);
+    
 
     String url =
-        '${Urlcon().domain}/GGB_BD/editProjectuse.php?isAdd=true&Project_Name=$projecctName&Responsible_Name=$responsible&Place=$place&SDate=$startDate&EDate=$endDate&Lat=$lat&Lng=$lng&ID_Use=$id';
+        '${Urlcon().domain}/GGB_BD/editProjectuse.php?isAdd=true&Project_Name=$projecctName&Responsible_Name=$responsible&Place=$place&SDate=$startDate&EDate=$endDate&Lat=$lat&Lng=$lng&ID_Use=$id&ID_Project=$idp';
 
     await Dio().get(url).then((data) {
       //print("================== + $data");
@@ -94,38 +136,40 @@ class _AddprojectState extends State<Addproject> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('เพิ่มข้อมูลโครงการ')),
-      body: SingleChildScrollView(
-        child: ListBody(
-          children: <Widget>[
-            proName(),
-            SizedBox(
-              height: 5,
+      appBar: AppBar(title: Text('แก้ไขข้อมูลโครงการ')),
+      body: projectModel == null
+          ? MyStyle().showProgress()
+          : SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  proName(),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  resName(),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  placeOpen(),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  starttime(),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  endtime(),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  lat == null ? MyStyle().showProgress() : showmap(),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  saveButton()
+                ],
+              ),
             ),
-            resName(),
-            SizedBox(
-              height: 5,
-            ),
-            placeOpen(),
-            SizedBox(
-              height: 5,
-            ),
-            starttime(),
-            SizedBox(
-              height: 5,
-            ),
-            endtime(),
-            SizedBox(
-              height: 5,
-            ),
-            lat == null ? MyStyle().showProgress() : showmap(),
-            SizedBox(
-              height: 5,
-            ),
-            saveButton()
-          ],
-        ),
-      ),
     );
   }
 
@@ -149,7 +193,7 @@ class _AddprojectState extends State<Addproject> {
     DateTime date = await showDatePicker(
       context: context,
       initialDate: endDate,
-      firstDate: DateTime.now(),
+      firstDate: endDate,
       lastDate: DateTime(DateTime.now().year + 1),
     );
 
@@ -179,7 +223,7 @@ class _AddprojectState extends State<Addproject> {
     DateTime date = await showDatePicker(
       context: context,
       initialDate: startDate,
-      firstDate: DateTime.now(),
+      firstDate: startDate,
       lastDate: DateTime(DateTime.now().year + 1),
     );
 
@@ -202,18 +246,31 @@ class _AddprojectState extends State<Addproject> {
         ));
   }
 
-  // Set<Marker> myMarker() {
-  //   return <Marker>[
-  //     Marker(
-  //       markerId: MarkerId('myMarkPJ'),
-  //       position: LatLng(lat, lng),
-  //       infoWindow: InfoWindow(
-  //         title: 'ที่จัดตั้งโครงการของคุณ',
-  //         snippet: 'ละติจูด = $lat ,ลองติจูด = $lng',
-  //       )
-  //     )
-  //   ].toSet();
-  // }
+
+  RaisedButton deleteButton() {
+    return RaisedButton.icon(
+        color: Colors.red,
+        onPressed: () {
+          dataProject();
+        },
+        icon: Icon(Icons.save, color: Colors.white),
+        label: Text(
+          "Delete Project",
+          style: TextStyle(color: Colors.white),
+        ));
+  }
+
+  Set<Marker> currentMarker() {
+    return <Marker>[
+      Marker(
+          markerId: MarkerId('myMarkPJ'),
+          position: LatLng(lat, lng),
+          infoWindow: InfoWindow(
+            title: 'ที่จัดตั้งโครงการของคุณ',
+            snippet: 'ละติจูด = $lat ,ลองติจูด = $lng',
+          ))
+    ].toSet();
+  }
 
   Container showmap() {
     LatLng latLng = LatLng(lat, lng);
@@ -229,7 +286,7 @@ class _AddprojectState extends State<Addproject> {
         mapType: MapType.normal,
         onMapCreated: (controller) {},
         // markers: myMarker(),
-        markers: Set.from(myMarker),
+        markers: currentMarker(),
         onTap: _handleTap,
       ),
     );
@@ -244,8 +301,9 @@ class _AddprojectState extends State<Addproject> {
           Expanded(
               child: Container(
             margin: EdgeInsets.only(right: 20, left: 10),
-            child: TextField(
+            child: TextFormField(
               onChanged: (value) => place = value.trim(),
+              initialValue: projectModel.place,
               decoration: InputDecoration(hintText: 'สถานที่เปิดรับบริจาค'),
             ),
           ))
@@ -263,8 +321,9 @@ class _AddprojectState extends State<Addproject> {
           Expanded(
               child: Container(
             margin: EdgeInsets.only(right: 20, left: 10),
-            child: TextField(
+            child: TextFormField(
               onChanged: (value) => responsible = value.trim(),
+              initialValue: projectModel.responsibleName,
               decoration: InputDecoration(hintText: 'ผู้รับผิดชอบ'),
             ),
           ))
@@ -282,8 +341,9 @@ class _AddprojectState extends State<Addproject> {
           Expanded(
               child: Container(
             margin: EdgeInsets.only(right: 20, left: 10),
-            child: TextField(
+            child: TextFormField(
               onChanged: (value) => projecctName = value.trim(),
+              initialValue: projectModel.projectName,
               decoration: InputDecoration(hintText: 'ชื่อโครงการ'),
             ),
           ))

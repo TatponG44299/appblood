@@ -3,7 +3,8 @@ class ProjectModel {
   String projectName;
   String responsibleName;
   String place;
-  String date;
+  String sDate;
+  String eDate;
   String lat;
   String lng;
   String iDUse;
@@ -13,7 +14,8 @@ class ProjectModel {
       this.projectName,
       this.responsibleName,
       this.place,
-      this.date,
+      this.sDate,
+      this.eDate,
       this.lat,
       this.lng,
       this.iDUse});
@@ -23,7 +25,8 @@ class ProjectModel {
     projectName = json['Project_Name'];
     responsibleName = json['Responsible_Name'];
     place = json['Place'];
-    date = json['Date'];
+    sDate = json['SDate'];
+    eDate = json['EDate'];
     lat = json['Lat'];
     lng = json['Lng'];
     iDUse = json['ID_Use'];
@@ -35,7 +38,8 @@ class ProjectModel {
     data['Project_Name'] = this.projectName;
     data['Responsible_Name'] = this.responsibleName;
     data['Place'] = this.place;
-    data['Date'] = this.date;
+    data['SDate'] = this.sDate;
+    data['EDate'] = this.eDate;
     data['Lat'] = this.lat;
     data['Lng'] = this.lng;
     data['ID_Use'] = this.iDUse;

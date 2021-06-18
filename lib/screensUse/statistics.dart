@@ -9,7 +9,7 @@ class _StatisticsState extends State<Statistics> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('สถิติ'),),
+      appBar: AppBar(title: Text('ประวัติ'),),
     );
   }
 }

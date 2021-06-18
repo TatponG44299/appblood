@@ -7,14 +7,15 @@ import 'package:appblood/screensUse/home.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Addinfodata extends StatefulWidget {
+class Addproinfodata extends StatefulWidget {
   @override
-  _AddinfodataState createState() => _AddinfodataState();
+  _AddproinfodataState createState() => _AddproinfodataState();
 }
 
 // class Region {
@@ -33,7 +34,7 @@ class Addinfodata extends StatefulWidget {
 //   }
 // }
 
-class _AddinfodataState extends State<Addinfodata> {
+class _AddproinfodataState extends State<Addproinfodata> {
   String fname,
       lname,
       phon,
@@ -78,7 +79,12 @@ class _AddinfodataState extends State<Addinfodata> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('เพิ่ม/แก้ข้อมูลส่วนตัว')),
+      appBar: AppBar(
+          backwardsCompatibility: false,
+          systemOverlayStyle:
+              SystemUiOverlayStyle(statusBarColor: Colors.purple[900]),
+          backgroundColor: Color(0xff4a148c),
+          title: Text('เพิ่ม/แก้ข้อมูลส่วนตัว')),
       body: SingleChildScrollView(
         child: Stack(
           children: <Widget>[
@@ -90,7 +96,7 @@ class _AddinfodataState extends State<Addinfodata> {
             idfield(),
             phonfield(),
             //nameblood(),
-            bloodTypeDrop(),
+            //bloodTypeDrop(),
             dateHBD(),
             addressfield(),
             tumbolfield(),
@@ -134,7 +140,7 @@ class _AddinfodataState extends State<Addinfodata> {
         children: [
           IconButton(
             icon: Icon(Icons.add_photo_alternate),
-            color: Colors.redAccent[700],
+            color: Colors.purple[900],
             iconSize: 32,
             onPressed: () => chooseImage(ImageSource.gallery),
           ),
@@ -150,7 +156,7 @@ class _AddinfodataState extends State<Addinfodata> {
         children: [
           IconButton(
             icon: Icon(Icons.add_a_photo),
-            color: Colors.redAccent[700],
+            color: Colors.purple[900],
             iconSize: 28,
             onPressed: () => chooseImage(ImageSource.camera),
           ),
@@ -233,7 +239,7 @@ class _AddinfodataState extends State<Addinfodata> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15.0),
             child: RaisedButton(
-              color: Colors.redAccent[700],
+              color: Colors.purple[900],
               onPressed: () {
                 if (fname == null ||
                     fname.isEmpty ||
@@ -350,7 +356,7 @@ class _AddinfodataState extends State<Addinfodata> {
         margin: EdgeInsets.only(top: 200, left: 25, right: 25),
         child: TextField(
           onChanged: (value) => idCustom = value.trim(),
-          decoration: InputDecoration(labelText: 'เลขประจำตัว'),
+          decoration: InputDecoration(labelText: 'ตำแหน่ง/หน้าที่'),
         ),
       );
 
@@ -361,49 +367,6 @@ class _AddinfodataState extends State<Addinfodata> {
           onChanged: (value) => phon = value.trim(),
           decoration: InputDecoration(labelText: 'เบอร์โทรศัพท์มือถือ'),
         ),
-      );
-
-  Widget nameblood() => Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-              margin: EdgeInsets.only(
-                top: 455,
-                left: 25,
-                right: 90,
-              ),
-              child: Text(
-                'หมุ่เลือด',
-                style: TextStyle(fontSize: 18),
-              )),
-        ],
-      );
-
-  Widget bloodTypeDrop() => Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 320, left: 25, right: 25),
-            child: DropdownButton(
-              items: _bloodType.map((value) {
-                var dropdownMenuItem = DropdownMenuItem(
-                  child: Text(
-                    value,
-                  ),
-                  value: value,
-                );
-                return dropdownMenuItem;
-              }).toList(),
-              onChanged: (selectBloodType) {
-                setState(() {
-                  selectedType = selectBloodType;
-                });
-              },
-              value: selectedType,
-              hint: Text('หมู่เลือด', style: TextStyle(fontSize: 20)),
-            ),
-          ),
-        ],
       );
 
   Widget addressfield() => Container(

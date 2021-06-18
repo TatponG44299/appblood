@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:appblood/model/accout_model.dart';
 import 'package:appblood/model/project_madel.dart';
 import 'package:appblood/nuility/mySty.dart';
 import 'package:appblood/nuility/my_con.dart';
@@ -8,19 +7,18 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../widgetscreensUse/info_project.dart';
+import 'addproject.dart';
+import 'setProject.dart';
 
-class ProjectDonate extends StatefulWidget {
+class ListProject extends StatefulWidget {
+  //const ListProject({ Key? key }) : super(key: key);
+
   @override
-  _ProjectDonateState createState() => _ProjectDonateState();
+  _ListProjectState createState() => _ListProjectState();
 }
 
-class _ProjectDonateState extends State<ProjectDonate> {
-//เปลี่ยนด้วนนะ อย่าลืม
-  //ProjectModel projectModel;
+class _ListProjectState extends State<ListProject> {
   var res, projectName, date;
-
-  //ProjectModel projectModel = ProjectModel();
   List<ProjectModel> projectModels = List();
 
   @override
@@ -30,15 +28,16 @@ class _ProjectDonateState extends State<ProjectDonate> {
   }
 
   Future<Null> readDataDonate() async {
-    // SharedPreferences preferences = await SharedPreferences.getInstance();
-    // String code = preferences.getString('code');
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String id = preferences.getString('id');
 
     //เปลี่ยนเป็นตารางของ โครงการบริจาคด้วย
-    String url = '${Urlcon().domain}/GGB_BD/getdataProject.php?isAdd=true';
+    String url =
+        '${Urlcon().domain}/GGB_BD/getdataProjectbyID.php?isAdd=true&ID_Use=$id';
 
     Response response = await Dio().get(url);
     res = json.decode(response.data);
-    print(res[0]['ID_Project']);
+    //print(res[0]['ID_Project']);
     // int inex = 0;
 
     for (var map in res) {
@@ -48,34 +47,33 @@ class _ProjectDonateState extends State<ProjectDonate> {
       });
       //projectModels.add(model);
     }
-
   }
-
-  //  Future<Null> routeLoginpage(
-  //     Widget myWidget, ProjectModel projectModel) async {
-  //   SharedPreferences preferences = await SharedPreferences.getInstance();
-  //   //แชร์ข้อมูลไปส่วนต่างๆได้หลังจาก login
-  //   preferences.setString('iDProject', projectModel.iDProject);
-  //   preferences.setString('email', projectModel.email);
-
-  //   MaterialPageRoute route = MaterialPageRoute(
-  //     builder: (value) => myWidget,
-  //   );
-
-  //   Navigator.pushAndRemoveUntil(context, route, (route) => false);
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('โครงการรับบริจาค'),
+        title: Text('เปิดโครงการรับบริจาค'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.control_point),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Addproject(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: res == null ? MyStyle().showProgress() : listCardshow(),
     );
   }
 
   ListView listCardshow() {
+    // buttonBar();
     return ListView.builder(
         itemCount: res.length,
         itemBuilder: (context, int index) {
@@ -93,10 +91,9 @@ class _ProjectDonateState extends State<ProjectDonate> {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        ProjectInfo(projectModel: projectModels[index]),
+                        EditdataProject(projectModel: projectModels[index]),
                   ),
                 );
-
               },
             ),
           );
