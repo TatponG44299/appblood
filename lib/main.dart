@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.red),
       debugShowCheckedModeBanner: false,
       title: 'Get&Give Blood',
-      home: MapCluster(), //เริ่มต้นRun
+      home: Login(), //เริ่มต้นRun
     );
   }
 }
