@@ -4,6 +4,8 @@ import 'package:appblood/screensUse/login.dart';
 import 'package:appblood/widgetscreensUse/map_search.dart';
 import 'package:flutter/material.dart';
 
+import 'screensPro/searchCluster.dart';
+
 //เมื่อโปรเจ็คทงาน Constructor Method หรือเม็ธตอดหลักทำการ call object จากคลาสตัวล่าง
 void main() {
   runApp(MyApp());
