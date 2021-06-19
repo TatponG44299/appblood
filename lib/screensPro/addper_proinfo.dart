@@ -184,9 +184,10 @@ class _AddproinfodataState extends State<Addproinfodata> {
             child: Stack(
           children: <Widget>[
             CircleAvatar(
+              backgroundColor: Color(0xff4a148c),
               radius: 70.0,
               backgroundImage: image == null
-                  ? AssetImage('images/pimages.png')
+                  ? AssetImage('images/pimages_purple.png')
                   : FileImage(File(image.path)),
             )
           ],
