@@ -1,5 +1,7 @@
+import 'package:appblood/nuility/mySty.dart';
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 import '../widgetscreensUse/map_search.dart';
 
@@ -12,22 +14,87 @@ class _SelectWayState extends State<SelectWay> {
   // static double lower = 1.0;
   // static double upper = 50.0;
   //RangeValues values = RangeValues(lower ,upper);
+//Future<Null>
+  int _selectedChoice;
   int km = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          child: Stack(
-            children: <Widget>[
-              //trRangeSlider()
-              setDis(),
-              slideNum(),
-              cilckButton(),
-            ],
-          ),
+      body: SingleChildScrollView(
+        child: ListBody(
+          children: <Widget>[
+            setDis(),
+            choiceButton(),
+            distain(),
+            cilckButton(),
+          ],
         ),
+      ),
+    );
+  }
+
+  Widget choiceButton() {
+    return Container(
+      margin: EdgeInsets.only(top: 50),
+      child: Center(
+        child: ToggleSwitch(
+          labels: ['5', '10', '20'],
+          onToggle: (index) {
+            print("Swictched to :$index");
+
+            _selectedChoice = index;
+
+            print("selectedChoice to :$_selectedChoice");
+          },
+          activeFgColor: Colors.white,
+          inactiveFgColor: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  ListTile choiceListTile1() {
+    return ListTile(
+      title: Text('5 กีโลเมตร'),
+      leading: Radio(
+        value: 5,
+        groupValue: _selectedChoice,
+        onChanged: (int value) {
+          setState(() {
+            _selectedChoice = value;
+          });
+        },
+      ),
+    );
+  }
+
+  ListTile choiceListTile2() {
+    return ListTile(
+      title: Text('10 กีโลเมตร'),
+      leading: Radio(
+        value: 10,
+        groupValue: _selectedChoice,
+        onChanged: (int value) {
+          setState(() {
+            _selectedChoice = value;
+          });
+        },
+      ),
+    );
+  }
+
+  ListTile choiceListTile3() {
+    return ListTile(
+      title: Text('20 กีโลเมตร'),
+      leading: Radio(
+        value: 20,
+        groupValue: _selectedChoice,
+        onChanged: (int value) {
+          setState(() {
+            _selectedChoice = value;
+          });
+        },
       ),
     );
   }
@@ -102,41 +169,57 @@ class _SelectWayState extends State<SelectWay> {
   // }
   //
   Widget setDis() {
-    return Container(
-      margin: EdgeInsets.only(left: 30),
-      child: Text(
-        'กำหนดระยะทาง',
-        style: TextStyle(fontSize: 28.0, color: Colors.redAccent[700]),
+    return Center(
+      child: Container(
+        margin: EdgeInsets.only(top: 30),
+        child: Text(
+          'กำหนดระยะทาง',
+          style: TextStyle(fontSize: 28.0, color: Colors.redAccent[700]),
+        ),
       ),
     );
   }
 
-  Widget cilckButton() => Container(
-      margin: EdgeInsets.only(top: 350),
-      width: 250.0,
-      child: ClipRRect(
-        //ลดเหลี่ยมปุ่ม
-        borderRadius: BorderRadius.circular(10),
-        child: FlatButton(
-          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-          color: Colors.redAccent[700],
-          onPressed: () {
-            Navigator.pop(context);
-            MaterialPageRoute route =
-                MaterialPageRoute(builder: (value) => Mapsearchuse());
-            Navigator.push(context, route);
-
-            // Navigator.pop(context);
-            // MaterialPageRoute route =
-            //     MaterialPageRoute(builder: (value) => Mapsearchuse());
-            // Navigator.push(context, route);
-            Text('km');
-            print(km);
-          },
-          child: Text(
-            'ค้นหา',
-            style: TextStyle(color: Colors.white, fontSize: 18.0),
-          ),
+  Widget distain() {
+    return Center(
+      child: Container(
+        margin: EdgeInsets.only(top: 30),
+        child: Text(
+          'กิโลเมตร(กม.)',
+          style: TextStyle(fontSize: 28.0, color: Colors.redAccent[700]),
         ),
-      ));
+      ),
+    );
+  }
+
+  Widget cilckButton() => Center(
+        child: Container(
+            margin: EdgeInsets.only(top: 50),
+            width: 250.0,
+            child: ClipRRect(
+              //ลดเหลี่ยมปุ่ม
+              borderRadius: BorderRadius.circular(10),
+              child: FlatButton(
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                color: Colors.redAccent[700],
+                onPressed: () {
+                  Navigator.pop(context);
+                  MaterialPageRoute route =
+                      MaterialPageRoute(builder: (value) => Mapsearchuse());
+                  Navigator.push(context, route);
+
+                  // Navigator.pop(context);
+                  // MaterialPageRoute route =
+                  //     MaterialPageRoute(builder: (value) => Mapsearchuse());
+                  // Navigator.push(context, route);
+                  Text('km');
+                  print(km);
+                },
+                child: Text(
+                  'ค้นหา',
+                  style: TextStyle(color: Colors.white, fontSize: 18.0),
+                ),
+              ),
+            )),
+      );
 }

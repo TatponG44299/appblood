@@ -13,13 +13,8 @@ class MapCluster extends StatefulWidget {
 }
 
 class _MapClusterState extends State<MapCluster> {
-  //double lat, lng;
   var res, lat1, lng1, lat2, lng2, lat3, lng3;
-//double doubleVar = intVar.toDouble();
-  //var taget1, taget2;
-  //value =[lat,lng]
 
-  //ClusteringModel clusteringModel;
 
   @override
   void initState() {

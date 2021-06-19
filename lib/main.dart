@@ -4,6 +4,7 @@ import 'package:appblood/widgetscreensUse/map_search.dart';
 import 'package:flutter/material.dart';
 
 import 'screensPro/searchCluster.dart';
+import 'widgetscreensUse/mapShow_Project.dart';
 
 //เมื่อโปรเจ็คทงาน Constructor Method หรือเม็ธตอดหลักทำการ call object จากคลาสตัวล่าง
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.red),
       debugShowCheckedModeBanner: false,
       title: 'Get&Give Blood',
-      home: Login(), //เริ่มต้นRun
+      home: MapShowProject(), //เริ่มต้นRun
     );
   }
 }

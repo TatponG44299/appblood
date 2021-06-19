@@ -93,6 +93,7 @@ class _UseWantDanateState extends State<UseWantDanate> {
                   'ละติจูด = ${userwantDonate.lat},ลองติจูด = ${userwantDonate.lng}'))
     ].toSet();
   }
+  
 
   @override
   Widget build(BuildContext context) {
