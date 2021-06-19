@@ -47,10 +47,6 @@ class _ProinfoState extends State<Proinfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backwardsCompatibility: false,
-        systemOverlayStyle:
-            SystemUiOverlayStyle(statusBarColor: Colors.purple[900]),
-        backgroundColor: Color(0xff4a148c),
         title: Text('ข้อมูลส่วนตัว'),
       ),
       body: Stack(

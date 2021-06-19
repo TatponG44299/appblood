@@ -80,9 +80,6 @@ class _AddproinfodataState extends State<Addproinfodata> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backwardsCompatibility: false,
-          systemOverlayStyle:
-              SystemUiOverlayStyle(statusBarColor: Colors.purple[900]),
           backgroundColor: Color(0xff4a148c),
           title: Text('เพิ่ม/แก้ข้อมูลส่วนตัว')),
       body: SingleChildScrollView(
