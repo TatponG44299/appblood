@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class Mapsearchuse extends StatefulWidget {
   @override
@@ -38,7 +39,7 @@ class _MapsearchuseState extends State<Mapsearchuse> {
     setState(() {
       _currentMapType = _currentMapType == MapType.normal
           ? MapType.satellite
-          : MapType.normal;
+          : MapType.hybrid;
     });
   }
 
@@ -79,6 +80,7 @@ class _MapsearchuseState extends State<Mapsearchuse> {
           mapType: _currentMapType,
           markers: _makers,
           onCameraMove: _onCameraMove,
+          myLocationEnabled: true,
         ),
         Padding(
           padding: EdgeInsets.all(16.0),

@@ -1,3 +1,4 @@
+import 'package:appblood/screensPro/proInfo.dart';
 import 'package:appblood/screensUse/home.dart';
 import 'package:appblood/screensUse/login.dart';
 import 'package:appblood/widgetscreensUse/map_search.dart';
@@ -23,3 +24,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+//taskkill /F /IM dart.exe
