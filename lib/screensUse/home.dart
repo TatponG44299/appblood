@@ -3,6 +3,7 @@ import 'package:appblood/screensPro/listProject.dart';
 import 'package:appblood/screensUse/login.dart';
 import 'package:appblood/screensUse/notifications.dart';
 import 'package:appblood/screensUse/personalInfo.dart';
+import 'package:appblood/widgetscreensUse/qrcode.dart';
 import 'package:appblood/widgetscreensUse/request_info.dart';
 import 'package:appblood/screensUse/list_requestblood.dart';
 import 'package:appblood/screensUse/project_donate.dart';
@@ -52,14 +53,12 @@ class _HomeState extends State<Home> {
         title: Text('Get & Give Blood'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.fingerprint),
-            onPressed: null,
-          ),
-          IconButton(
-            icon: Icon(Icons.center_focus_weak),
+            icon: Icon(Icons.apps),
             onPressed: () {
-              print('object');
-              scanQR();
+              Navigator.pop(context);
+              MaterialPageRoute route =
+                  MaterialPageRoute(builder: (value) => QRcode());
+              Navigator.push(context, route);
             },
           )
         ],
@@ -79,7 +78,7 @@ class _HomeState extends State<Home> {
   Future<Null> scanQR() async {
     try {
       var qrResult = await BarcodeScanner.scan();
-      resultQR = qrResult.rawContent;
+      resultQR = qrResult;
       print('resultQR====>$resultQR');
     } catch (e) {}
   }

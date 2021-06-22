@@ -1,4 +1,5 @@
 import 'package:appblood/nuility/mySty.dart';
+import 'package:appblood/widgetscreensUse/mapShow_Project.dart';
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -15,7 +16,7 @@ class _SelectWayState extends State<SelectWay> {
   // static double upper = 50.0;
   //RangeValues values = RangeValues(lower ,upper);
 //Future<Null>
-  int _selectedChoice;
+  int _selectedChoice = 0;
   int km = 0;
 
   @override
@@ -26,6 +27,7 @@ class _SelectWayState extends State<SelectWay> {
           children: <Widget>[
             setDis(),
             choiceButton(),
+            //choiceButton2(),
             distain(),
             cilckButton(),
           ],
@@ -39,7 +41,27 @@ class _SelectWayState extends State<SelectWay> {
       margin: EdgeInsets.only(top: 50),
       child: Center(
         child: ToggleSwitch(
-          labels: ['5', '10', '20'],
+          labels: ['3', '5', '10', '12', '15', '20'],
+          onToggle: (index) {
+            print("Swictched to :$index");
+
+            _selectedChoice = index;
+
+            print("selectedChoice to :$_selectedChoice");
+          },
+          activeFgColor: Colors.white,
+          inactiveFgColor: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  Widget choiceButton2() {
+    return Container(
+      margin: EdgeInsets.only(top: 50),
+      child: Center(
+        child: ToggleSwitch(
+          labels: ['20', '25', '30'],
           onToggle: (index) {
             print("Swictched to :$index");
 
@@ -205,7 +227,7 @@ class _SelectWayState extends State<SelectWay> {
                 onPressed: () {
                   Navigator.pop(context);
                   MaterialPageRoute route =
-                      MaterialPageRoute(builder: (value) => Mapsearchuse());
+                      MaterialPageRoute(builder: (value) => MapShowProject());
                   Navigator.push(context, route);
 
                   // Navigator.pop(context);

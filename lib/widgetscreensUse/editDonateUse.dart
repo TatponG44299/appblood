@@ -19,14 +19,10 @@ class EditDonateUse extends StatefulWidget {
 
 var selectedType;
 List<String> _bloodType = <String>[
-  'A+',
-  'A-',
-  'B+',
-  'B-',
-  'AB+',
-  'AB-',
-  'O+',
-  'O-'
+  'A',
+  'B',
+  'AB',
+  'O',
 ];
 
 class _EditDonateUseState extends State<EditDonateUse> {

@@ -3,56 +3,52 @@ import 'dart:convert';
 import 'package:appblood/model/project_madel.dart';
 import 'package:appblood/nuility/mySty.dart';
 import 'package:appblood/nuility/my_con.dart';
+import 'package:appblood/screensUse/home.dart';
+import 'package:appblood/screensUse/wayHome.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapShowProject extends StatefulWidget {
-  //const MapShowProject({ Key? key }) : super(key: key);
+  //final ProjectModel projectModel;
+
+  //MapShowProject({Key key, this.projectModel}) : super(key: key);
 
   @override
   _MapShowProjectState createState() => _MapShowProjectState();
 }
 
 class _MapShowProjectState extends State<MapShowProject> {
-  var res;
+  var res, idProject, nameProject;
   double lat, lng;
-
-  List projectModels = [];
   ProjectModel projectModel;
 
   Set<Marker> setMarker = Set();
 
-  // Future<Null>
-  // Set<Marker> setMarker() {
-  //   return <Marker>[].toSet();
-  // }
+  Marker resultMarker() {
+    return Marker(
+      markerId: MarkerId('ID_Project$idProject'),
+      position: LatLng(lat, lng),
+      icon: BitmapDescriptor.defaultMarkerWithHue(60.0),
+      infoWindow: InfoWindow(
+          title: 'ชื่อโครงการ:$nameProject',
+          snippet: 'ละติจูด = $lat,ลองติจูด = $lng'),
+    );
+  }
 
-  // Marker resultMarker() {
-  //   return Marker(
-  //     markerId: MarkerId('clusMarker3'),
-  //     position: LatLng(
-  //         double.parse(projectModel.lat), double.parse(projectModel.lng)),
-  //     icon: BitmapDescriptor.defaultMarkerWithHue(60.0),
-  //     //   infoWindow: InfoWindow(
-  //     //       title: 'จุดที่ควรเปิดรับโครงการที่ 3',
-  //     //       snippet: 'ละติจูด = $lat3,ลองติจูด = $lng3'),
-  //   );
-  // }
-
-  Marker resultMarker = Marker(
-    //position: LatLng(, longitude),
-    markerId: MarkerId(''),
-    infoWindow: InfoWindow(title: "", snippet: ""),
-    //position: LatLng( double.parse(projectModel.lat), double.parse(projectModel.lng)),
-    //markers.add(resultMarker);
-  );
-
+  // Marker resultMarker = Marker(
+  //   markerId: MarkerId('ID_Project$idProject'),
+  //   position: LatLng(lat, lng),
+  //   icon: BitmapDescriptor.defaultMarkerWithHue(60.0),
+  //   //   infoWindow: InfoWindow(
+  //   //       title: 'จุดที่ควรเปิดรับโครงการที่ 3',
+  //   //       snippet: 'ละติจูด = $lat3,ลองติจูด = $lng3'),
+  // );
   @override
   void initState() {
     super.initState();
+    //projectModel = widget.projectModel;
     readDatamapProject();
-    setMarker.add(resultMarker);
   }
 
   Future<Null> readDatamapProject() async {
@@ -60,19 +56,20 @@ class _MapShowProjectState extends State<MapShowProject> {
 
     Response response = await Dio().get(url);
     res = json.decode(response.data);
+    //print('***************' + projectModel.iDProject);
     //print(res[0]['ID_Project']);
     // int inex = 0;
 
     for (var map in res) {
       projectModel = ProjectModel.fromJson(map);
       setState(() {
-        projectModels.add(projectModel);
+        //projectModels.add(projectModel);
         lat = double.parse(projectModel.lat);
         lng = double.parse(projectModel.lng);
+        nameProject = projectModel.projectName;
+        idProject = projectModel.iDProject;
       });
-      print('$lat+$lng');
-      print('=======================${projectModels.length}');
-      // lat = projectModel.lat;
+      setMarker.add(resultMarker());
     }
   }
 
@@ -84,7 +81,17 @@ class _MapShowProjectState extends State<MapShowProject> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('จุดที่ควรจัดตั้งโครงการ')),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            MaterialPageRoute route =
+                MaterialPageRoute(builder: (value) => Home());
+            Navigator.push(context, route);
+          },
+        ),
+        title: Text('จุดตั้งโครงการ'),
+      ),
       body: lat == null
           ? MyStyle().showProgress()
           : GoogleMap(

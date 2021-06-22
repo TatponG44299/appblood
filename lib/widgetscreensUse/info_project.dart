@@ -85,6 +85,7 @@ class _ProjectInfoState extends State<ProjectInfo> {
             double.parse(model.lat),
             double.parse(model.lng),
           ),
+          // target: LatLng(0.0, 0.0),
           infoWindow: InfoWindow(
               title: 'ตำแหน่งโครงการ',
               snippet: 'ละติจูด = ${model.lat},ลองติจูด = ${model.lng}'))

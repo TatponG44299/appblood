@@ -4,6 +4,7 @@ import 'package:appblood/model/project_madel.dart';
 import 'package:appblood/nuility/mySty.dart';
 import 'package:appblood/nuility/my_con.dart';
 import 'package:appblood/nuility/normal_Dialog.dart';
+import 'package:appblood/screensPro/scanQRcode.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -21,7 +22,7 @@ class EditdataProject extends StatefulWidget {
 }
 
 class _EditdataProjectState extends State<EditdataProject> {
-  String projecctName, responsible, place;
+  String projecctName, responsible, place, idProject;
 
   double lat, lng;
 
@@ -115,8 +116,7 @@ class _EditdataProjectState extends State<EditdataProject> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String id = preferences.getString('id');
     String idp = projectModel.iDProject;
-    print('==========================='+idp);
-    
+    print('===========================' + idp);
 
     String url =
         '${Urlcon().domain}/GGB_BD/editProjectuse.php?isAdd=true&Project_Name=$projecctName&Responsible_Name=$responsible&Place=$place&SDate=$startDate&EDate=$endDate&Lat=$lat&Lng=$lng&ID_Use=$id&ID_Project=$idp';
@@ -130,13 +130,29 @@ class _EditdataProjectState extends State<EditdataProject> {
         normalDialog(context, 'ไม่สามารถบันทึกได้ กรุณาลองใหม่');
         //Navigator.pop(context);
       }
+      idProject = projectModel.iDProject.toString();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('แก้ไขข้อมูลโครงการ')),
+      appBar: AppBar(
+        title: Text('ข้อมูลโครงการ'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.center_focus_strong),
+            onPressed: () {
+              MaterialPageRoute route = MaterialPageRoute(
+                  builder: (value) => ScanQRcode(
+                        idProject: '${projectModel.iDProject}'.toString(),
+                      ));
+              Navigator.push(context, route);
+              //print('${projectModel.iDProject}');
+            },
+          )
+        ],
+      ),
       body: projectModel == null
           ? MyStyle().showProgress()
           : SingleChildScrollView(
@@ -245,7 +261,6 @@ class _EditdataProjectState extends State<EditdataProject> {
           style: TextStyle(color: Colors.white),
         ));
   }
-
 
   RaisedButton deleteButton() {
     return RaisedButton.icon(
