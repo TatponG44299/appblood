@@ -2,6 +2,7 @@ class AccountModel {
   String iD;
   String email;
   String password;
+  String chooseType;
   String firstName;
   String lastName;
   String phon;
@@ -12,13 +13,12 @@ class AccountModel {
   String district;
   String county;
   String urlPicture;
-  String idCustom;
 
   AccountModel(
       {this.iD,
       this.email,
       this.password,
-      this.idCustom,
+      this.chooseType,
       this.firstName,
       this.lastName,
       this.phon,
@@ -34,7 +34,7 @@ class AccountModel {
     iD = json['ID'];
     email = json['Email'];
     password = json['Password'];
-    idCustom = json['ID_costom'];
+    chooseType = json['ChooseType'];
     firstName = json['First_name'];
     lastName = json['Last_name'];
     phon = json['Phon'];
@@ -52,7 +52,7 @@ class AccountModel {
     data['ID'] = this.iD;
     data['Email'] = this.email;
     data['Password'] = this.password;
-    data['ID_costom'] = this.idCustom;
+    data['ChooseType'] = this.chooseType;
     data['First_name'] = this.firstName;
     data['Last_name'] = this.lastName;
     data['Phon'] = this.phon;

@@ -99,8 +99,8 @@ class _PersonalState extends State<Personal> {
                 color: Colors.red,
               ),
             ),
-            Text(
-              '${accountModel.idCustom}',
+            Text('แปปนึ่งครับ',
+              //'${accountModel.idCustom}',
               style: TextStyle(fontSize: 20.0),
             ),
           ],

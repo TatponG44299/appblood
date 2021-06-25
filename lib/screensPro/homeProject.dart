@@ -1,35 +1,25 @@
 import 'package:appblood/model/accout_model.dart';
-import 'package:appblood/screensPro/listProject.dart';
 import 'package:appblood/screensUse/login.dart';
-import 'package:appblood/screensUse/notifications.dart';
 import 'package:appblood/screensUse/personalInfo.dart';
-import 'package:appblood/widgetscreensUse/qrcode.dart';
-import 'package:appblood/widgetscreensUse/request_info.dart';
-import 'package:appblood/screensUse/list_requestblood.dart';
-import 'package:appblood/screensUse/project_donate.dart';
-import 'package:appblood/screensPro/addproject.dart';
-import 'package:appblood/widgetscreensUse/query.dart';
-import 'package:appblood/screensUse/statistics.dart';
-import 'package:appblood/screensUse/wayHome.dart';
-import 'package:barcode_scan/barcode_scan.dart';
+import 'package:appblood/widgetscreensPro/homeproject.dart';
 import 'package:flutter/material.dart';
-
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'usebloodDonate.dart';
+import 'listProject.dart';
 
-class Home extends StatefulWidget {
+class ProjectPage extends StatefulWidget {
+  //const ProjectPage({ Key? key }) : super(key: key);
+
   @override
-  _HomeState createState() => _HomeState();
+  _ProjectPageState createState() => _ProjectPageState();
 }
 
-class _HomeState extends State<Home> {
+class _ProjectPageState extends State<ProjectPage> {
   String fname, lname, email, resultQR = '';
   AccountModel accountModel;
 
   //กำหนดหน้าแรกของแอพ01
-  Widget currentWidget = SelectWay();
+  Widget currentWidget = Pagehomeproject();
 
   @override
   void initState() {
@@ -55,10 +45,10 @@ class _HomeState extends State<Home> {
           IconButton(
             icon: Icon(Icons.apps),
             onPressed: () {
-              Navigator.pop(context);
-              MaterialPageRoute route =
-                  MaterialPageRoute(builder: (value) => QRcode());
-              Navigator.push(context, route);
+              // Navigator.pop(context);
+              // MaterialPageRoute route =
+              //     MaterialPageRoute(builder: (value) => QRcode());
+              // Navigator.push(context, route);
             },
           )
         ],
@@ -75,30 +65,30 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Future<Null> scanQR() async {
-    try {
-      var qrResult = await BarcodeScanner.scan();
-      resultQR = qrResult;
-      print('resultQR====>$resultQR');
-    } catch (e) {}
-  }
+  // Future<Null> scanQR() async {
+  //   try {
+  //     var qrResult = await BarcodeScanner.scan();
+  //     resultQR = qrResult;
+  //     print('resultQR====>$resultQR');
+  //   } catch (e) {}
+  // }
 
-  Container showMap() {
-    LatLng latLng = LatLng(19.0281895, 99.8918563);
-    CameraPosition lomap = CameraPosition(
-      target: latLng,
-      zoom: 16.0,
-    );
+  // Container showMap() {
+  //   LatLng latLng = LatLng(19.0281895, 99.8918563);
+  //   CameraPosition lomap = CameraPosition(
+  //     target: latLng,
+  //     zoom: 16.0,
+  //   );
 
-    return Container(
-      height: 550,
-      child: GoogleMap(
-        initialCameraPosition: lomap,
-        mapType: MapType.normal,
-        onMapCreated: (controller) {},
-      ),
-    );
-  }
+  //   return Container(
+  //     height: 550,
+  //     child: GoogleMap(
+  //       initialCameraPosition: lomap,
+  //       mapType: MapType.normal,
+  //       onMapCreated: (controller) {},
+  //     ),
+  //   );
+  // }
 
 //แทบ Menu ข้างซ้าย
   Drawer showDrawer() => Drawer(
@@ -147,10 +137,10 @@ class _HomeState extends State<Home> {
       title: Text('ต้องการบริจาคโลหิต'),
       onTap: () {
         //กดเปลี่ยนหน้า
-        Navigator.pop(context);
-        MaterialPageRoute route =
-            MaterialPageRoute(builder: (value) => UseWantDanate());
-        Navigator.push(context, route);
+        // Navigator.pop(context);
+        // MaterialPageRoute route =
+        //     MaterialPageRoute(builder: (value) => UseWantDanate());
+        // Navigator.push(context, route);
       },
     );
   }
@@ -161,10 +151,10 @@ class _HomeState extends State<Home> {
       leading: Icon(Icons.location_city),
       title: Text('โครงการรับบริจาค'),
       onTap: () {
-        Navigator.pop(context);
-        MaterialPageRoute route =
-            MaterialPageRoute(builder: (value) => ProjectDonate());
-        Navigator.push(context, route);
+        // Navigator.pop(context);
+        // MaterialPageRoute route =
+        //     MaterialPageRoute(builder: (value) => ProjectDonate());
+        // Navigator.push(context, route);
       },
     );
   }
@@ -173,12 +163,12 @@ class _HomeState extends State<Home> {
   ListTile notificMenu() {
     return ListTile(
       leading: Icon(Icons.notifications),
-      title: Text('การแจ้งเตือน'),
+      title: Text('โครงการ'),
       onTap: () {
-        // Navigator.pop(context);
-        // MaterialPageRoute route =
-        //     MaterialPageRoute(builder: (value) => ListProject());
-        // Navigator.push(context, route);
+        Navigator.pop(context);
+        MaterialPageRoute route =
+            MaterialPageRoute(builder: (value) => ListProject());
+        Navigator.push(context, route);
       },
     );
   }
@@ -192,10 +182,10 @@ class _HomeState extends State<Home> {
         // setState(() {
         //   currentWidget = Statistics();
         // });
-        Navigator.pop(context);
-        MaterialPageRoute route =
-            MaterialPageRoute(builder: (value) => Statistics());
-        Navigator.push(context, route);
+        // Navigator.pop(context);
+        // MaterialPageRoute route =
+        //     MaterialPageRoute(builder: (value) => Statistics());
+        // Navigator.push(context, route);
       },
     );
   }
@@ -209,10 +199,10 @@ class _HomeState extends State<Home> {
         // setState(() {
         //   currentWidget = Requestblood();
         // });
-        Navigator.pop(context);
-        MaterialPageRoute route =
-            MaterialPageRoute(builder: (value) => Requestblood());
-        Navigator.push(context, route);
+        // Navigator.pop(context);
+        // MaterialPageRoute route =
+        //     MaterialPageRoute(builder: (value) => Requestblood());
+        // Navigator.push(context, route);
       },
     );
   }

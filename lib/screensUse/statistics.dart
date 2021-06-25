@@ -7,9 +7,21 @@ class Statistics extends StatefulWidget {
 
 class _StatisticsState extends State<Statistics> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  Future<Null> readata() async {
+    
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('ประวัติ'),),
+      appBar: AppBar(
+        title: Text('ประวัติ'),
+      ),
     );
   }
 }

@@ -109,7 +109,8 @@ class _ScanQRcodeState extends State<ScanQRcode> {
             FlatButton(
               padding: EdgeInsets.all(15.0),
               onPressed: () {
-                print('5555555555555555555555555555555555555555555555555$idProject');
+                print(
+                    '5555555555555555555555555555555555555555555555555$idProject');
                 dataProject();
               },
               child: Text(

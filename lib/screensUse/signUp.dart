@@ -11,7 +11,7 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   //field
-  String email, password, confpassword;
+  String email, password, confpassword, chooseType;
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +91,49 @@ class _SignUpState extends State<SignUp> {
             height: 1,
           ),
           Padding(
+            padding: const EdgeInsets.only(top: 5, left: 20),
+            child: Row(
+              children: [
+                Radio(
+                  value: 'user',
+                  groupValue: chooseType,
+                  onChanged: (value) {
+                    setState(() {
+                      chooseType = value;
+                    });
+                  },
+                ),
+                Text('ผู้ใช้ที่ต้องการบริจาคโลหิต'),
+              ],
+            ),
+          ),
+
+          SizedBox(
+            height: 1,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 5, left: 20),
+            child: Row(
+              children: [
+                Radio(
+                  value: 'project',
+                  groupValue: chooseType,
+                  onChanged: (value) {
+                    setState(() {
+                      chooseType = value;
+                    });
+                  },
+                ),
+                Text('ผู้ใช้ที่ต้องการเปิดโครงการ'),
+              ],
+            ),
+          ),
+
+          //
+          SizedBox(
+            height: 1,
+          ),
+          Padding(
             padding: const EdgeInsets.all(20.0),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
@@ -103,7 +146,8 @@ class _SignUpState extends State<SignUp> {
                         email == null ||
                         email.isEmpty ||
                         confpassword == null ||
-                        confpassword.isEmpty) {
+                        confpassword.isEmpty ||
+                        chooseType == null) {
                       normalDialog(context, 'Please fill in all fields.');
                     } else if (password != confpassword ||
                         confpassword != password) {
@@ -149,7 +193,7 @@ class _SignUpState extends State<SignUp> {
 //จัดการ data
   Future<Null> registerAccount() async {
     String url =
-        '${Urlcon().domain}/GGB_BD/addRegister.php?isAdd=true&Email=$email&Password=$password';
+        '${Urlcon().domain}/GGB_BD/addRegister.php?isAdd=true&Email=$email&Password=$password&ChooseType=$chooseType';
     try {
       Response response = await Dio().get(url);
       print('res = $response');

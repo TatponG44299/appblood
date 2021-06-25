@@ -99,7 +99,8 @@ class _ProinfoState extends State<Proinfo> {
               ),
             ),
             Text(
-              '${accountModel.idCustom}',
+              'test',
+              //'${accountModel.idCustom}',
               style: TextStyle(fontSize: 20.0),
             ),
           ],

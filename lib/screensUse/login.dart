@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-
 import 'package:appblood/model/accout_model.dart';
 import 'package:appblood/nuility/my_con.dart';
 import 'package:appblood/nuility/normal_Dialog.dart';
+import 'package:appblood/screensPro/homeProject.dart';
 import 'package:appblood/screensUse/home.dart';
 import 'package:appblood/screensUse/signUp.dart';
 import 'package:dio/dio.dart';
@@ -142,7 +142,13 @@ class _LoginState extends State<Login> {
       for (var map in result) {
         AccountModel accountModel = AccountModel.fromJson(map);
         if (password == accountModel.password) {
-          routeLoginpage(Home(), accountModel);
+          String chooseType = accountModel.chooseType;
+          print('******************$chooseType');
+          if (chooseType == 'user') {
+            routeLoginpage(Home(), accountModel);
+          } else if (chooseType == 'project') {
+            routeLoginpage(ProjectPage(), accountModel);
+          }
         } else {
           normalDialog(context, 'Password Fail. Please try again.');
         }
