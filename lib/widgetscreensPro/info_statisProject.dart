@@ -1,64 +1,90 @@
 import 'dart:convert';
 
+import 'package:appblood/model/accout_model.dart';
+import 'package:appblood/model/historyuse.dart';
+import 'package:appblood/model/project_madel.dart';
 import 'package:appblood/nuility/mySty.dart';
 import 'package:appblood/nuility/my_con.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:appblood/model/historyuse.dart';
 
-class Statistics extends StatefulWidget {
+class InfostaticsProject extends StatefulWidget {
+  final ProjectModel projectModel;
+
+  const InfostaticsProject({Key key, this.projectModel}) : super(key: key);
+
   @override
-  _StatisticsState createState() => _StatisticsState();
+  _InfostaticsProjectState createState() => _InfostaticsProjectState();
 }
 
-var count;
-
-class _StatisticsState extends State<Statistics> {
-  var res;
-  var count;
-
-  HistoryModel historyModl;
-
+class _InfostaticsProjectState extends State<InfostaticsProject> {
+  var res, resUse, idp, iduse;
+  ProjectModel projectModel;
+  HistoryModel historyModel;
+  AccountModel accountModel;
+  List<AccountModel> accountModels = List();
+  List resUser = List();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    projectModel = widget.projectModel;
     readata();
   }
 
   Future<Null> readata() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String id = preferences.getString('id');
+    // SharedPreferences preferences = await SharedPreferences.getInstance();
+    //String id = preferences.getString('id');
+    idp = projectModel.iDProject;
 
     //เปลี่ยนเป็นตารางของ โครงการบริจาคด้วย
     String url =
-        '${Urlcon().domain}/GGB_BD/gethistoryUser.php?isAdd=true&ID=$id';
+        '${Urlcon().domain}/GGB_BD/gethistoryProject.php?isAdd=true&ID_Project=$idp';
 
     Response response = await Dio().get(url);
     res = json.decode(response.data);
+    //print(res.length['ID']);
+    //print(res[0]['ID_History']);
     for (var map in res) {
+      historyModel = HistoryModel.fromJson(map);
       setState(() {
-        historyModl = HistoryModel.fromJson(map);
+        iduse = historyModel.iD;
       });
-      //print(historyModl.firstName);
+
+      print('**************************' + res.toString());
+      print(res.length);
+      //readataUse();
+      //setMarker.add(resultMarker());
 
     }
-    //print('fname ==========${res.}');
-    count = res.length;
-    print(count);
   }
+
+  // Future<Null> readataUse() async {
+  //   String url =
+  //       '${Urlcon().domain}/GGB_BD/getUserWhereID.php?isAdd=true&ID=$iduse';
+
+  //   Response response = await Dio().get(url);
+  //   resUse = json.decode(response.data);
+  //   for (var map in resUse) {
+  //     accountModel = AccountModel.fromJson(map);
+  //     resUser.add(resUse);
+  //   }
+  //   // resUser.add(resUse);
+  //   print('====================' + resUser.toString());
+  //   //print('************************${accountModel.iD}');
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ประวัติการบริจาคโลหิต'),
+        title: Text('ผู้ที่บริจาค'),
       ),
-      body: res == 0
-          ? MyStyle().showProgress()
-          : res == null
-              ? Text('ไม่มีข้อมูลการบริจาค')
+      body: res == null
+          ? Center(child: Text('ไม่มีข้อมูลการบริจาค'))
+          : idp == null
+              ? MyStyle().showProgress()
               : SingleChildScrollView(child: showColumnhade()),
     );
   }
@@ -68,13 +94,13 @@ class _StatisticsState extends State<Statistics> {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: <Widget>[
-          Title(
-            color: Colors.blue,
-            child: Text(
-              'จำนวนที่บริจาค: $count ',
-              style: TextStyle(fontSize: 18, color: Colors.blue[900]),
-            ),
-          ),
+          // Title(
+          //   color: Colors.blue,
+          //   child: Text(
+          //     'จำนวนที่บริจาค:  ',
+          //     style: TextStyle(fontSize: 18, color: Colors.blue[900]),
+          //   ),
+          // ),
           titleHead(),
           buildListData(),
         ],
@@ -94,7 +120,7 @@ class _StatisticsState extends State<Statistics> {
               child: Title(
                 color: Colors.blue,
                 child: Text(
-                  'ครั้งที่',
+                  'คนที่',
                   style: TextStyle(fontSize: 18),
                 ),
               ),
@@ -104,7 +130,7 @@ class _StatisticsState extends State<Statistics> {
               child: Title(
                 color: Colors.blue,
                 child: Text(
-                  'โครงการที่บริจาค',
+                  'ผู้ที่มาบริจาค',
                   style: TextStyle(fontSize: 18),
                 ),
               ),
@@ -114,7 +140,7 @@ class _StatisticsState extends State<Statistics> {
               child: Title(
                 color: Colors.blue,
                 child: Text(
-                  'ผู้รับผิดชอบ',
+                  'หมู่เลือด',
                   style: TextStyle(fontSize: 18),
                 ),
               ),
@@ -138,14 +164,14 @@ class _StatisticsState extends State<Statistics> {
             Expanded(
               flex: 2,
               child: Text(
-                res[index]['Project_Name'],
+                res[index]['First_name'] + ' ' + res[index]['Last_name'],
                 style: TextStyle(fontSize: 16),
               ),
             ),
             Expanded(
               flex: 1,
               child: Text(
-                res[index]['Responsible_Name'],
+                res[index]['Blood_type'],
                 style: TextStyle(fontSize: 16),
               ),
             ),

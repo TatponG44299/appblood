@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'listProject.dart';
+import 'statisticsProject.dart';
 
 class ProjectPage extends StatefulWidget {
   //const ProjectPage({ Key? key }) : super(key: key);
@@ -182,10 +183,10 @@ class _ProjectPageState extends State<ProjectPage> {
         // setState(() {
         //   currentWidget = Statistics();
         // });
-        // Navigator.pop(context);
-        // MaterialPageRoute route =
-        //     MaterialPageRoute(builder: (value) => Statistics());
-        // Navigator.push(context, route);
+        Navigator.pop(context);
+        MaterialPageRoute route =
+            MaterialPageRoute(builder: (value) => StatisicsProject());
+        Navigator.push(context, route);
       },
     );
   }

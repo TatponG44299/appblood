@@ -3,6 +3,8 @@ import 'package:appblood/screensPro/listProject.dart';
 import 'package:appblood/screensUse/login.dart';
 import 'package:appblood/screensUse/notifications.dart';
 import 'package:appblood/screensUse/personalInfo.dart';
+import 'package:appblood/widgetscreensUse/mapfindbyUse/mapsBloc.dart';
+import 'package:appblood/widgetscreensUse/mapfindbyUse/maps_Widget.dart';
 import 'package:appblood/widgetscreensUse/qrcode.dart';
 import 'package:appblood/widgetscreensUse/request_info.dart';
 import 'package:appblood/screensUse/list_requestblood.dart';
@@ -13,6 +15,7 @@ import 'package:appblood/screensUse/statistics.dart';
 import 'package:appblood/screensUse/wayHome.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,7 +32,12 @@ class _HomeState extends State<Home> {
   AccountModel accountModel;
 
   //กำหนดหน้าแรกของแอพ01
-  Widget currentWidget = SelectWay();
+  Widget currentWidget =
+      BlocProvider(
+        create: (BuildContext context) => MapsBloc(),
+        child: Maps(),
+      );
+      //SelectWay();
 
   @override
   void initState() {

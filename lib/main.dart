@@ -1,13 +1,10 @@
-import 'package:appblood/screensPro/proInfo.dart';
-import 'package:appblood/screensUse/home.dart';
 import 'package:appblood/screensUse/login.dart';
-import 'package:appblood/widgetscreensUse/map_search.dart';
-import 'package:flutter/material.dart';
+import 'package:appblood/widgetscreensUse/mapfindbyUse/mapsBloc.dart';
 
-import 'screensPro/scanQRcode.dart';
-import 'screensPro/searchCluster.dart';
-import 'widgetscreensUse/mapShow_Project.dart';
-import 'widgetscreensUse/qrcode.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'widgetscreensUse/mapfindbyUse/maps_Widget.dart';
 
 //เมื่อโปรเจ็คทงาน Constructor Method หรือเม็ธตอดหลักทำการ call object จากคลาสตัวล่าง
 void main() {
@@ -22,7 +19,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.red),
       debugShowCheckedModeBanner: false,
       title: 'Get&Give Blood',
-      home: Login(), //เริ่มต้นRun
+      home:
+          // BlocProvider(
+          //   create: (BuildContext context) => MapsBloc(),
+          //   child: Maps(),
+          // ),
+
+          Login(), //เริ่มต้นRun
     );
   }
 }

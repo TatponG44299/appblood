@@ -43,6 +43,10 @@ dependencies:
   lite_rolling_switch: ^0.1.1
   toggle_switch: "^0.1.7"
   qr_flutter: ^3.0.1
+  geocoder: ^0.1.2 
+  flutter_bloc: ^4.0.0
+  great_circle_distance: ^1.0.1
+  equatable: ^0.2.6
 
 dev_dependencies:
   flutter_test:
