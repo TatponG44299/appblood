@@ -7,6 +7,7 @@ import 'package:appblood/screensPro/homeProject.dart';
 import 'package:appblood/screensUse/home.dart';
 import 'package:appblood/screensUse/signUp.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,6 +19,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   //Field
+  FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+
   String email, password;
   Response response;
   Dio dio = new Dio();
@@ -136,10 +139,13 @@ class _LoginState extends State<Login> {
       Response response = await Dio().get(url);
       //print('res = $response');
       //print(response);
-
       var result = json.decode(response.data);
       //print('result = $result');
       for (var map in result) {
+        // SharedPreferences preferences = await SharedPreferences.getInstance();
+        // String chooseType = preferences.getString('ChooseType');
+        // String idLogin = preferences.getString('ID');
+        // print ('idLogin = $idLogin');
         AccountModel accountModel = AccountModel.fromJson(map);
         if (password == accountModel.password) {
           String chooseType = accountModel.chooseType;
@@ -162,11 +168,30 @@ class _LoginState extends State<Login> {
   Future<Null> routeLoginpage(
       Widget myWidget, AccountModel accountModel) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+
     //แชร์ข้อมูลไปส่วนต่างๆได้หลังจาก login
     preferences.setString('id', accountModel.iD);
     preferences.setString('email', accountModel.email);
     preferences.setString('firstName', accountModel.firstName);
     preferences.setString('lastName', accountModel.lastName);
+    preferences.setString('chooseType', accountModel.chooseType);
+
+    String idLogin = preferences.getString('id');
+    print('idLogin = $idLogin');
+
+    String token = await firebaseMessaging.getToken();
+    print('TOKEN ==========================> $token');
+    // FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+    // String token = await firebaseMessaging.getToken();
+
+    if (idLogin != null || idLogin.isEmpty) {
+      print('idLogin = $idLogin');
+      String url =
+          '${Urlcon().domain}/GGB_BD/editProfileuser.php?isAdd=true&ID=$idLogin&Token=$token';
+      await Dio()
+          .get(url)
+          .then((value) => print('----->Update Token Success<-----'));
+    }
 
     MaterialPageRoute route = MaterialPageRoute(
       builder: (value) => myWidget,

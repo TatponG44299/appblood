@@ -13,6 +13,7 @@ class AccountModel {
   String district;
   String county;
   String urlPicture;
+  String token;
 
   AccountModel(
       {this.iD,
@@ -28,7 +29,8 @@ class AccountModel {
       this.tombol,
       this.district,
       this.county,
-      this.urlPicture});
+      this.urlPicture,
+      this.token});
 
   AccountModel.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
@@ -45,6 +47,7 @@ class AccountModel {
     district = json['District'];
     county = json['County'];
     urlPicture = json['UrlPicture'];
+    token = json['Token'];
   }
 
   Map<String, dynamic> toJson() {
@@ -63,6 +66,7 @@ class AccountModel {
     data['District'] = this.district;
     data['County'] = this.county;
     data['UrlPicture'] = this.urlPicture;
+    data['Token'] = this.token;
     return data;
   }
 }

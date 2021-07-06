@@ -45,7 +45,8 @@ class _AddproinfodataState extends State<Addproinfodata> {
       county,
       urlimage;
 
-  File image;
+  ImagePicker _picker = ImagePicker();
+  PickedFile image;
 
   DateTime timedate;
 
@@ -164,7 +165,7 @@ class _AddproinfodataState extends State<Addproinfodata> {
 
   Future<Null> chooseImage(ImageSource imageSource) async {
     try {
-      var iMage = await ImagePicker.pickImage(
+      var iMage = await _picker.getImage(
         source: imageSource,
         maxHeight: 1000.0,
         maxWidth: 1000,
@@ -415,6 +416,7 @@ class _AddproinfodataState extends State<Addproinfodata> {
           ),
         ],
       );
+
   // Widget pssp() =>
   //         Container(
   //           margin: EdgeInsets.only(top: 420, left: 25, right: 25),
