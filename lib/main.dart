@@ -8,11 +8,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
-import 'screensPro/scanQRcode.dart';
-import 'screensPro/searchCluster.dart';
-import 'widgetscreensUse/mapShow_Project.dart';
-import 'widgetscreensUse/qrcode.dart';
-
 //เมื่อโปรเจ็คทงาน Constructor Method หรือเม็ธตอดหลักทำการ call object จากคลาสตัวล่าง
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +30,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.red),
       debugShowCheckedModeBanner: false,
       title: 'Get&Give Blood',
-      home: Login(), //เริ่มต้นRun
+      home:
+          // BlocProvider(
+          //   create: (BuildContext context) => MapsBloc(),
+          //   child: Maps(),
+          // ),
+
+          Login(), //เริ่มต้นRun
     );
   }
 }

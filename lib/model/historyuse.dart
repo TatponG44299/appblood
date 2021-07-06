@@ -6,6 +6,7 @@ class HistoryModel {
   String bloodType;
   String iDProject;
   String projectName;
+  String responsibleName;
 
   HistoryModel(
       {this.iDHistory,
@@ -14,7 +15,8 @@ class HistoryModel {
       this.lastName,
       this.bloodType,
       this.iDProject,
-      this.projectName});
+      this.projectName,
+      this.responsibleName});
 
   HistoryModel.fromJson(Map<String, dynamic> json) {
     iDHistory = json['ID_History'];
@@ -24,6 +26,7 @@ class HistoryModel {
     bloodType = json['Blood_type'];
     iDProject = json['ID_Project'];
     projectName = json['Project_Name'];
+    responsibleName = json['Responsible_Name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -35,6 +38,7 @@ class HistoryModel {
     data['Blood_type'] = this.bloodType;
     data['ID_Project'] = this.iDProject;
     data['Project_Name'] = this.projectName;
+    data['Responsible_Name'] = this.responsibleName;
     return data;
   }
 }

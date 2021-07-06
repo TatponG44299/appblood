@@ -8,6 +8,7 @@ import 'package:appblood/screensUse/wayHome.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class MapShowProject extends StatefulWidget {
   //final ProjectModel projectModel;
@@ -20,9 +21,9 @@ class MapShowProject extends StatefulWidget {
 
 class _MapShowProjectState extends State<MapShowProject> {
   var res, idProject, nameProject;
-  double lat, lng;
+  double lat, lng, latuse, lnguse;
   ProjectModel projectModel;
-
+  List<Marker> myMarker = [];
   Set<Marker> setMarker = Set();
 
   Marker resultMarker() {
@@ -34,6 +35,56 @@ class _MapShowProjectState extends State<MapShowProject> {
           title: 'ชื่อโครงการ:$nameProject',
           snippet: 'ละติจูด = $lat,ลองติจูด = $lng'),
     );
+  }
+
+  Marker currentMarker() {
+    return Marker(
+      markerId: MarkerId('myMarkPJ'),
+      position: LatLng(latuse, lnguse),
+      infoWindow: InfoWindow(
+        title: 'ตำแหน่งของคุณ',
+        snippet: 'ละติจูด = $lat ,ลองติจูด = $lng',
+      ),
+    );
+  }
+
+  // _handleTap(LatLng tappedPoint) {
+  //   lat = tappedPoint.latitude;
+  //   lng = tappedPoint.longitude;
+  //   setState(() {
+  //     myMarker = [];
+  //     myMarker.add(
+  //       Marker(
+  //         markerId: MarkerId(tappedPoint.toString()),
+  //         //position: tappedPoint,
+  //         position: LatLng(tappedPoint.latitude, tappedPoint.longitude),
+  //         infoWindow: InfoWindow(
+  //           title: 'ที่จัดตั้งโครงการของคุณ',
+  //           snippet: 'ละติจูด = $lat ,ลองติจูด = $lng',
+  //         ),
+  //       ),
+  //     );
+  //   });
+  //   print("====================================$lat***$lng");
+  // }
+
+  Future<Null> findLatLng() async {
+    LocationData locationData = await findLocation();
+    setState(() {
+      latuse = locationData.latitude;
+      lnguse = locationData.longitude;
+    });
+    setMarker.add(currentMarker());
+    print("lat ============ $lat , lng = $lng");
+  }
+
+  Future<LocationData> findLocation() async {
+    Location location = Location();
+    try {
+      return location.getLocation();
+    } catch (e) {
+      return null;
+    }
   }
 
   // Marker resultMarker = Marker(
@@ -48,6 +99,7 @@ class _MapShowProjectState extends State<MapShowProject> {
   void initState() {
     super.initState();
     //projectModel = widget.projectModel;
+    findLatLng();
     readDatamapProject();
   }
 
@@ -92,13 +144,14 @@ class _MapShowProjectState extends State<MapShowProject> {
         ),
         title: Text('จุดตั้งโครงการ'),
       ),
-      body: lat == null
+      body: lat == null || latuse == null
           ? MyStyle().showProgress()
           : GoogleMap(
               initialCameraPosition: thai,
               mapType: MapType.normal,
               onMapCreated: (controller) {},
               markers: setMarker,
+             // circles: ,
             ),
     );
   }
