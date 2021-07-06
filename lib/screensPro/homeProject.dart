@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'listProject.dart';
+import 'searchCluster.dart';
 import 'statisticsProject.dart';
 
 class ProjectPage extends StatefulWidget {
@@ -101,11 +102,11 @@ class _ProjectPageState extends State<ProjectPage> {
             statisticsMenu(),
             notificMenu(),
             queryMenu(),
-            Divider(
-              color: Colors.grey[700],
-            ),
-            prodonatMenu(),
-            requestbloodMenu(),
+            // Divider(
+            //   color: Colors.grey[700],
+            // ),
+            // prodonatMenu(),
+            // requestbloodMenu(),
             Divider(
               color: Colors.grey[700],
             ),
@@ -135,13 +136,13 @@ class _ProjectPageState extends State<ProjectPage> {
   ListTile queryMenu() {
     return ListTile(
       leading: Icon(Icons.book),
-      title: Text('ต้องการบริจาคโลหิต'),
+      title: Text('จุดที่ควรจัดตั้งโครงการ'),
       onTap: () {
         //กดเปลี่ยนหน้า
-        // Navigator.pop(context);
-        // MaterialPageRoute route =
-        //     MaterialPageRoute(builder: (value) => UseWantDanate());
-        // Navigator.push(context, route);
+        Navigator.pop(context);
+        MaterialPageRoute route =
+            MaterialPageRoute(builder: (value) => MapCluster());
+        Navigator.push(context, route);
       },
     );
   }

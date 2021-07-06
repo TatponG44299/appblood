@@ -71,7 +71,7 @@ class _RangeRadiusState extends State<RangeRadius> {
           builder: (context, state) {
             return Column(
               children: <Widget>[
-                Text(_radius.toInt().toString() + ' กิโลเมตร'),
+                Text(_radius.toInt().toString() + ' เมตร'),
                 Slider(
                   max: 20000,
                   min: 1000,
@@ -85,18 +85,18 @@ class _RangeRadiusState extends State<RangeRadius> {
                     }
                   },
                 ),
-                FlatButton(
-                  child: Text(widget.isRadiusFixed != true
-                      ? 'Fijar Radio'
-                      : 'Cancelar'),
-                  onPressed: () =>
-                      //readDatamapProject(isRadiusFixed: widget.isRadiusFixed),
-                      _mapsBloc.add(
-                    IsRadiusFixedPressed(isRadiusFixed: widget.isRadiusFixed),
-                  ),
-                  color:
-                      widget.isRadiusFixed != true ? Colors.blue : Colors.red,
-                )
+                // FlatButton(
+                //   child: Text(widget.isRadiusFixed != true
+                //       ? 'Fijar Radio'
+                //       : 'Cancelar'),
+                //   onPressed: () =>
+                //       //readDatamapProject(isRadiusFixed: widget.isRadiusFixed),
+                //       _mapsBloc.add(
+                //     IsRadiusFixedPressed(isRadiusFixed: widget.isRadiusFixed),
+                //   ),
+                //   color:
+                //       widget.isRadiusFixed != true ? Colors.blue : Colors.red,
+                // )
               ],
             );
           },

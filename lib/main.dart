@@ -1,10 +1,5 @@
 import 'package:appblood/screensUse/login.dart';
-import 'package:appblood/widgetscreensUse/mapfindbyUse/mapsBloc.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'widgetscreensUse/mapfindbyUse/maps_Widget.dart';
 
 //เมื่อโปรเจ็คทงาน Constructor Method หรือเม็ธตอดหลักทำการ call object จากคลาสตัวล่าง
 void main() {

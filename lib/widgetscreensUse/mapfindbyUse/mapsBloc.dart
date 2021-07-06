@@ -107,18 +107,67 @@ class MapsBloc extends Bloc<MapsEvent, MapsState> {
   Stream<MapsState> _mapUpdateRangeValues(double _radius) async* {
     yield Loading();
     double _zoom;
-    if (_radius > 100 && _radius < 220) {
-      //_zoom = 17;
-      _zoom = 9;
-    } else if (_radius >= 220 && _radius < 420) {
+    if (_radius > 999 && _radius < 1100) {
+      _zoom = 14.5;
+      //_zoom = 9;
+      print('1');
+    } 
+     else if (_radius >= 2583 && _radius < 4166) {
      // _zoom = 16;
-      _zoom = 8;
-    } else if (_radius > 420) {
+      _zoom = 13;
+       print('2');
+    }
+    else if (_radius >= 4166 && _radius < 5750) {
+     // _zoom = 16;
+      _zoom = 12.7;
+       print('3');
+    }else if (_radius >= 5750 && _radius < 7333) {
+     // _zoom = 16;
+      _zoom = 12.3;
+       print('4');
+    } else if (_radius >= 7333 && _radius < 8916) {
       //_zoom = 15;
-      _zoom = 16;
-    } else {
+      _zoom = 11.7;
+       print('5');
+    } else if (_radius >= 8916 && _radius < 10500) {
+      //_zoom = 15;
+      _zoom = 11.5;
+       print('6');
+    } 
+    else if (_radius >= 10500 && _radius < 12083) {
+      //_zoom = 15;
+      _zoom = 11.3;
+       print('7');
+    } 
+    else if (_radius >= 12083 && _radius < 13666) {
+      //_zoom = 15;
+      _zoom = 11;
+       print('8');
+    } 
+    else if (_radius >= 13666 && _radius < 15250) {
+      //_zoom = 15;
+      _zoom = 11;
+       print('9');
+    } 
+    else if (_radius >= 15250 && _radius < 16833) {
+      //_zoom = 15;
+      _zoom = 10.8;
+       print('10');
+    } 
+    else if (_radius >= 16833 && _radius < 18416) {
+      //_zoom = 15;
+      _zoom = 10.5;
+       print('11');
+    } 
+    else if (_radius > 18416 && _radius < 20000) {
+      //_zoom = 15;
+      _zoom = 10.4;
+       print('12');
+    } 
+    else {
       //_zoom = 18;
-      _zoom = 16;
+      _zoom = 10.3;
+       print('13');
     }
     yield RadiusUpdate(radius: _radius, zoom: _zoom);
   }

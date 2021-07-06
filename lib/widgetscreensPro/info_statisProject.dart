@@ -19,12 +19,17 @@ class InfostaticsProject extends StatefulWidget {
 }
 
 class _InfostaticsProjectState extends State<InfostaticsProject> {
-  var res, resUse, idp, iduse;
+  var res, resUse, idp, iduse, ga, gb, go, gab, g;
   ProjectModel projectModel;
   HistoryModel historyModel;
   AccountModel accountModel;
   List<AccountModel> accountModels = List();
   List resUser = List();
+  List gA = [];
+  List gB = [];
+  List gO = [];
+  List gAB = [];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -50,10 +55,23 @@ class _InfostaticsProjectState extends State<InfostaticsProject> {
       historyModel = HistoryModel.fromJson(map);
       setState(() {
         iduse = historyModel.iD;
+        g = historyModel.bloodType;
+        if (g == 'A') {
+          gA.add(g);
+        } else if (g == 'B') {
+          gB.add(g);
+        } else if (g == 'O') {
+          gO.add(g);
+        } else {
+          gAB.add(g);
+        }
       });
-
-      print('**************************' + res.toString());
-      print(res.length);
+      print('55555555555555555555555555555555555555555555555' + g);
+      //print('**************************' + res.toString());
+      print("ABABABABABABAB=${gAB.length}");
+      print("AAAAAAAAAAAAAA=${gA.length}");
+      print("BBBBBBBBBBBBBb=${gB.length}");
+      print("OOOOOOOOOOOOOO=${gO.length}");
       //readataUse();
       //setMarker.add(resultMarker());
 
@@ -79,7 +97,7 @@ class _InfostaticsProjectState extends State<InfostaticsProject> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ผู้ที่บริจาค'),
+        title: Text('สถิติโครงการ'),
       ),
       body: res == null
           ? Center(child: Text('ไม่มีข้อมูลการบริจาค'))
@@ -92,20 +110,190 @@ class _InfostaticsProjectState extends State<InfostaticsProject> {
   Widget showColumnhade() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
+      child: Stack(
         children: <Widget>[
-          // Title(
-          //   color: Colors.blue,
-          //   child: Text(
-          //     'จำนวนที่บริจาค:  ',
-          //     style: TextStyle(fontSize: 18, color: Colors.blue[900]),
-          //   ),
-          // ),
-          titleHead(),
-          buildListData(),
+          Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Center(
+                  child: Title(
+                    color: Colors.blue,
+                    child: Text(
+                      'จำนวนคนมาที่บริจาค',
+                      style: TextStyle(fontSize: 20, color: Colors.blue[900]),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          //titleHead(),
+          textColum1(),
+          textColum2(),
+          textgbA(),
+          gbA(),
+          textgbB(),
+          gbB(),
+          textgbO(),
+          gbO(),
+          textgbAB(),
+          gbAB(),
+          gbAll(),
+          //buildListData(),
         ],
       ),
     );
+  }
+
+  Widget textColum1() {
+    return Container(
+        margin: EdgeInsets.only(top: 80, left: 30),
+        child: Column(
+          children: <Widget>[
+            Text(
+              "หมู่เลือด",
+              style: TextStyle(fontSize: 18),
+            )
+          ],
+        ));
+  }
+
+  Widget textColum2() {
+    return Container(
+        margin: EdgeInsets.only(top: 80, left: 290),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Text(
+              "จำนวน",
+              style: TextStyle(fontSize: 18),
+            )
+          ],
+        ));
+  }
+
+  Widget textgbA() {
+    return Container(
+        margin: EdgeInsets.only(top: 140, left: 55),
+        child: Column(
+          children: <Widget>[
+            Text(
+              "A",
+              style: TextStyle(fontSize: 18),
+            )
+          ],
+        ));
+  }
+
+  Widget gbA() {
+    return Container(
+        margin: EdgeInsets.only(top: 140, left: 310),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Text(
+              "${gA.length}",
+              style: TextStyle(fontSize: 18),
+            )
+          ],
+        ));
+  }
+
+  Widget textgbB() {
+    return Container(
+        margin: EdgeInsets.only(top: 200, left: 55),
+        child: Column(
+          children: <Widget>[
+            Text(
+              "B",
+              style: TextStyle(fontSize: 18),
+            )
+          ],
+        ));
+  }
+
+  Widget gbB() {
+    return Container(
+        margin: EdgeInsets.only(top: 200, left: 310),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Text(
+              "${gB.length}",
+              style: TextStyle(fontSize: 18),
+            )
+          ],
+        ));
+  }
+
+  Widget textgbO() {
+    return Container(
+        margin: EdgeInsets.only(top: 260, left: 55),
+        child: Column(
+          children: <Widget>[
+            Text(
+              "O",
+              style: TextStyle(fontSize: 18),
+            )
+          ],
+        ));
+  }
+
+  Widget gbO() {
+    return Container(
+        margin: EdgeInsets.only(top: 260, left: 310),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Text(
+              "${gO.length}",
+              style: TextStyle(fontSize: 18),
+            )
+          ],
+        ));
+  }
+
+  Widget textgbAB() {
+    return Container(
+        margin: EdgeInsets.only(top: 320, left: 55),
+        child: Column(
+          children: <Widget>[
+            Text(
+              "AB",
+              style: TextStyle(fontSize: 18),
+            )
+          ],
+        ));
+  }
+
+  Widget gbAB() {
+    return Container(
+        margin: EdgeInsets.only(top: 320, left: 310),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Text(
+              "${gAB.length}",
+              style: TextStyle(fontSize: 18),
+            )
+          ],
+        ));
+  }
+
+  Widget gbAll() {
+    return Container(
+        margin: EdgeInsets.only(top: 380, left: 200),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Text(
+              "รวมทั้งหมด   ${res.length}   คน",
+              style: TextStyle(fontSize: 18),
+            )
+          ],
+        ));
   }
 
   Widget titleHead() {
@@ -113,10 +301,10 @@ class _InfostaticsProjectState extends State<InfostaticsProject> {
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(color: Colors.red[200]),
       child: Center(
-        child: Row(
+        child: Column(
           children: <Widget>[
             Expanded(
-              flex: 1,
+              //flex: 1,
               child: Title(
                 color: Colors.blue,
                 child: Text(
@@ -126,7 +314,7 @@ class _InfostaticsProjectState extends State<InfostaticsProject> {
               ),
             ),
             Expanded(
-              flex: 2,
+              //flex: 2,
               child: Title(
                 color: Colors.blue,
                 child: Text(
@@ -136,7 +324,7 @@ class _InfostaticsProjectState extends State<InfostaticsProject> {
               ),
             ),
             Expanded(
-              flex: 1,
+              //flex: 1,
               child: Title(
                 color: Colors.blue,
                 child: Text(

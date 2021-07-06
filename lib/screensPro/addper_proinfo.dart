@@ -8,7 +8,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -44,8 +43,8 @@ class _AddproinfodataState extends State<Addproinfodata> {
       district,
       county,
       urlimage;
-
-  File image;
+  ImagePicker _picker = ImagePicker();
+  PickedFile image;
 
   DateTime timedate;
 
@@ -164,7 +163,7 @@ class _AddproinfodataState extends State<Addproinfodata> {
 
   Future<Null> chooseImage(ImageSource imageSource) async {
     try {
-      var iMage = await ImagePicker.pickImage(
+      var iMage = await _picker.getImage(
         source: imageSource,
         maxHeight: 1000.0,
         maxWidth: 1000,
