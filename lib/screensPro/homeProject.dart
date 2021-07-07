@@ -1,7 +1,9 @@
 import 'package:appblood/model/accout_model.dart';
+import 'package:appblood/screensUse/home.dart';
 import 'package:appblood/screensUse/login.dart';
 import 'package:appblood/screensUse/personalInfo.dart';
 import 'package:appblood/widgetscreensPro/homeproject.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,6 +34,11 @@ class _ProjectPageState extends State<ProjectPage> {
   //จำ User ไม่ต้องไป login  ซ้ำ
   Future<Null> memUse() async {
     //email =  accountModel.email;
+
+    // FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+    // String token = await firebaseMessaging.getToken();
+    // print('TOKEN ===============> $token');
+
     SharedPreferences preferences = await SharedPreferences.getInstance();
     fname = preferences.getString('firstName');
     lname = preferences.getString('lastName');

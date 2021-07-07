@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:appblood/model/accout_model.dart';
+import 'package:appblood/model/project_madel.dart';
 import 'package:appblood/nuility/mySty.dart';
 import 'package:appblood/nuility/my_con.dart';
 import 'package:appblood/nuility/normal_Dialog.dart';
@@ -19,6 +21,10 @@ class _AddprojectState extends State<Addproject> {
   String projecctName, responsible, place;
   var res, lat1, lat2, lat3, lng1, lng2, lng3;
 
+  ProjectModel projectModel;
+
+  AccountModel model;
+
   //field
   double lat, lng;
 
@@ -33,6 +39,7 @@ class _AddprojectState extends State<Addproject> {
     super.initState();
     findLatLng();
     readLocation();
+    //notification();
     startDate = DateTime.now();
     endDate = DateTime.now();
   }
@@ -114,6 +121,7 @@ class _AddprojectState extends State<Addproject> {
       if (data.toString() == 'true') {
         Navigator.pop(context);
         normalDialog(context, 'ลงข้อมูลสำเร็จ');
+        //_______________________>>>>
       } else {
         normalDialog(context, 'ไม่สามารถบันทึกได้ กรุณาลองใหม่');
         //Navigator.pop(context);
@@ -265,6 +273,7 @@ class _AddprojectState extends State<Addproject> {
         color: Colors.red,
         onPressed: () {
           dataProject();
+          //_showNotification();
         },
         icon: Icon(Icons.save, color: Colors.white),
         label: Text(
@@ -362,4 +371,29 @@ class _AddprojectState extends State<Addproject> {
       ),
     );
   }
+
+  // Future<Null> notificationProject(String iDProject) async {
+  //   String urlFindToken =
+  //       '${Urlcon().domain}/GGB_BD/getUserWhereID.php?isAdd=true&ID=$iDProject';
+  //   //นำ token มาเก็บไว้ใน iDProject
+  //   await Dio().get(urlFindToken).then((value) {
+  //     var result = json.decode(value.data);
+  //     print('result =======> $result');
+  //     for (var json in result) {
+  //       String tokenProject = model.token;
+  //       print('tokenProject ========= $tokenProject');
+  //       //text ใน notification
+  //       String title = 'มีโครงกาจัดตั้งขึ้น';
+  //       String body = 'กดเพื่อเข้าไปดูรายละเอียด';
+  //       String urlSendtoken =
+  //           '${Urlcon().domain}/GGB_BD/apiNotification.php?isAdd=true&token=$tokenProject&title=$title&body=$body';
+  //       sendNotificationProject(urlSendtoken);
+  //     }
+  //   });
+  // }
+
+  // Future<Null> sendNotificationProject(String urlSendtoken) async {
+  //   await Dio().get(urlSendtoken);
+  //   //.then((value) => normalDialog(context, ''));
+  // }
 }

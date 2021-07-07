@@ -43,9 +43,10 @@ class _AddinfodataState extends State<Addinfodata> {
       district,
       county,
       urlimage;
-      
+
   ImagePicker _picker = ImagePicker();
   PickedFile image;
+
   DateTime timedate;
 
   @override
