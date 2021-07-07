@@ -71,8 +71,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
-<<<<<<< HEAD
-=======
   equatable:
     dependency: "direct main"
     description:
@@ -80,7 +78,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.6"
->>>>>>> 2403c7c869511a8db3b3c54ba2e45f36fadb4dde
   fake_async:
     dependency: transitive
     description:
@@ -102,7 +99,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.2"
-<<<<<<< HEAD
   firebase_core:
     dependency: "direct main"
     description:
@@ -145,8 +141,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
-=======
->>>>>>> 2403c7c869511a8db3b3c54ba2e45f36fadb4dde
   flutter:
     dependency: "direct main"
     description: flutter
@@ -166,7 +160,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.1"
-<<<<<<< HEAD
   flutter_local_notifications:
     dependency: "direct main"
     description:
@@ -181,8 +174,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
-=======
->>>>>>> 2403c7c869511a8db3b3c54ba2e45f36fadb4dde
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -242,13 +233,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-<<<<<<< HEAD
-  http:
-    dependency: transitive
-=======
   great_circle_distance:
     dependency: "direct main"
->>>>>>> 2403c7c869511a8db3b3c54ba2e45f36fadb4dde
     description:
       name: great_circle_distance
       url: "https://pub.dartlang.org"
@@ -345,8 +331,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0"
-<<<<<<< HEAD
-=======
   nested:
     dependency: transitive
     description:
@@ -354,7 +338,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
->>>>>>> 2403c7c869511a8db3b3c54ba2e45f36fadb4dde
   path:
     dependency: transitive
     description:
@@ -411,8 +394,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.1"
-<<<<<<< HEAD
-=======
   provider:
     dependency: transitive
     description:
@@ -420,7 +401,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.3.3"
->>>>>>> 2403c7c869511a8db3b3c54ba2e45f36fadb4dde
   qr:
     dependency: transitive
     description:
@@ -545,7 +525,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.0"
-<<<<<<< HEAD
   timezone:
     dependency: transitive
     description:
@@ -553,8 +532,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.0"
-=======
->>>>>>> 2403c7c869511a8db3b3c54ba2e45f36fadb4dde
   toggle_switch:
     dependency: "direct main"
     description:
@@ -582,7 +559,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.4"
+    version: "2.2.5"
   xdg_directories:
     dependency: transitive
     description:
@@ -592,8 +569,4 @@ packages:
     version: "0.2.0"
 sdks:
   dart: ">=2.13.0 <3.0.0"
-<<<<<<< HEAD
   flutter: ">=2.2.0"
-=======
-  flutter: ">=2.0.0"
->>>>>>> 2403c7c869511a8db3b3c54ba2e45f36fadb4dde
