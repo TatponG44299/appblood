@@ -183,10 +183,10 @@ class _HomeState extends State<Home> {
       leading: Icon(Icons.notifications),
       title: Text('การแจ้งเตือน'),
       onTap: () {
-        // Navigator.pop(context);
-        // MaterialPageRoute route =
-        //     MaterialPageRoute(builder: (value) => ListProject());
-        // Navigator.push(context, route);
+        Navigator.pop(context);
+        MaterialPageRoute route =
+            MaterialPageRoute(builder: (value) => Notfic());
+        Navigator.push(context, route);
       },
     );
   }

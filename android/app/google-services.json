@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "679552626313",
+    "project_id": "appggb-ad78d",
+    "storage_bucket": "appggb-ad78d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679552626313:android:559c3934a46cf80789a058",
+        "android_client_info": {
+          "package_name": "fluttergiveblood.com.appblood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "679552626313-g2chajof2m5pl9dg746q6cdh2vrmrp9c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDay49OO7QdRZPsTw4sKFJ9kHDICZYGNmA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "679552626313-g2chajof2m5pl9dg746q6cdh2vrmrp9c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

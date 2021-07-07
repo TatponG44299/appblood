@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:appblood/model/accout_model.dart';
 import 'package:appblood/nuility/mySty.dart';
 import 'package:appblood/nuility/my_con.dart';
+import 'package:appblood/screensPro/addper_proinfo.dart';
 import 'package:appblood/widgetscreensUse/addper_info.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -65,10 +66,10 @@ class _PersonalState extends State<Personal> {
   Widget showDatainfo() => Column(
         children: <Widget>[
           showimage(),
-          idtextshow(),
+          //idtextshow(),
           nameTextshow(),
-          bloodtextshow(),
-          agetextshow(),
+          //bloodtextshow(),
+          //agetextshow(),
           phontextshow(),
           infotextshowone(),
           infotextshowtwo(),
@@ -140,7 +141,7 @@ class _PersonalState extends State<Personal> {
               ),
             ),
             Text(
-              '${accountModel.firstName}   ${accountModel.lastName} ',
+              '${accountModel.firstName} ',
               style: TextStyle(fontSize: 20.0),
             ),
           ],
@@ -260,7 +261,7 @@ class _PersonalState extends State<Personal> {
 
   void addEditdata() {
     MaterialPageRoute materialPageRoute =
-        MaterialPageRoute(builder: (context) => Addinfodata());
+        MaterialPageRoute(builder: (context) => Addproinfodata());
     Navigator.push(context, materialPageRoute);
   }
 }

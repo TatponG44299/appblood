@@ -88,12 +88,12 @@ class _AddproinfodataState extends State<Addproinfodata> {
             cimage(),
             gimage(),
             fnamefield(),
-            lnamefield(),
-            idfield(),
+            //lnamefield(),
+            //idfield(),
             phonfield(),
             //nameblood(),
             //bloodTypeDrop(),
-            dateHBD(),
+            //dateHBD(),
             addressfield(),
             tumbolfield(),
             districtfield(),
@@ -231,7 +231,7 @@ class _AddproinfodataState extends State<Addproinfodata> {
 
   Widget saveButton() => Center(
         child: Container(
-          margin: EdgeInsets.only(top: 550, left: 25, right: 25),
+          margin: EdgeInsets.only(top: 640, left: 25, right: 25),
           width: 250,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15.0),
@@ -240,14 +240,8 @@ class _AddproinfodataState extends State<Addproinfodata> {
               onPressed: () {
                 if (fname == null ||
                     fname.isEmpty ||
-                    lname == null ||
-                    lname.isEmpty ||
-                    idCustom == null ||
-                    idCustom.isEmpty ||
                     phon == null ||
                     phon.isEmpty ||
-                    selectedType == null ||
-                    selectedType.isEmpty ||
                     address == null ||
                     address.isEmpty ||
                     tumbol == null ||
@@ -257,8 +251,6 @@ class _AddproinfodataState extends State<Addproinfodata> {
                     county == null ||
                     county.isEmpty) {
                   normalDialog(context, 'มีช่องว่าง กรุณากรอกให้ครบ');
-                } else if (timedate == DateTime.now()) {
-                  normalDialog(context, 'กรุณนาเลือกวัน/เดือน/ปี');
                 } else {
                   checkImage();
                   //checkData();
@@ -303,7 +295,7 @@ class _AddproinfodataState extends State<Addproinfodata> {
 
     String
         url = //'${Urlcon().domain}/GGB_BD/editProfileuser.php?isAdd=true&ID=$iD&First_name=$fname&Last_name=$lname&Phon=$phon&Blood_type=$selectedType&Add_detail=$address&Tombol=$tumbol&District=$district&County=$county&UrlPicture=$urlimage';
-        '${Urlcon().domain}/GGB_BD/editProfileuser.php?isAdd=true&ID=$iD&ID_costom=$idCustom&First_name=$fname&Last_name=$lname&Phon=$phon&Blood_type=$selectedType&Birthday=$timedate&Add_detail=$address&Tombol=$tumbol&District=$district&County=$county&UrlPicture=$urlimage';
+        '${Urlcon().domain}/GGB_BD/editProfileuser.php?isAdd=true&ID=$iD&First_name=$fname&Phon=$phon&Add_detail=$address&Tombol=$tumbol&District=$district&County=$county&UrlPicture=$urlimage';
 
     await Dio().get(url).then((value) {
       if (value.toString() == 'true') {
@@ -327,8 +319,8 @@ class _AddproinfodataState extends State<Addproinfodata> {
   // }
 
   Widget fnamefield() => Container(
-        margin: EdgeInsets.only(top: 150, left: 25),
-        width: 140,
+        margin: EdgeInsets.only(top: 150, left: 25, right: 25),
+        //width: 140,
         child: TextField(
           onChanged: (value) => fname = value.trim(),
           decoration: InputDecoration(labelText: 'ชื่อ'),
@@ -358,7 +350,7 @@ class _AddproinfodataState extends State<Addproinfodata> {
       );
 
   Widget phonfield() => Container(
-        margin: EdgeInsets.only(top: 250, left: 25, right: 25),
+        margin: EdgeInsets.only(top: 230, left: 25, right: 25),
         child: TextField(
           keyboardType: TextInputType.number,
           onChanged: (value) => phon = value.trim(),
@@ -367,53 +359,37 @@ class _AddproinfodataState extends State<Addproinfodata> {
       );
 
   Widget addressfield() => Container(
-        margin: EdgeInsets.only(top: 350, left: 25, right: 25),
+        margin: EdgeInsets.only(top: 320, left: 25, right: 25),
         child: TextField(
           onChanged: (value) => address = value.trim(),
           decoration: InputDecoration(labelText: 'รายละเอียดที่อยู่'),
         ),
       );
 
-  Widget tumbolfield() => Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 400, left: 25, right: 25),
-            width: 140,
-            child: TextField(
-              onChanged: (value) => tumbol = value.trim(),
-              decoration: InputDecoration(labelText: 'ตำบล/แขวง'),
-            ),
-          ),
-        ],
+  Widget tumbolfield() => Container(
+        margin: EdgeInsets.only(top: 400, left: 25, right: 25),
+        child: TextField(
+          onChanged: (value) => tumbol = value.trim(),
+          decoration: InputDecoration(labelText: 'ตำบล/แขวง'),
+        ),
       );
 
-  Widget districtfield() => Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 400, left: 25, right: 25),
-            width: 160,
-            child: TextField(
-              onChanged: (value) => district = value.trim(),
-              decoration: InputDecoration(labelText: 'อำเภอ/เขต'),
-            ),
-          ),
-        ],
+  Widget districtfield() => Container(
+        margin: EdgeInsets.only(top: 480, left: 25, right: 25),
+        child: TextField(
+          onChanged: (value) => district = value.trim(),
+          decoration: InputDecoration(labelText: 'อำเภอ/เขต'),
+        ),
       );
 
-  Widget countyfield() => Row(
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 450, left: 25, right: 25),
-            width: 160,
-            child: TextField(
-              onChanged: (value) => county = value.trim(),
-              decoration: InputDecoration(labelText: 'จังหวัด'),
-            ),
-          ),
-        ],
+  Widget countyfield() => Container(
+        margin: EdgeInsets.only(top: 560, left: 25, right: 25),
+        child: TextField(
+          onChanged: (value) => county = value.trim(),
+          decoration: InputDecoration(labelText: 'จังหวัด'),
+        ),
       );
+
   // Widget pssp() =>
   //         Container(
   //           margin: EdgeInsets.only(top: 420, left: 25, right: 25),

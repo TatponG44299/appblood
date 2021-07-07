@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:appblood/nuility/mySty.dart';
 import 'package:appblood/nuility/my_con.dart';
 import 'package:appblood/nuility/normal_Dialog.dart';
@@ -15,6 +17,7 @@ class Addproject extends StatefulWidget {
 
 class _AddprojectState extends State<Addproject> {
   String projecctName, responsible, place;
+  var res, lat1, lat2, lat3, lng1, lng2, lng3;
 
   //field
   double lat, lng;
@@ -29,6 +32,7 @@ class _AddprojectState extends State<Addproject> {
   void initState() {
     super.initState();
     findLatLng();
+    readLocation();
     startDate = DateTime.now();
     endDate = DateTime.now();
   }
@@ -72,6 +76,32 @@ class _AddprojectState extends State<Addproject> {
     }
   }
 
+  Future<Null> readLocation() async {
+    String url = '${Urlcon().domain}/GGB_BD/democlustering.php?isAdd=true';
+
+    Response response = await Dio().get(url);
+    res = json.decode(response.data);
+    Map decoded = json.decode(response.data);
+
+    var name = decoded['data'];
+    setState(() {
+      ///////////Clust1//////////////////
+      lat1 = name[0]['Lat'].toDouble();
+      lng1 = name[0]['Lng'].toDouble();
+      ////////////Clust2/////////////////
+      lat2 = name[1]['Lat'].toDouble();
+      lng2 = name[1]['Lng'].toDouble();
+      ///////////Clust3//////////////////
+      lat3 = name[2]['Lat'].toDouble();
+      lng3 = name[2]['Lng'].toDouble();
+      ///////////////////////////////////
+    });
+    print('****************$name');
+    print('****************$lat1 + $lng1');
+    print('****************$lat2 + $lng2');
+    print('****************$lat3 + $lng3');
+  }
+
   Future<Null> dataProject() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String id = preferences.getString('id');
@@ -89,6 +119,47 @@ class _AddprojectState extends State<Addproject> {
         //Navigator.pop(context);
       }
     });
+  }
+
+  Set<Marker> setMarker() {
+    return <Marker>[
+      clus1Marker(),
+      clus2Marker(),
+      clus3Marker(),
+    ].toSet();
+  }
+
+  Marker clus1Marker() {
+    return Marker(
+      markerId: MarkerId('clusMarker1'),
+      position: LatLng(lat1, lng2),
+      icon: BitmapDescriptor.defaultMarkerWithHue(60.0),
+      infoWindow: InfoWindow(
+          title: 'จุดที่ควรเปิดรับโครงการที่ 1',
+          snippet: 'ละติจูด = $lat1,ลองติจูด = $lng1'),
+    );
+  }
+
+  Marker clus2Marker() {
+    return Marker(
+      markerId: MarkerId('clusMarker2'),
+      position: LatLng(lat2, lng2),
+      icon: BitmapDescriptor.defaultMarkerWithHue(60.0),
+      infoWindow: InfoWindow(
+          title: 'จุดที่ควรเปิดรับโครงการที่ 2',
+          snippet: 'ละติจูด = $lat2,ลองติจูด = $lng2'),
+    );
+  }
+
+  Marker clus3Marker() {
+    return Marker(
+      markerId: MarkerId('clusMarker3'),
+      position: LatLng(lat3, lng3),
+      icon: BitmapDescriptor.defaultMarkerWithHue(60.0),
+      infoWindow: InfoWindow(
+          title: 'จุดที่ควรเปิดรับโครงการที่ 3',
+          snippet: 'ละติจูด = $lat3,ลองติจูด = $lng3'),
+    );
   }
 
   @override
@@ -118,7 +189,7 @@ class _AddprojectState extends State<Addproject> {
             SizedBox(
               height: 5,
             ),
-            lat == null ? MyStyle().showProgress() : showmap(),
+            lat == null || lat1 == null ? MyStyle().showProgress() : showmap(),
             SizedBox(
               height: 5,
             ),
@@ -228,8 +299,8 @@ class _AddprojectState extends State<Addproject> {
         initialCameraPosition: cameraPosition,
         mapType: MapType.normal,
         onMapCreated: (controller) {},
-        // markers: myMarker(),
-        markers: Set.from(myMarker),
+        markers: setMarker(),
+        //markers: Set.from(myMarker),
         onTap: _handleTap,
       ),
     );

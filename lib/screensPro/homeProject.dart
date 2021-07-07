@@ -250,6 +250,6 @@ class _ProjectPageState extends State<ProjectPage> {
 //UserAccountDrawrHead
   UserAccountsDrawerHeader showDrawerHeader() {
     return UserAccountsDrawerHeader(
-        accountName: Text('$fname $lname'), accountEmail: Text('$email'));
+        accountName: Text('$fname'), accountEmail: Text('$email'));
   }
 }
