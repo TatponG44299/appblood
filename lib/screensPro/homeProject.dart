@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'listProject.dart';
+import 'proInfo.dart';
 import 'searchCluster.dart';
 import 'statisticsProject.dart';
 
@@ -248,7 +249,7 @@ class _ProjectPageState extends State<ProjectPage> {
         // });
         Navigator.pop(context);
         MaterialPageRoute route =
-            MaterialPageRoute(builder: (value) => Personal());
+            MaterialPageRoute(builder: (value) => Proinfo());
         Navigator.push(context, route);
       },
     );

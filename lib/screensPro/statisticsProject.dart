@@ -18,7 +18,7 @@ class StatisicsProject extends StatefulWidget {
 
 class _StatisicsProjectState extends State<StatisicsProject> {
   var res;
-  List<ProjectModel> projectModels = List();
+  List<ProjectModel> projectModels = [];
 
   @override
   void initState() {

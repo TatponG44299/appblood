@@ -30,13 +30,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.red),
       debugShowCheckedModeBanner: false,
       title: 'Get&Give Blood',
-      home:
-          // BlocProvider(
-          //   create: (BuildContext context) => MapsBloc(),
-          //   child: Maps(),
-          // ),
-
-          Login(), //เริ่มต้นRun
+      home: Login(), //เริ่มต้นRun
     );
   }
 }

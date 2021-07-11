@@ -68,7 +68,7 @@ class _PersonalState extends State<Personal> {
           showimage(),
           //idtextshow(),
           nameTextshow(),
-          //bloodtextshow(),
+          bloodtextshow(),
           //agetextshow(),
           phontextshow(),
           infotextshowone(),
@@ -141,7 +141,7 @@ class _PersonalState extends State<Personal> {
               ),
             ),
             Text(
-              '${accountModel.firstName} ',
+              '${accountModel.firstName} ${accountModel.lastName}',
               style: TextStyle(fontSize: 20.0),
             ),
           ],
@@ -174,7 +174,7 @@ class _PersonalState extends State<Personal> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'มือถือ : ',
+              'ติดต่อ : ',
               style: TextStyle(
                 fontSize: 20.0,
                 color: Colors.red,
@@ -261,7 +261,7 @@ class _PersonalState extends State<Personal> {
 
   void addEditdata() {
     MaterialPageRoute materialPageRoute =
-        MaterialPageRoute(builder: (context) => Addproinfodata());
+        MaterialPageRoute(builder: (context) => Addinfodata());
     Navigator.push(context, materialPageRoute);
   }
 }
