@@ -39,9 +39,9 @@ class _AddprojectState extends State<Addproject> {
 
   //field
   double lat, lng;
-
+  bool values;
   DateTime startDate, endDate;
-
+  String tokenProject;
   //List<Marker> useMarker = [];
   //Set<Marker> setMarker = Set();
   List<Marker> myMarker = [];
@@ -235,6 +235,10 @@ class _AddprojectState extends State<Addproject> {
               height: 5,
             ),
             endtime(),
+            SizedBox(
+              height: 5,
+            ),
+            switButton1(),
             SizedBox(
               height: 5,
             ),
@@ -453,28 +457,66 @@ class _AddprojectState extends State<Addproject> {
     );
   }
 
-  // Future<Null> notificationProject(String iDProject) async {
-  //   String urlFindToken =
-  //       '${Urlcon().domain}/GGB_BD/getUserWhereID.php?isAdd=true&ID=$iDProject';
-  //   //นำ token มาเก็บไว้ใน iDProject
-  //   await Dio().get(urlFindToken).then((value) {
-  //     var result = json.decode(value.data);
-  //     print('result =======> $result');
-  //     for (var json in result) {
-  //       String tokenProject = model.token;
-  //       print('tokenProject ========= $tokenProject');
-  //       //text ใน notification
-  //       String title = 'มีโครงกาจัดตั้งขึ้น';
-  //       String body = 'กดเพื่อเข้าไปดูรายละเอียด';
-  //       String urlSendtoken =
-  //           '${Urlcon().domain}/GGB_BD/apiNotification.php?isAdd=true&token=$tokenProject&title=$title&body=$body';
-  //       sendNotificationProject(urlSendtoken);
-  //     }
-  //   });
-  // }
+  Padding switButton1() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+      child: Row(
+        children: <Widget>[
+          Text('ประกาศโครงการ: ', style: TextStyle(fontSize: 18)),
+          Transform.scale(
+            scale: 1.5,
+            child: Switch.adaptive(
+              activeColor: Colors.blueAccent,
+              //activeTrackColor: Colors.,
+              value: values,
+              onChanged: (swi) {
+                setState(() {
+                  swi == true ? this.values = true : this.values = false;
+                  //this.value = swi;
+                  //updateStatus();
+                });
 
-  // Future<Null> sendNotificationProject(String urlSendtoken) async {
-  //   await Dio().get(urlSendtoken);
-  //   //.then((value) => normalDialog(context, ''));
-  // }
+                notificationProject();
+                print('6666666666666666666666666666666666666666666$values');
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<Null> notificationProject() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String iD = preferences.getString('id');
+    String urlFindToken =
+        '${Urlcon().domain}/GGB_BD/getUserWhereID.php?isAdd=true&ID=$iD';
+    print('==================================> $iD');
+    //ใช้ iD เพื่อให้คายตัว model ออกมาเพื่อหา token และใช้ค่านี้ยิงต่อไปที่ apiNotification เพื่อแจ้งเตือน
+    await Dio().get(urlFindToken).then((value) {
+      print('======================> $urlFindToken');
+      var result = json.decode(value.data);
+      print('result ======================> $result');
+      for (var json in result) {
+        AccountModel model = AccountModel.fromJson(json);
+        tokenProject = model.token;
+
+        print('tokenProject =======================> $tokenProject');
+
+        sendNotificationProject();
+      }
+    });
+  }
+
+  Future<Null> sendNotificationProject() async {
+    String text = 'มีโครงการ $projecctName จัดตั้งขึ้น ณ $place';
+    //'มีโครงการจัคตั้งขึ้น';
+    String urlSendtoken =
+        '${Urlcon().domain}/GGB_BD/Line_notify.php?token=$tokenProject&text=$text';
+    await Dio().get(urlSendtoken);
+    print(
+        'urlSendtoken = =========================================>>>>>$urlSendtoken');
+    //sendNotificationProject(urlSendtoken);
+    //then((value) => normalDialog(context, 'ประกาศโครงการสำเร็จ'));
+  }
 }

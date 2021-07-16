@@ -35,7 +35,7 @@ class _RequestbloodState extends State<Requestblood> {
 
     Response response = await Dio().get(url);
     res = json.decode(response.data);
-    //print(res[0]['ID_Project']);
+    print('********************* ${res[0]['ID_request']}');
     // int inex = 0;
 
     for (var map in res) {

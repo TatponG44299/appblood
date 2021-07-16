@@ -393,10 +393,9 @@ class _EditDonateUseState extends State<EditDonateUse> {
                   swi == true ? this.values = true : this.values = false;
                   //this.value = swi;
                 });
-                notificationProject();
-                //print('6666666666666666666666666666666666666666666$value');
-                //notificationProject(model.iD);
+
                 updateStatus();
+                notificationProject();
                 print('6666666666666666666666666666666666666666666$values');
               },
             ),
@@ -430,13 +429,14 @@ class _EditDonateUseState extends State<EditDonateUse> {
 
   Future<Null> sendNotificationProject() async {
     //text ใน notification
-    String text = 'มีการประกาศขอรับบริจาค';
+    String text =
+        'มีผู้ป่วย ${useDonateModel.receiverName} ต้องการหมู่เลือด ${useDonateModel.bloodType} ที่ ${useDonateModel.hospitalName}';
     String urlSendtoken =
         '${Urlcon().domain}/GGB_BD/Line_notify.php?token=$tokenUser&text=$text';
     await Dio().get(urlSendtoken);
     print(
         'urlSendtoken = =========================================>>>>>$urlSendtoken');
     //sendNotificationProject(urlSendtoken);
-    //then((value) => normalDialog(context, 'ประกาศโครงการสำเร็จ'));
+    //then((value) => normalDialog(context, 'ประกาศขอรับบริจาคสำเร็จ'));
   }
 }
