@@ -12,6 +12,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class EditdataProject extends StatefulWidget {
   final ProjectModel projectModel;
@@ -31,7 +32,7 @@ class _EditdataProjectState extends State<EditdataProject> {
   AccountModel model;
   List<Marker> myMarker = [];
   ProjectModel projectModel;
-
+  String tokenProject;
   Location location = Location();
 
   @override
@@ -391,7 +392,7 @@ class _EditdataProjectState extends State<EditdataProject> {
                   swi == true ? this.value = true : this.value = false;
                   //this.value = swi;
                 });
-                notificationProject(model.iD);
+                notificationProject();
                 //print('6666666666666666666666666666666666666666666$value');
               },
             ),
@@ -401,34 +402,40 @@ class _EditdataProjectState extends State<EditdataProject> {
     );
   }
 
-  Future<Null> notificationProject(String iD) async {
-    // SharedPreferences preferences = await SharedPreferences.getInstance();
-    // String token = preferences.getString('token');
+  Future<Null> notificationProject() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String iD = preferences.getString('id');
     String urlFindToken =
-        '${Urlcon().domain}/GGB_BD/getUserWhereID.php?isAdd=true&id=$iD';
+        '${Urlcon().domain}/GGB_BD/getUserWhereID.php?isAdd=true&ID=$iD';
     print('==================================> $iD');
-    //ใช้ iDProject เพื่อให้คายตัว model ออกมาเพื่อหา token และใช้ค่านี้ยิงต่อไปที่ apiNotification เพื่อแจ้งเตือน
-    await Dio().get(urlFindToken).then((element) {
+    //ใช้ iD เพื่อให้คายตัว model ออกมาเพื่อหา token และใช้ค่านี้ยิงต่อไปที่ apiNotification เพื่อแจ้งเตือน
+    await Dio().get(urlFindToken).then((value) {
       print('======================> $urlFindToken');
-      var result = json.decode(element.data);
-      print('result =======> $result');
+      var result = json.decode(value.data);
+      print('result ======================> $result');
       for (var json in result) {
         AccountModel model = AccountModel.fromJson(json);
-        String tokenProject = model.token;
+        tokenProject = model.token;
 
-        print('tokenProject ========= $tokenProject');
-        //text ใน notification
-        String title = 'มีโครงการจัดตั้งขึ้น';
-        String body = 'กดเพื่อเข้าไปดูรายละเอียด';
-        String urlSendtoken =
-            '${Urlcon().domain}/GGB_BD/apiNotification.php?isAdd=true&token=$tokenProject&title=$title&body=$body';
-        sendNotificationProject(urlSendtoken);
+        print('tokenProject =======================> $tokenProject');
+        // String text = 'มีโครงการจัดตั้งขึ้น';
+        // String urlSendtoken =
+        //     '${Urlcon().domain}/GGB_BD/Line_notify.php?token=$tokenProject&text=$text';
+        sendNotificationProject();
+        //   print(
+        //       'urlSendtoken = =========================================>>>>>$urlSendtoken');
       }
     });
   }
 
-  Future<Null> sendNotificationProject(String urlSendtoken) async {
+  Future<Null> sendNotificationProject() async {
+    String text = 'มีโครงการจัดตั้งขึ้น';
+    String urlSendtoken =
+        '${Urlcon().domain}/GGB_BD/Line_notify.php?token=$tokenProject&text=$text';
     await Dio().get(urlSendtoken);
-    //.then((value) => normalDialog(context, 'ประกาศโครงการสำเร็จ'));
+    print(
+        'urlSendtoken = =========================================>>>>>$urlSendtoken');
+    //sendNotificationProject(urlSendtoken);
+    //then((value) => normalDialog(context, 'ประกาศโครงการสำเร็จ'));
   }
 }

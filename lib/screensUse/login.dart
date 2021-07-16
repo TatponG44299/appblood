@@ -176,22 +176,20 @@ class _LoginState extends State<Login> {
     preferences.setString('lastName', accountModel.lastName);
     preferences.setString('chooseType', accountModel.chooseType);
 
-    String idLogin = preferences.getString('id');
-    print('idLogin = $idLogin');
+    // String idLogin = preferences.getString('id');
+    // print('idLogin = $idLogin');
 
-    String token = await firebaseMessaging.getToken();
-    print('TOKEN ==========================> $token');
-    // FirebaseMessaging firebaseMessaging = FirebaseMessaging();
     // String token = await firebaseMessaging.getToken();
+    // print('TOKEN ==========================> $token');
 
-    if (idLogin != null || idLogin.isEmpty) {
-      print('idLogin = $idLogin');
-      String url =
-          '${Urlcon().domain}/GGB_BD/editProfileuser.php?isAdd=true&ID=$idLogin&Token=$token';
-      await Dio()
-          .get(url)
-          .then((value) => print('----->Update Token Success<-----'));
-    }
+    // if (idLogin != null || idLogin.isEmpty) {
+    //   print('idLogin = $idLogin');
+    //   String url =
+    //       '${Urlcon().domain}/GGB_BD/editProfileuser.php?isAdd=true&ID=$idLogin&Token=$token';
+    //   await Dio()
+    //       .get(url)
+    //       .then((value) => print('----->Update Token Success<-----'));
+    // }
 
     MaterialPageRoute route = MaterialPageRoute(
       builder: (value) => myWidget,
