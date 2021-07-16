@@ -23,10 +23,10 @@ class EditdataProject extends StatefulWidget {
 }
 
 class _EditdataProjectState extends State<EditdataProject> {
-  String projecctName, responsible, place, idProject;
+  String projecctName, responsible, place, idProject, type1, s;
 
   double lat, lng;
-  bool value = false;
+  bool values;
   DateTime startDate, endDate;
   AccountModel model;
   List<Marker> myMarker = [];
@@ -41,13 +41,8 @@ class _EditdataProjectState extends State<EditdataProject> {
     findLatLng();
     startDate = DateTime.parse(projectModel.sDate);
     endDate = DateTime.parse(projectModel.eDate);
-    // location.onLocationChanged.listen((event) {
-    //   setState(() {
-    //     lat = event.latitude;
-    //     lng = event.longitude;
-    //     print("lat ============ $lat , lng = $lng");
-    //   });
-    // });
+    s = projectModel.status;
+    s == '0' ? values = false : values = true;
   }
 
   _handleTap(LatLng tappedPoint) {
@@ -118,11 +113,12 @@ class _EditdataProjectState extends State<EditdataProject> {
     String id = preferences.getString('id');
     String idp = projectModel.iDProject;
     String token = preferences.getString('token');
+    values == true ? type1 = '1' : type1 = '0';
 
     print('===========================' + idp);
 
     String url =
-        '${Urlcon().domain}/GGB_BD/editProjectuse.php?isAdd=true&Project_Name=$projecctName&Responsible_Name=$responsible&Place=$place&SDate=$startDate&EDate=$endDate&Lat=$lat&Lng=$lng&ID_Use=$id&ID_Project=$idp';
+        '${Urlcon().domain}/GGB_BD/editProjectuse.php?isAdd=true&Project_Name=$projecctName&Responsible_Name=$responsible&Place=$place&SDate=$startDate&EDate=$endDate&Lat=$lat&Lng=$lng&ID_Use=$id&ID_Project=$idp&Status=$type1';
 
     await Dio().get(url).then((data) {
       //print("================== + $data");
@@ -134,6 +130,31 @@ class _EditdataProjectState extends State<EditdataProject> {
         //Navigator.pop(context);
       }
       idProject = projectModel.iDProject.toString();
+    });
+  }
+
+  Future<Null> updateStatus() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String id = preferences.getString('id');
+    //String type ;
+    String idp = projectModel.iDProject;
+    print('3373737373737373 ===$values');
+    //print('5555555555555555 ===$state');
+    values == true ? type1 = '1' : type1 = '0';
+    //state == true ? type2 = '1' : type2 = '0';
+
+    String url =
+        '${Urlcon().domain}/GGB_BD/editProjectuse.php?isAdd=true&Status=$type1&ID_Use=$id&ID_Project=$idp&acction=updateType';
+
+    await Dio().get(url).then((data) {
+      //print("================== + $url");
+      if (data.toString() == 'true') {
+        //Navigator.pop(context);ID_Project
+        normalDialog(context, 'อัพเดตข้อมูลสำเร็จ');
+      } else {
+        normalDialog(context, 'ไม่สามารถบันทึกได้ กรุณาลองใหม่');
+        //Navigator.pop(context);
+      }
     });
   }
 
@@ -185,6 +206,10 @@ class _EditdataProjectState extends State<EditdataProject> {
                   SizedBox(
                     height: 5,
                   ),
+                  // switButton2(),
+                  // SizedBox(
+                  //   height: 5,
+                  // ),
                   lat == null ? MyStyle().showProgress() : showmap(),
                   SizedBox(
                     height: 5,
@@ -374,6 +399,33 @@ class _EditdataProjectState extends State<EditdataProject> {
     );
   }
 
+  Padding switButton2() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+      child: Row(
+        children: <Widget>[
+          Text('ประกาศโครงการ: ', style: TextStyle(fontSize: 18)),
+          Transform.scale(
+            scale: 1.5,
+            child: Switch.adaptive(
+              activeColor: Colors.blueAccent,
+              //activeTrackColor: Colors.,
+              value: values,
+              onChanged: (swi) {
+                setState(() {
+                  swi == true ? this.values = true : this.values = false;
+                  //this.value = swi;
+                });
+                //notificationProject(model.iD);
+                //print('6666666666666666666666666666666666666666666$value');
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Padding switButton1() {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
@@ -385,14 +437,16 @@ class _EditdataProjectState extends State<EditdataProject> {
             child: Switch.adaptive(
               activeColor: Colors.blueAccent,
               //activeTrackColor: Colors.,
-              value: value,
+              value: values,
               onChanged: (swi) {
                 setState(() {
-                  swi == true ? this.value = true : this.value = false;
+                  swi == true ? this.values = true : this.values = false;
                   //this.value = swi;
+                  //updateStatus();
                 });
-                notificationProject(model.iD);
-                //print('6666666666666666666666666666666666666666666$value');
+                updateStatus();
+                //notificationProject(model.iD);
+                print('6666666666666666666666666666666666666666666$values');
               },
             ),
           ),

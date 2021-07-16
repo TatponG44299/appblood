@@ -33,8 +33,8 @@ class _MapState extends State<Maps> {
   GoogleMapController _controller;
   final Set<Marker> _markers = {};
   final Set<Circle> _circle = {};
-  double _radius = 100.0;
-  double _zoom = 9.0;
+  double _radius = 1000.0;
+  double _zoom = 14.5;
   //double _zoom = 18.0;
   bool _showFixedGpsIcon = false;
   bool _isRadiusFixed = false;

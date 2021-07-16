@@ -20,9 +20,9 @@ class UseWantDanate extends StatefulWidget {
 class _UseWantDanateState extends State<UseWantDanate> {
   UserWantDonate userwantDonate;
   var idDonate;
-  bool value = false;
-  bool state = false;
-  String type1, type2;
+  bool values;
+  bool state;
+  String type1, type2, v, s;
 
   @override
   void initState() {
@@ -34,13 +34,13 @@ class _UseWantDanateState extends State<UseWantDanate> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String id = preferences.getString('id');
     //String type ;
-    print('3373737373737373 ===$value');
+    print('3373737373737373 ===$values');
     print('5555555555555555 ===$state');
-    value == true ? type1 = '1' : type1 = '0';
+    values == true ? type1 = '1' : type1 = '0';
     state == true ? type2 = '1' : type2 = '0';
 
     String url =
-        '${Urlcon().domain}/GGB_BD/userWantDonate.php?isAdd=true&type=$type1&=$type2&ID_Use=$id&ID_UseDonate=$idDonate&acction=updateType';
+        '${Urlcon().domain}/GGB_BD/userWantDonate.php?isAdd=true&Quick_Donate=$type1&Project_Donate=$type2&ID_Use=$id&ID_UseDonate=$idDonate&acction=updateType';
 
     await Dio().get(url).then((data) {
       //print("================== + $url");
@@ -65,9 +65,9 @@ class _UseWantDanateState extends State<UseWantDanate> {
     // String url =
     //     '${Urlcon().domain}/GGB_BD/getUserWantDonateWhereID.php?isAdd=true&ID_Use=$id';
     await Dio().get(url).then((value) {
-      print('Value = $value');
+      //print('Value = $value');
       var result = json.decode(value.data);
-      print('result==$result');
+      //print('result==$result');
       for (var map in result) {
         //print('fname == ${accountModel.firstName}');
         setState(() {
@@ -75,7 +75,13 @@ class _UseWantDanateState extends State<UseWantDanate> {
         });
       }
       idDonate = userwantDonate.iDUseDonate;
-      //value = userwantDonate.type;
+      v = userwantDonate.projectDonate;
+      s = userwantDonate.quickDonate;
+
+      v == '0' ? values = false : values = true;
+      s == '0' ? state = false : state = true;
+
+      //print('*******************************+' + v);
     }).catchError((onError) => print(onError));
   }
 
@@ -93,7 +99,6 @@ class _UseWantDanateState extends State<UseWantDanate> {
                   'ละติจูด = ${userwantDonate.lat},ลองติจูด = ${userwantDonate.lng}'))
     ].toSet();
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -172,10 +177,10 @@ class _UseWantDanateState extends State<UseWantDanate> {
             child: Switch.adaptive(
               activeColor: Colors.blueAccent,
               //activeTrackColor: Colors.,
-              value: value,
+              value: values,
               onChanged: (swi) {
                 setState(() {
-                  swi == true ? this.value = true : this.value = false;
+                  swi == true ? this.values = true : this.values = false;
                   //this.value = swi;
                 });
                 updatetype();

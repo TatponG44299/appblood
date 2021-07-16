@@ -10,6 +10,7 @@ class UseDonate {
   String lat;
   String lng;
   String iDUse;
+  String status;
 
   UseDonate(
       {this.iDRequest,
@@ -22,7 +23,8 @@ class UseDonate {
       this.endTime,
       this.lat,
       this.lng,
-      this.iDUse});
+      this.iDUse,
+      this.status});
 
   UseDonate.fromJson(Map<String, dynamic> json) {
     iDRequest = json['ID_request'];
@@ -36,6 +38,7 @@ class UseDonate {
     lat = json['Lat'];
     lng = json['Lng'];
     iDUse = json['ID_Use'];
+    status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -51,6 +54,7 @@ class UseDonate {
     data['Lat'] = this.lat;
     data['Lng'] = this.lng;
     data['ID_Use'] = this.iDUse;
+    data['status'] = this.status;
     return data;
   }
 }

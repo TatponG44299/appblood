@@ -109,7 +109,7 @@ class _ProjectPageState extends State<ProjectPage> {
             usedataMenu(),
             statisticsMenu(),
             notificMenu(),
-            queryMenu(),
+            //queryMenu(),
             // Divider(
             //   color: Colors.grey[700],
             // ),

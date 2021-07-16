@@ -17,9 +17,21 @@ class Addproject extends StatefulWidget {
   _AddprojectState createState() => _AddprojectState();
 }
 
+var selectedClutter;
+List<String> _pointClutter = <String>[
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+];
+
 class _AddprojectState extends State<Addproject> {
   String projecctName, responsible, place;
-  var res, lat1, lat2, lat3, lng1, lng2, lng3;
+  var res, lat1, lat2, lat3, lng1, lng2, lng3, latc, lngc, i;
 
   ProjectModel projectModel;
 
@@ -31,8 +43,12 @@ class _AddprojectState extends State<Addproject> {
   DateTime startDate, endDate;
 
   //List<Marker> useMarker = [];
-
+  //Set<Marker> setMarker = Set();
   List<Marker> myMarker = [];
+  List latall = [];
+  List lngall = [];
+
+  //var _clusLatLng = LatLng(lat1, lng2),
 
   @override
   void initState() {
@@ -71,7 +87,7 @@ class _AddprojectState extends State<Addproject> {
       lng = locationData.longitude;
     });
 
-    print("lat ============ $lat , lng = $lng");
+    //print("lat ============ $lat , lng = $lng");
   }
 
   Future<LocationData> findLocation() async {
@@ -84,7 +100,8 @@ class _AddprojectState extends State<Addproject> {
   }
 
   Future<Null> readLocation() async {
-    String url = '${Urlcon().domain}/GGB_BD/democlustering.php?isAdd=true';
+    String url =
+        '${Urlcon().domain}/GGB_BD/democlustering.php?isAdd=true&Cuspoint=$selectedClutter';
 
     Response response = await Dio().get(url);
     res = json.decode(response.data);
@@ -103,11 +120,35 @@ class _AddprojectState extends State<Addproject> {
       lng3 = name[2]['Lng'].toDouble();
       ///////////////////////////////////
     });
-    print('****************$name');
-    print('****************$lat1 + $lng1');
-    print('****************$lat2 + $lng2');
-    print('****************$lat3 + $lng3');
+    print('1****************$lat1 + $lng1');
+    print('2****************$lat2 + $lng2');
+    print('3****************$lat3 + $lng3');
+
+    // for (i = 0; i < int.parse(selectedClutter); i++) {
+    //   setState(() {
+    //     latc = name[i]['Lat'].toDouble();
+    //     lngc = name[i]['Lng'].toDouble();
+    //     print('lat*******$latc +  lng*******$lngc');
+    //     //setMarker.add(resultMarker(latc, lngc));
+    //   });
+    //   setMarker.add(resultMarker());
+    // }
+
+    //setMarker.add(resultMarker());
+    //print('****************$name');
   }
+
+  // Marker resultMarker() {
+  //   return Marker(
+  //     markerId: MarkerId('ID_Project$id'),
+  //     position: //_clusLatLng,
+  //         LatLng(latc, lngc),
+  //     icon: BitmapDescriptor.defaultMarkerWithHue(60.0),
+  //     infoWindow: InfoWindow(
+  //         title: 'จุดที่ควรจัดจุดที่:$selectedClutter',
+  //         snippet: 'ละติจูด = $latc,ลองติจูด = $lngc'),
+  //   );
+  // }
 
   Future<Null> dataProject() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -197,13 +238,53 @@ class _AddprojectState extends State<Addproject> {
             SizedBox(
               height: 5,
             ),
-            lat == null || lat1 == null ? MyStyle().showProgress() : showmap(),
+            //clustereDrop(),
+            SizedBox(
+              height: 5,
+            ),
+            lat == null || lng1 == null ? MyStyle().showProgress() : showmap(),
+            //selectedClutter == null ? MyStyle().showProgress() : showmap(),
             SizedBox(
               height: 5,
             ),
             saveButton()
           ],
         ),
+      ),
+    );
+  }
+
+  Padding clustereDrop() {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Row(
+        children: <Widget>[
+          IconButton(icon: Icon(Icons.map_sharp), onPressed: null),
+          Text('จุดต้องการบริจาค:  '),
+          DropdownButton(
+            items: _pointClutter.map((value) {
+              var dropdownMenuItem = DropdownMenuItem(
+                child: Text(
+                  value,
+                ),
+                value: value,
+              );
+              return dropdownMenuItem;
+            }).toList(),
+            onChanged: (selectBloodType) {
+              setState(() {
+                selectedClutter = selectBloodType;
+                readLocation();
+              });
+              //readLocation();
+            },
+            value: selectedClutter,
+            hint: Text(
+              '-',
+              //style: TextStyle(fontSize: 20)
+            ),
+          ),
+        ],
       ),
     );
   }

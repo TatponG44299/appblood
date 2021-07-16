@@ -8,6 +8,7 @@ class ProjectModel {
   String lat;
   String lng;
   String iDUse;
+  String status;
 
   ProjectModel(
       {this.iDProject,
@@ -18,7 +19,8 @@ class ProjectModel {
       this.eDate,
       this.lat,
       this.lng,
-      this.iDUse});
+      this.iDUse,
+      this.status});
 
   ProjectModel.fromJson(Map<String, dynamic> json) {
     iDProject = json['ID_Project'];
@@ -30,6 +32,7 @@ class ProjectModel {
     lat = json['Lat'];
     lng = json['Lng'];
     iDUse = json['ID_Use'];
+    status = json['Status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -43,6 +46,7 @@ class ProjectModel {
     data['Lat'] = this.lat;
     data['Lng'] = this.lng;
     data['ID_Use'] = this.iDUse;
+    data['Status'] = this.status;
     return data;
   }
 }

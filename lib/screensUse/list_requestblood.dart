@@ -17,7 +17,7 @@ class Requestblood extends StatefulWidget {
 
 class _RequestbloodState extends State<Requestblood> {
   var res, projectName, date;
-  List<UseDonate> useDonates = List();
+  List<UseDonate> useDonates = [];
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class _RequestbloodState extends State<Requestblood> {
 
     //เปลี่ยนเป็นตารางของ โครงการบริจาคด้วย
     String url =
-        '${Urlcon().domain}/GGB_BD/getdataReqUsebyID.php?isAdd=true&ID_Use=$id';
+        '${Urlcon().domain}/GGB_BD/getdataReqUsebyID.php?isAdd=true&ID_Use=$id&status=1';
 
     Response response = await Dio().get(url);
     res = json.decode(response.data);
