@@ -9,6 +9,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'donorlist.dart';
+
 class InfostaticsProject extends StatefulWidget {
   final ProjectModel projectModel;
 
@@ -23,8 +25,9 @@ class _InfostaticsProjectState extends State<InfostaticsProject> {
   ProjectModel projectModel;
   HistoryModel historyModel;
   AccountModel accountModel;
-  List<AccountModel> accountModels = List();
-  List resUser = List();
+  List<ProjectModel> projectModels = [];
+  List<AccountModel> accountModels = [];
+  List resUser = [];
   List gA = [];
   List gB = [];
   List gO = [];
@@ -66,12 +69,12 @@ class _InfostaticsProjectState extends State<InfostaticsProject> {
           gAB.add(g);
         }
       });
-      print('55555555555555555555555555555555555555555555555' + g);
-      //print('**************************' + res.toString());
-      print("ABABABABABABAB=${gAB.length}");
-      print("AAAAAAAAAAAAAA=${gA.length}");
-      print("BBBBBBBBBBBBBb=${gB.length}");
-      print("OOOOOOOOOOOOOO=${gO.length}");
+      // print('55555555555555555555555555555555555555555555555' + g);
+      // //print('**************************' + res.toString());
+      // print("ABABABABABABAB=${gAB.length}");
+      // print("AAAAAAAAAAAAAA=${gA.length}");
+      // print("BBBBBBBBBBBBBb=${gB.length}");
+      // print("OOOOOOOOOOOOOO=${gO.length}");
       //readataUse();
       //setMarker.add(resultMarker());
 
@@ -141,6 +144,7 @@ class _InfostaticsProjectState extends State<InfostaticsProject> {
           textgbAB(),
           gbAB(),
           gbAll(),
+          detillButton(),
           //buildListData(),
         ],
       ),
@@ -366,4 +370,33 @@ class _InfostaticsProjectState extends State<InfostaticsProject> {
           ],
         ),
       );
+
+  Container detillButton() => Container(
+      margin: EdgeInsets.only(top: 460, left: 200),
+      //width: 250.0,
+      child: ClipRRect(
+        //ลดเหลี่ยมปุ่ม
+        borderRadius: BorderRadius.circular(10),
+        child: FlatButton(
+          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          color: Colors.redAccent[700],
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Donorlist(
+                  projectModel: idp,
+                ),
+              ),
+            );
+
+            //Donorlist();
+            print('*************************=$idp');
+          },
+          child: Text(
+            'รายชื่อผู้มาบริจาค',
+            style: TextStyle(color: Colors.white, fontSize: 18.0),
+          ),
+        ),
+      ));
 }

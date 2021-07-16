@@ -4,6 +4,7 @@ import 'package:appblood/model/accout_model.dart';
 import 'package:appblood/model/useDonate_model.dart';
 import 'package:appblood/nuility/mySty.dart';
 import 'package:appblood/nuility/my_con.dart';
+import 'package:appblood/widgetscreensUse/mapfindbyUse/mapsState.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -17,7 +18,7 @@ class Pagehomeproject extends StatefulWidget {
 }
 
 class _PagehomeprojectState extends State<Pagehomeproject> {
- var res, idProject, nameProject,iduse;
+  var res, name, nameProject, iduse;
   double lat, lng, latuse, lnguse;
   //ProjectModel projectModel;
   UseDonate useDonate;
@@ -26,11 +27,11 @@ class _PagehomeprojectState extends State<Pagehomeproject> {
 
   Marker resultMarker() {
     return Marker(
-      markerId: MarkerId('ID_Project$idProject'),
+      markerId: MarkerId('ชื่อผู้พร้อมบริจาค$iduse'),
       position: LatLng(lat, lng),
       icon: BitmapDescriptor.defaultMarkerWithHue(60.0),
       infoWindow: InfoWindow(
-          title: 'ชื่อโครงการ:$nameProject',
+          title: 'ชื่อผู้พร้อมบริจาค$iduse',
           snippet: 'ละติจูด = $lat,ลองติจูด = $lng'),
     );
   }
@@ -97,7 +98,7 @@ class _PagehomeprojectState extends State<Pagehomeproject> {
   void initState() {
     super.initState();
     //projectModel = widget.projectModel;
-    //findLatLng();
+    findLatLng();
     readDatamapuse();
   }
 
@@ -119,15 +120,11 @@ class _PagehomeprojectState extends State<Pagehomeproject> {
         //namef = useDonate.firstName;
         //namel = useDonate.firstName;
         iduse = useDonate.iDUse;
+        name = useDonate.announceName;
       });
       setMarker.add(resultMarker());
     }
   }
-
-  static final thai = CameraPosition(
-    target: LatLng(13.7204405, 100.4196398),
-    zoom: 10,
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -143,14 +140,17 @@ class _PagehomeprojectState extends State<Pagehomeproject> {
       //   ),
       //   title: Text('จุดตั้งโครงการ'),
       // ),
-      body: lat == null 
+      body: lat == null || latuse == null
           ? MyStyle().showProgress()
           : GoogleMap(
-              initialCameraPosition: thai,
+              initialCameraPosition: CameraPosition(
+                target: LatLng(latuse, lnguse),
+                zoom: 10,
+              ),
               mapType: MapType.normal,
               onMapCreated: (controller) {},
               markers: setMarker,
-             // circles: ,
+              // circles: ,
             ),
     );
   }

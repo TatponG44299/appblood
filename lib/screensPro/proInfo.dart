@@ -65,9 +65,9 @@ class _ProinfoState extends State<Proinfo> {
   Widget showDatainfo() => Column(
         children: <Widget>[
           showimage(),
-          idtextshow(),
+          //idtextshow(),
           nameTextshow(),
-          agetextshow(),
+          //agetextshow(),
           phontextshow(),
           infotextshowone(),
           infotextshowtwo(),
@@ -120,7 +120,7 @@ class _ProinfoState extends State<Proinfo> {
               ),
             ),
             Text(
-              '${accountModel.firstName}   ${accountModel.lastName} ',
+              '${accountModel.firstName}  ',
               style: TextStyle(fontSize: 20.0),
             ),
           ],
@@ -153,7 +153,7 @@ class _ProinfoState extends State<Proinfo> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'มือถือ : ',
+              'ติดต่อ : ',
               style: TextStyle(
                 fontSize: 20.0,
                 color: Colors.purple[900],

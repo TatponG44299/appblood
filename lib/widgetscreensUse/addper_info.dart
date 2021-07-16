@@ -88,7 +88,7 @@ class _AddinfodataState extends State<Addinfodata> {
             gimage(),
             fnamefield(),
             lnamefield(),
-            idfield(),
+            //idfield(),
             phonfield(),
             //nameblood(),
             bloodTypeDrop(),
@@ -200,7 +200,7 @@ class _AddinfodataState extends State<Addinfodata> {
 
   Widget dateHBD() {
     return Container(
-      margin: EdgeInsets.only(top: 318, right: 25),
+      margin: EdgeInsets.only(top: 310, right: 25),
       width: 230,
       child: ListTile(
         title: Text(
@@ -229,7 +229,7 @@ class _AddinfodataState extends State<Addinfodata> {
 
   Widget saveButton() => Center(
         child: Container(
-          margin: EdgeInsets.only(top: 550, left: 25, right: 25),
+          margin: EdgeInsets.only(top: 690, left: 25, right: 25),
           width: 250,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15.0),
@@ -326,7 +326,7 @@ class _AddinfodataState extends State<Addinfodata> {
 
   Widget fnamefield() => Container(
         margin: EdgeInsets.only(top: 150, left: 25),
-        width: 140,
+        width: 155,
         child: TextField(
           onChanged: (value) => fname = value.trim(),
           decoration: InputDecoration(labelText: 'ชื่อ'),
@@ -338,7 +338,7 @@ class _AddinfodataState extends State<Addinfodata> {
         children: [
           Container(
             margin: EdgeInsets.only(top: 150, right: 25),
-            width: 140,
+            width: 155,
             child: TextField(
               onChanged: (value) => lname = value.trim(),
               decoration: InputDecoration(labelText: 'นามสกุล'),
@@ -356,7 +356,7 @@ class _AddinfodataState extends State<Addinfodata> {
       );
 
   Widget phonfield() => Container(
-        margin: EdgeInsets.only(top: 250, left: 25, right: 25),
+        margin: EdgeInsets.only(top: 230, left: 25, right: 25),
         child: TextField(
           keyboardType: TextInputType.number,
           onChanged: (value) => phon = value.trim(),
@@ -384,7 +384,7 @@ class _AddinfodataState extends State<Addinfodata> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
-            margin: EdgeInsets.only(top: 320, left: 25, right: 25),
+            margin: EdgeInsets.only(top: 310, left: 25, right: 25),
             child: DropdownButton(
               items: _bloodType.map((value) {
                 var dropdownMenuItem = DropdownMenuItem(
@@ -408,52 +408,35 @@ class _AddinfodataState extends State<Addinfodata> {
       );
 
   Widget addressfield() => Container(
-        margin: EdgeInsets.only(top: 350, left: 25, right: 25),
+        margin: EdgeInsets.only(top: 370, left: 25, right: 25),
         child: TextField(
           onChanged: (value) => address = value.trim(),
           decoration: InputDecoration(labelText: 'รายละเอียดที่อยู่'),
         ),
       );
 
-  Widget tumbolfield() => Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 400, left: 25, right: 25),
-            width: 140,
-            child: TextField(
-              onChanged: (value) => tumbol = value.trim(),
-              decoration: InputDecoration(labelText: 'ตำบล/แขวง'),
-            ),
-          ),
-        ],
+  Widget tumbolfield() => Container(
+        margin: EdgeInsets.only(top: 450, left: 25, right: 25),
+        child: TextField(
+          onChanged: (value) => tumbol = value.trim(),
+          decoration: InputDecoration(labelText: 'ตำบล/แขวง'),
+        ),
       );
 
-  Widget districtfield() => Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 400, left: 25, right: 25),
-            width: 160,
-            child: TextField(
-              onChanged: (value) => district = value.trim(),
-              decoration: InputDecoration(labelText: 'อำเภอ/เขต'),
-            ),
-          ),
-        ],
+  Widget districtfield() => Container(
+        margin: EdgeInsets.only(top: 530, left: 25, right: 25),
+        child: TextField(
+          onChanged: (value) => district = value.trim(),
+          decoration: InputDecoration(labelText: 'อำเภอ/เขต'),
+        ),
       );
 
-  Widget countyfield() => Row(
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 450, left: 25, right: 25),
-            width: 160,
-            child: TextField(
-              onChanged: (value) => county = value.trim(),
-              decoration: InputDecoration(labelText: 'จังหวัด'),
-            ),
-          ),
-        ],
+  Widget countyfield() => Container(
+        margin: EdgeInsets.only(top: 610, left: 25, right: 25),
+        child: TextField(
+          onChanged: (value) => county = value.trim(),
+          decoration: InputDecoration(labelText: 'จังหวัด'),
+        ),
       );
   // Widget pssp() =>
   //         Container(

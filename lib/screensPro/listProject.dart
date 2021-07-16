@@ -19,7 +19,7 @@ class ListProject extends StatefulWidget {
 
 class _ListProjectState extends State<ListProject> {
   var res, projectName, date;
-  List<ProjectModel> projectModels = List();
+  List<ProjectModel> projectModels = [];
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _ListProjectState extends State<ListProject> {
 
     //เปลี่ยนเป็นตารางของ โครงการบริจาคด้วย
     String url =
-        '${Urlcon().domain}/GGB_BD/getdataProjectbyID.php?isAdd=true&ID_Use=$id';
+        '${Urlcon().domain}/GGB_BD/getdataProjectbyID.php?isAdd=true&ID_Use=$id&Status=1';
 
     Response response = await Dio().get(url);
     res = json.decode(response.data);

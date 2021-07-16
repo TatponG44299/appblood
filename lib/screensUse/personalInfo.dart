@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:appblood/model/accout_model.dart';
 import 'package:appblood/nuility/mySty.dart';
 import 'package:appblood/nuility/my_con.dart';
+import 'package:appblood/screensPro/addper_proinfo.dart';
 import 'package:appblood/widgetscreensUse/addper_info.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -65,10 +66,10 @@ class _PersonalState extends State<Personal> {
   Widget showDatainfo() => Column(
         children: <Widget>[
           showimage(),
-          idtextshow(),
+          //idtextshow(),
           nameTextshow(),
           bloodtextshow(),
-          agetextshow(),
+          //agetextshow(),
           phontextshow(),
           infotextshowone(),
           infotextshowtwo(),
@@ -140,7 +141,7 @@ class _PersonalState extends State<Personal> {
               ),
             ),
             Text(
-              '${accountModel.firstName}   ${accountModel.lastName} ',
+              '${accountModel.firstName} ${accountModel.lastName}',
               style: TextStyle(fontSize: 20.0),
             ),
           ],
@@ -173,7 +174,7 @@ class _PersonalState extends State<Personal> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'มือถือ : ',
+              'ติดต่อ : ',
               style: TextStyle(
                 fontSize: 20.0,
                 color: Colors.red,

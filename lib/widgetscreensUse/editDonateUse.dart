@@ -29,11 +29,11 @@ List<String> _bloodType = <String>[
 ];
 
 class _EditDonateUseState extends State<EditDonateUse> {
-  String announceName, recipName, phone, hospitalname, detail;
+  String announceName, recipName, phone, hospitalname, detail, type1, s;
 
   List<Marker> useMarker = [];
   double lat, lng;
-  bool value = false;
+  bool values;
   DateTime timedate;
   AccountModel model;
   String tokenUser;
@@ -47,9 +47,15 @@ class _EditDonateUseState extends State<EditDonateUse> {
   void initState() {
     super.initState();
     useDonateModel = widget.useDonateModel;
+    print(widget.useDonateModel);
+    //values = useDonateModel.status.toolen;
     findLatLng();
     timedate = DateTime.parse(useDonateModel.endTime);
     //timedate = DateTime.now();
+    s = useDonateModel.status;
+    s == '0' ? values = false : values = true;
+
+    print('ค่าstatus**************' + s);
   }
 
   _handleTap(LatLng tappedPoint) {
@@ -104,6 +110,32 @@ class _EditDonateUseState extends State<EditDonateUse> {
       if (data.toString() == 'true') {
         Navigator.pop(context);
         normalDialog(context, 'ลงข้อมูลสำเร็จ');
+      } else {
+        normalDialog(context, 'ไม่สามารถบันทึกได้ กรุณาลองใหม่');
+        //Navigator.pop(context);
+      }
+    });
+  }
+
+  Future<Null> updateStatus() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String id = preferences.getString('id');
+    //String type ;
+    String idr = useDonateModel.iDRequest;
+    //print('3373737373737373 ===$values');
+    //print('5555555555555555 ===$state');
+    values == true ? type1 = '1' : type1 = '0';
+    //state == true ? type2 = '1' : type2 = '0';
+    print('$id $idr $type1');
+
+    String url =
+        '${Urlcon().domain}/GGB_BD/bloodrequestUse.php?isAdd=true&status=$type1&ID_Use=$id&ID_request=$idr&acction=updateType';
+
+    await Dio().get(url).then((data) {
+      //print("================== + $url");
+      if (data.toString() == 'true') {
+        //Navigator.pop(context);ID_Project
+        normalDialog(context, 'อัพเดตข้อมูลสำเร็จ');
       } else {
         normalDialog(context, 'ไม่สามารถบันทึกได้ กรุณาลองใหม่');
         //Navigator.pop(context);
@@ -355,14 +387,17 @@ class _EditDonateUseState extends State<EditDonateUse> {
             child: Switch.adaptive(
               activeColor: Colors.blueAccent,
               //activeTrackColor: Colors.,
-              value: value,
+              value: values,
               onChanged: (swi) {
                 setState(() {
-                  swi == true ? this.value = true : this.value = false;
+                  swi == true ? this.values = true : this.values = false;
                   //this.value = swi;
                 });
                 notificationProject();
                 //print('6666666666666666666666666666666666666666666$value');
+                //notificationProject(model.iD);
+                updateStatus();
+                print('6666666666666666666666666666666666666666666$values');
               },
             ),
           ),

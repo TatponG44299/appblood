@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'listProject.dart';
+import 'proInfo.dart';
 import 'searchCluster.dart';
 import 'statisticsProject.dart';
 
@@ -108,7 +109,7 @@ class _ProjectPageState extends State<ProjectPage> {
             usedataMenu(),
             statisticsMenu(),
             notificMenu(),
-            queryMenu(),
+            //queryMenu(),
             // Divider(
             //   color: Colors.grey[700],
             // ),
@@ -248,7 +249,7 @@ class _ProjectPageState extends State<ProjectPage> {
         // });
         Navigator.pop(context);
         MaterialPageRoute route =
-            MaterialPageRoute(builder: (value) => Personal());
+            MaterialPageRoute(builder: (value) => Proinfo());
         Navigator.push(context, route);
       },
     );
@@ -257,6 +258,6 @@ class _ProjectPageState extends State<ProjectPage> {
 //UserAccountDrawrHead
   UserAccountsDrawerHeader showDrawerHeader() {
     return UserAccountsDrawerHeader(
-        accountName: Text('$fname $lname'), accountEmail: Text('$email'));
+        accountName: Text('$fname'), accountEmail: Text('$email'));
   }
 }
