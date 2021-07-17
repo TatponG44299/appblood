@@ -430,7 +430,7 @@ class _EditDonateUseState extends State<EditDonateUse> {
   Future<Null> sendNotificationProject() async {
     //text ใน notification
     String text =
-        'มีผู้ป่วย ${useDonateModel.receiverName} ต้องการหมู่เลือด ${useDonateModel.bloodType} ที่ ${useDonateModel.hospitalName}';
+        'มีผู้ป่วย ${useDonateModel.receiverName} ต้องการหมู่เลือด ${useDonateModel.bloodType} ณ ที่ ${useDonateModel.hospitalName}';
     String urlSendtoken =
         '${Urlcon().domain}/GGB_BD/Line_notify.php?token=$tokenUser&text=$text';
     await Dio().get(urlSendtoken);
