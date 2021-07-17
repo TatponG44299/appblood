@@ -33,11 +33,11 @@ class _EditDonateUseState extends State<EditDonateUse> {
 
   List<Marker> useMarker = [];
   double lat, lng;
-  bool values;
+
   DateTime timedate;
   AccountModel model;
   String tokenUser;
-
+  bool values;
   var res;
 
   int index;
@@ -381,7 +381,7 @@ class _EditDonateUseState extends State<EditDonateUse> {
       padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
       child: Row(
         children: <Widget>[
-          Text('ประกาศขอรับบริจาค: ', style: TextStyle(fontSize: 18)),
+          Text('อัพเดตข้อมูล: ', style: TextStyle(fontSize: 18)),
           Transform.scale(
             scale: 1.5,
             child: Switch.adaptive(
@@ -395,7 +395,7 @@ class _EditDonateUseState extends State<EditDonateUse> {
                 });
 
                 updateStatus();
-                notificationProject();
+                //notificationProject();
                 print('6666666666666666666666666666666666666666666$values');
               },
             ),
@@ -405,38 +405,38 @@ class _EditDonateUseState extends State<EditDonateUse> {
     );
   }
 
-  Future<Null> notificationProject() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String iD = preferences.getString('id');
-    String urlFindToken =
-        '${Urlcon().domain}/GGB_BD/getUserWhereID.php?isAdd=true&ID=$iD';
-    print('==================================> $iD');
-    //ใช้ iD เพื่อให้คายตัว model ออกมาเพื่อหา token และใช้ค่านี้ยิงต่อไปที่ apiNotification เพื่อแจ้งเตือน
-    await Dio().get(urlFindToken).then((value) {
-      print('======================> $urlFindToken');
-      var result = json.decode(value.data);
-      print('result ======================> $result');
-      for (var json in result) {
-        AccountModel model = AccountModel.fromJson(json);
-        tokenUser = model.token;
+  // Future<Null> notificationProject() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   String iD = preferences.getString('id');
+  //   String urlFindToken =
+  //       '${Urlcon().domain}/GGB_BD/getUserWhereID.php?isAdd=true&ID=$iD';
+  //   print('==================================> $iD');
+  //   //ใช้ iD เพื่อให้คายตัว model ออกมาเพื่อหา token และใช้ค่านี้ยิงต่อไปที่ apiNotification เพื่อแจ้งเตือน
+  //   await Dio().get(urlFindToken).then((value) {
+  //     print('======================> $urlFindToken');
+  //     var result = json.decode(value.data);
+  //     print('result ======================> $result');
+  //     for (var json in result) {
+  //       AccountModel model = AccountModel.fromJson(json);
+  //       tokenUser = model.token;
 
-        print('tokenUser ========= $tokenUser');
+  //       print('tokenUser ========= $tokenUser');
 
-        sendNotificationProject();
-      }
-    });
-  }
+  //       sendNotificationProject();
+  //     }
+  //   });
+  // }
 
-  Future<Null> sendNotificationProject() async {
-    //text ใน notification
-    String text =
-        'มีผู้ป่วย ${useDonateModel.receiverName} ต้องการหมู่เลือด ${useDonateModel.bloodType} ณ ที่ ${useDonateModel.hospitalName}';
-    String urlSendtoken =
-        '${Urlcon().domain}/GGB_BD/Line_notify.php?token=$tokenUser&text=$text';
-    await Dio().get(urlSendtoken);
-    print(
-        'urlSendtoken = =========================================>>>>>$urlSendtoken');
-    //sendNotificationProject(urlSendtoken);
-    //then((value) => normalDialog(context, 'ประกาศขอรับบริจาคสำเร็จ'));
-  }
+  // Future<Null> sendNotificationProject() async {
+  //   //text ใน notification
+  //   String text =
+  //       'มีผู้ป่วย ${useDonateModel.receiverName} ต้องการหมู่เลือด ${useDonateModel.bloodType} ที่ ${useDonateModel.hospitalName}';
+  //   String urlSendtoken =
+  //       '${Urlcon().domain}/GGB_BD/Line_notify.php?token=$tokenUser&text=$text';
+  //   await Dio().get(urlSendtoken);
+  //   print(
+  //       'urlSendtoken = =========================================>>>>>$urlSendtoken');
+  //   //sendNotificationProject(urlSendtoken);
+  //   //then((value) => normalDialog(context, 'ประกาศขอรับบริจาคสำเร็จ'));
+  // }
 }

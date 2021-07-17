@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:appblood/model/accout_model.dart';
 import 'package:appblood/nuility/mySty.dart';
 import 'package:appblood/nuility/my_con.dart';
 import 'package:appblood/nuility/normal_Dialog.dart';
@@ -28,8 +31,10 @@ class _RequestInfoState extends State<RequestInfo> {
 
   List<Marker> useMarker = [];
   double lat, lng;
-
+  String tokenUser;
+  bool values;
   DateTime timedate;
+  AccountModel model;
 
   @override
   void initState() {
@@ -110,6 +115,7 @@ class _RequestInfoState extends State<RequestInfo> {
             calluser(),
             bloodTypeDrop(),
             starttime(),
+            switButton1(),
             lat == null ? MyStyle().showProgress() : showmap(),
             SizedBox(
               height: 5,
@@ -322,5 +328,68 @@ class _RequestInfoState extends State<RequestInfo> {
         ],
       ),
     );
+  }
+
+  Padding switButton1() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+      child: Row(
+        children: <Widget>[
+          Text('ประกาศขอรับบริจาค: ', style: TextStyle(fontSize: 18)),
+          Transform.scale(
+            scale: 1.5,
+            child: Switch.adaptive(
+              activeColor: Colors.blueAccent,
+              //activeTrackColor: Colors.,
+              value: values,
+              onChanged: (swi) {
+                setState(() {
+                  swi == true ? this.values = true : this.values = false;
+                  //this.value = swi;
+                });
+
+                notificationProject();
+                print('6666666666666666666666666666666666666666666$values');
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<Null> notificationProject() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String iD = preferences.getString('id');
+    String urlFindToken =
+        '${Urlcon().domain}/GGB_BD/getUserWhereID.php?isAdd=true&ID=$iD';
+    print('==================================> $iD');
+    //ใช้ iD เพื่อให้คายตัว model ออกมาเพื่อหา token และใช้ค่านี้ยิงต่อไปที่ apiNotification เพื่อแจ้งเตือน
+    await Dio().get(urlFindToken).then((value) {
+      print('======================> $urlFindToken');
+      var result = json.decode(value.data);
+      print('result ======================> $result');
+      for (var json in result) {
+        AccountModel model = AccountModel.fromJson(json);
+        tokenUser = model.token;
+
+        print('tokenUser ========= $tokenUser');
+
+        sendNotificationProject();
+      }
+    });
+  }
+
+  Future<Null> sendNotificationProject() async {
+    //text ใน notification
+    String text =
+        'มีผู้ป่วย $announceName ต้องการหมู่เลือด $selectedType ที่ $hospitalname';
+    String urlSendtoken =
+        '${Urlcon().domain}/GGB_BD/Line_notify.php?token=$tokenUser&text=$text';
+    await Dio().get(urlSendtoken);
+    print(
+        'urlSendtoken = =========================================>>>>>$urlSendtoken');
+    //sendNotificationProject(urlSendtoken);
+    //then((value) => normalDialog(context, 'ประกาศขอรับบริจาคสำเร็จ'));
   }
 }

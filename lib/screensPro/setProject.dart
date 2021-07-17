@@ -432,7 +432,7 @@ class _EditdataProjectState extends State<EditdataProject> {
       padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
       child: Row(
         children: <Widget>[
-          Text('ประกาศโครงการ: ', style: TextStyle(fontSize: 18)),
+          Text('อัพเดตข้อมูล: ', style: TextStyle(fontSize: 18)),
           Transform.scale(
             scale: 1.5,
             child: Switch.adaptive(
