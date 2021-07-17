@@ -358,6 +358,7 @@ class _AddprojectState extends State<Addproject> {
         color: Colors.red,
         onPressed: () {
           dataProject();
+          //sendNotificationProject();
           //_showNotification();
         },
         icon: Icon(Icons.save, color: Colors.white),
