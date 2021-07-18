@@ -32,12 +32,11 @@ class _HomeState extends State<Home> {
   AccountModel accountModel;
 
   //กำหนดหน้าแรกของแอพ01
-  Widget currentWidget =
-      BlocProvider(
-        create: (BuildContext context) => MapsBloc(),
-        child: Maps(),
-      );
-      //SelectWay();
+  Widget currentWidget = BlocProvider(
+    create: (BuildContext context) => MapsBloc(),
+    child: Maps(),
+  );
+  //SelectWay();
 
   @override
   void initState() {
@@ -116,13 +115,13 @@ class _HomeState extends State<Home> {
             //thaimap(),
             usedataMenu(),
             statisticsMenu(),
-            notificMenu(),
             queryMenu(),
+            requestbloodMenu(),
             Divider(
               color: Colors.grey[700],
             ),
+            notificMenu(),
             prodonatMenu(),
-            requestbloodMenu(),
             Divider(
               color: Colors.grey[700],
             ),
@@ -181,7 +180,7 @@ class _HomeState extends State<Home> {
   ListTile notificMenu() {
     return ListTile(
       leading: Icon(Icons.notifications),
-      title: Text('การแจ้งเตือน'),
+      title: Text('โลหิตด่วน'),
       onTap: () {
         Navigator.pop(context);
         MaterialPageRoute route =

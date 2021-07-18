@@ -29,7 +29,7 @@ class _NotficState extends State<Notfic> {
 
     //เปลี่ยนเป็นตารางของ โครงการบริจาคด้วย
     String url =
-        '${Urlcon().domain}/GGB_BD/getdataUseDonate.php?isAdd=true';
+        '${Urlcon().domain}/GGB_BD/getdataReqUsebyID.php?isAdd=true&status=1';
 
     Response response = await Dio().get(url);
     res = json.decode(response.data);
@@ -50,7 +50,7 @@ class _NotficState extends State<Notfic> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ขอรับบริจาคโลหิตด่วน'),
+        title: Text('โลหิตด่วน'),
         actions: <Widget>[
           // IconButton(
           //   icon: Icon(Icons.control_point),

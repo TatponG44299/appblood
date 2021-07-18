@@ -362,7 +362,8 @@ class _RequestInfoState extends State<RequestInfo> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String iD = preferences.getString('id');
     String urlFindToken =
-        '${Urlcon().domain}/GGB_BD/getUserWhereID.php?isAdd=true&ID=$iD';
+        '${Urlcon().domain}/GGB_BD/notifybyStatusQD.php?isAdd=true&Quick_Donate=1';
+    //'${Urlcon().domain}/GGB_BD/getUserWhereID.php?isAdd=true&ID=$iD';
     print('==================================> $iD');
     //ใช้ iD เพื่อให้คายตัว model ออกมาเพื่อหา token และใช้ค่านี้ยิงต่อไปที่ apiNotification เพื่อแจ้งเตือน
     await Dio().get(urlFindToken).then((value) {
