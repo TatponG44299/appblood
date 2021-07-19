@@ -35,6 +35,7 @@ class _RequestInfoState extends State<RequestInfo> {
   bool values;
   DateTime timedate;
   AccountModel model;
+  List tokenUsers = [];
 
   @override
   void initState() {
@@ -374,6 +375,7 @@ class _RequestInfoState extends State<RequestInfo> {
       for (var json in result) {
         AccountModel model = AccountModel.fromJson(json);
         tokenUser = model.token;
+        tokenUsers.add(tokenUser);
 
         print('tokenUser ========= $tokenUser');
 

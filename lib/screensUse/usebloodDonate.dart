@@ -143,7 +143,7 @@ class _UseWantDanateState extends State<UseWantDanate> {
         child: Row(
           // mainAxisAlignment: ma,
           children: <Widget>[
-            Text('บริจาคแบบโครงการ:   ', style: TextStyle(fontSize: 18)),
+            Text('การเเจ้งเตือนแบบโครงการ:   ', style: TextStyle(fontSize: 18)),
             Transform.scale(
               scale: 1.5,
               child: Switch.adaptive(
@@ -171,7 +171,7 @@ class _UseWantDanateState extends State<UseWantDanate> {
       padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
       child: Row(
         children: <Widget>[
-          Text('บริจาคแบบโลหิตด่วน: ', style: TextStyle(fontSize: 18)),
+          Text('การแจ้งเตือนแบบโลหิตด่วน: ', style: TextStyle(fontSize: 18)),
           Transform.scale(
             scale: 1.5,
             child: Switch.adaptive(
