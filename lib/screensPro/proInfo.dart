@@ -95,7 +95,7 @@ class _ProinfoState extends State<Proinfo> {
               'ตำแหน่ง/หน้าที่ : ',
               style: TextStyle(
                 fontSize: 20.0,
-                color: Colors.purple[900],
+                color: Colors.red,
               ),
             ),
             Text(
@@ -116,7 +116,7 @@ class _ProinfoState extends State<Proinfo> {
               'ชื่อ : ',
               style: TextStyle(
                 fontSize: 20.0,
-                color: Colors.purple[900],
+                color: Colors.red,
               ),
             ),
             Text(
@@ -136,7 +136,7 @@ class _ProinfoState extends State<Proinfo> {
               'อายุ : ',
               style: TextStyle(
                 fontSize: 20.0,
-                color: Colors.purple[900],
+                color: Colors.red,
               ),
             ),
             Text(
@@ -156,7 +156,7 @@ class _ProinfoState extends State<Proinfo> {
               'ติดต่อ : ',
               style: TextStyle(
                 fontSize: 20.0,
-                color: Colors.purple[900],
+                color: Colors.red,
               ),
             ),
             Text(
@@ -176,7 +176,7 @@ class _ProinfoState extends State<Proinfo> {
               'ที่อยู่ : ',
               style: TextStyle(
                 fontSize: 20.0,
-                color: Colors.purple[900],
+                color: Colors.red,
               ),
             ),
             Text(
@@ -228,7 +228,7 @@ class _ProinfoState extends State<Proinfo> {
             Container(
               margin: EdgeInsets.only(right: 16.0, bottom: 16.0),
               child: FloatingActionButton(
-                backgroundColor: Colors.purple[900],
+                backgroundColor: Colors.red,
                 child: Icon(Icons.edit),
                 onPressed: () => addEditdata(),
               ),

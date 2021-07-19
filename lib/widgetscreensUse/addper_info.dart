@@ -240,8 +240,8 @@ class _AddinfodataState extends State<Addinfodata> {
                     fname.isEmpty ||
                     lname == null ||
                     lname.isEmpty ||
-                    idCustom == null ||
-                    idCustom.isEmpty ||
+                    // idCustom == null ||
+                    // idCustom.isEmpty ||
                     phon == null ||
                     phon.isEmpty ||
                     selectedType == null ||

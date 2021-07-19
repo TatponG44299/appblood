@@ -238,7 +238,7 @@ class _AddprojectState extends State<Addproject> {
             SizedBox(
               height: 5,
             ),
-            switButton1(),
+            //switButton1(),
             SizedBox(
               height: 5,
             ),
@@ -358,6 +358,7 @@ class _AddprojectState extends State<Addproject> {
         color: Colors.red,
         onPressed: () {
           dataProject();
+          notificationProject();
           //sendNotificationProject();
           //_showNotification();
         },
@@ -458,40 +459,41 @@ class _AddprojectState extends State<Addproject> {
     );
   }
 
-  Padding switButton1() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-      child: Row(
-        children: <Widget>[
-          Text('ประกาศโครงการ: ', style: TextStyle(fontSize: 18)),
-          Transform.scale(
-            scale: 1.5,
-            child: Switch.adaptive(
-              activeColor: Colors.blueAccent,
-              //activeTrackColor: Colors.,
-              value: values,
-              onChanged: (swi) {
-                setState(() {
-                  swi == true ? this.values = true : this.values = false;
-                  //this.value = swi;
-                  //updateStatus();
-                });
+  // Padding switButton1() {
+  //   return Padding(
+  //     padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+  //     child: Row(
+  //       children: <Widget>[
+  //         Text('ประกาศโครงการ: ', style: TextStyle(fontSize: 18)),
+  //         Transform.scale(
+  //           scale: 1.5,
+  //           child: Switch.adaptive(
+  //             activeColor: Colors.blueAccent,
+  //             //activeTrackColor: Colors.,
+  //             value: values,
+  //             onChanged: (swi) {
+  //               setState(() {
+  //                 swi == true ? this.values = true : this.values = false;
+  //                 //this.value = swi;
+  //                 //updateStatus();
+  //               });
 
-                notificationProject();
-                print('6666666666666666666666666666666666666666666$values');
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  //               notificationProject();
+  //               print('6666666666666666666666666666666666666666666$values');
+  //             },
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Future<Null> notificationProject() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String iD = preferences.getString('id');
     String urlFindToken =
         '${Urlcon().domain}/GGB_BD/notifybyStatusQD.php?isAdd=true';
+    //'${Urlcon().domain}/GGB_BD/getUserWhereID.php?isAdd=true&ID=$iD';
     print('==================================> $iD');
     //ใช้ iD เพื่อให้คายตัว model ออกมาเพื่อหา token และใช้ค่านี้ยิงต่อไปที่ apiNotification เพื่อแจ้งเตือน
     await Dio().get(urlFindToken).then((value) {
@@ -502,10 +504,9 @@ class _AddprojectState extends State<Addproject> {
         AccountModel model = AccountModel.fromJson(json);
         tokenProject = model.token;
 
-        print('tokenProject =======================> $tokenProject');
-
-        sendNotificationProject();
+        print('tokenProject =======================> $tokenProject/////////');
       }
+      sendNotificationProject();
     });
   }
 

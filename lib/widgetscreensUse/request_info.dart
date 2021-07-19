@@ -115,7 +115,7 @@ class _RequestInfoState extends State<RequestInfo> {
             calluser(),
             bloodTypeDrop(),
             starttime(),
-            switButton1(),
+            //switButton1(),
             lat == null ? MyStyle().showProgress() : showmap(),
             SizedBox(
               height: 5,
@@ -132,6 +132,7 @@ class _RequestInfoState extends State<RequestInfo> {
         color: Colors.red,
         onPressed: () {
           dataRequestUse();
+          notificationProject();
         },
         icon: Icon(Icons.save, color: Colors.white),
         label: Text(
@@ -330,33 +331,33 @@ class _RequestInfoState extends State<RequestInfo> {
     );
   }
 
-  Padding switButton1() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-      child: Row(
-        children: <Widget>[
-          Text('ประกาศขอรับบริจาค: ', style: TextStyle(fontSize: 18)),
-          Transform.scale(
-            scale: 1.5,
-            child: Switch.adaptive(
-              activeColor: Colors.blueAccent,
-              //activeTrackColor: Colors.,
-              value: values,
-              onChanged: (swi) {
-                setState(() {
-                  swi == true ? this.values = true : this.values = false;
-                  //this.value = swi;
-                });
+  // Padding switButton1() {
+  //   return Padding(
+  //     padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+  //     child: Row(
+  //       children: <Widget>[
+  //         Text('ประกาศขอรับบริจาค: ', style: TextStyle(fontSize: 18)),
+  //         Transform.scale(
+  //           scale: 1.5,
+  //           child: Switch.adaptive(
+  //             activeColor: Colors.blueAccent,
+  //             //activeTrackColor: Colors.,
+  //             value: values,
+  //             onChanged: (swi) {
+  //               setState(() {
+  //                 swi == true ? this.values = true : this.values = false;
+  //                 //this.value = swi;
+  //               });
 
-                notificationProject();
-                print('6666666666666666666666666666666666666666666$values');
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  //               notificationProject();
+  //               print('6666666666666666666666666666666666666666666$values');
+  //             },
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Future<Null> notificationProject() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();

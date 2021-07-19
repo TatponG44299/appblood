@@ -78,9 +78,7 @@ class _AddproinfodataState extends State<Addproinfodata> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Color(0xff4a148c),
-          title: Text('เพิ่ม/แก้ข้อมูลส่วนตัว')),
+      appBar: AppBar(title: Text('เพิ่ม/แก้ข้อมูลส่วนตัว')),
       body: SingleChildScrollView(
         child: Stack(
           children: <Widget>[
@@ -136,7 +134,7 @@ class _AddproinfodataState extends State<Addproinfodata> {
         children: [
           IconButton(
             icon: Icon(Icons.add_photo_alternate),
-            color: Colors.purple[900],
+            color: Colors.red,
             iconSize: 32,
             onPressed: () => chooseImage(ImageSource.gallery),
           ),
@@ -152,7 +150,7 @@ class _AddproinfodataState extends State<Addproinfodata> {
         children: [
           IconButton(
             icon: Icon(Icons.add_a_photo),
-            color: Colors.purple[900],
+            color: Colors.red,
             iconSize: 28,
             onPressed: () => chooseImage(ImageSource.camera),
           ),
@@ -180,10 +178,9 @@ class _AddproinfodataState extends State<Addproinfodata> {
             child: Stack(
           children: <Widget>[
             CircleAvatar(
-              backgroundColor: Color(0xff4a148c),
               radius: 70.0,
               backgroundImage: image == null
-                  ? AssetImage('images/pimages_purple.png')
+                  ? AssetImage('images/pimages.png')
                   : FileImage(File(image.path)),
             )
           ],
@@ -236,7 +233,7 @@ class _AddproinfodataState extends State<Addproinfodata> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15.0),
             child: RaisedButton(
-              color: Colors.purple[900],
+              color: Colors.red,
               onPressed: () {
                 if (fname == null ||
                     fname.isEmpty ||
