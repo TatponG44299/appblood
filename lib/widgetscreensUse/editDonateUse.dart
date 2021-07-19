@@ -31,6 +31,7 @@ List<String> _bloodType = <String>[
 class _EditDonateUseState extends State<EditDonateUse> {
   String announceName, recipName, phone, hospitalname, detail, type1, s;
 
+  var datafors = DateFormat.yMMMd();
   List<Marker> useMarker = [];
   double lat, lng;
 
@@ -101,6 +102,7 @@ class _EditDonateUseState extends State<EditDonateUse> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String id = preferences.getString('id');
     String idr = useDonateModel.iDRequest;
+    print('******************************$idr');
 
     String url =
         '${Urlcon().domain}/GGB_BD/bloodrequestUse.php?isAdd=true&AnnounceName=$announceName&ReceiverName=$recipName&BloodType=$selectedType&HospitalName=$hospitalname&Detail=$detail&Contact=$phone&EndTime=$timedate&Lat=$lat&Lng=$lng&ID_Use=$id&ID_request=$idr';
@@ -173,7 +175,7 @@ class _EditDonateUseState extends State<EditDonateUse> {
     return RaisedButton.icon(
         color: Colors.red,
         onPressed: () {
-          dataRequestUse();
+          showconDialog();
         },
         icon: Icon(Icons.save, color: Colors.white),
         label: Text(
@@ -366,7 +368,7 @@ class _EditDonateUseState extends State<EditDonateUse> {
               child: Container(
             margin: EdgeInsets.only(right: 20, left: 10),
             child: TextFormField(
-              onChanged: (value) => announceName = value.trim(),
+              //onChanged: (value) => announceName = value.trim(),
               initialValue: useDonateModel.announceName,
               decoration: InputDecoration(hintText: 'ชื่อประกาศ'),
             ),
@@ -399,6 +401,78 @@ class _EditDonateUseState extends State<EditDonateUse> {
                 print('6666666666666666666666666666666666666666666$values');
               },
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> showconDialog() async {
+    showDialog(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: Center(
+          child: Text(
+            'ยืนยันข้อมูล',
+            style: TextStyle(fontSize: 20, color: Colors.blueAccent),
+          ),
+        ),
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'ผู้ที่ได้รับเลือด: $recipName',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'โรงพยาบาล / สถานที่: $hospitalname',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'รายละเอียดเบืองต้น: $detail',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'ติดต่อ: $phone',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'หมู่เลือด: $selectedType',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'วันที่ลงประกาศ: ${datafors.format(timedate)}',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+
+          //Text('สถานที่เปิดรับบริจาค: $place'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  dataRequestUse();
+                  Navigator.pop(context);
+                },
+                child: Text('ยืนยัน'),
+              ),
+            ],
           ),
         ],
       ),

@@ -29,6 +29,8 @@ List<String> _bloodType = <String>[
 class _RequestInfoState extends State<RequestInfo> {
   String announceName, recipName, phone, hospitalname, detail;
 
+  var datafors = DateFormat.yMMMd();
+
   List<Marker> useMarker = [];
   double lat, lng;
   String tokenUser;
@@ -36,11 +38,13 @@ class _RequestInfoState extends State<RequestInfo> {
   DateTime timedate;
   AccountModel model;
   List tokenUsers = [];
+  AccountModel accountModel;
 
   @override
   void initState() {
     super.initState();
     findLatLng();
+    readDataUser();
     timedate = DateTime.now();
   }
 
@@ -81,6 +85,26 @@ class _RequestInfoState extends State<RequestInfo> {
     } catch (e) {
       return null;
     }
+  }
+
+  Future<Null> readDataUser() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String id = preferences.getString('id');
+
+    String url =
+        '${Urlcon().domain}/GGB_BD/getUserWhereID.php?isAdd=true&ID=$id';
+    await Dio().get(url).then((value) {
+      print('Value = $value');
+      var result = json.decode(value.data);
+      print('result==$result');
+      for (var map in result) {
+        //print('fname == ${accountModel.firstName}');
+        setState(() {
+          accountModel = AccountModel.fromJson(map);
+        });
+      }
+      announceName = '${accountModel.firstName}  ${accountModel.lastName}';
+    });
   }
 
   Future<Null> dataRequestUse() async {
@@ -132,7 +156,7 @@ class _RequestInfoState extends State<RequestInfo> {
     return RaisedButton.icon(
         color: Colors.red,
         onPressed: () {
-          dataRequestUse();
+          showconDialog();
         },
         icon: Icon(Icons.save, color: Colors.white),
         label: Text(
@@ -246,6 +270,8 @@ class _RequestInfoState extends State<RequestInfo> {
               child: Container(
             margin: EdgeInsets.only(right: 20, left: 10),
             child: TextField(
+              maxLength: 10,
+              keyboardType: TextInputType.number,
               onChanged: (value) => phone = value.trim(),
               decoration: InputDecoration(hintText: 'ติดต่อ'),
             ),
@@ -304,7 +330,7 @@ class _RequestInfoState extends State<RequestInfo> {
             margin: EdgeInsets.only(right: 20, left: 10),
             child: TextField(
               onChanged: (value) => recipName = value.trim(),
-              decoration: InputDecoration(hintText: 'ผู้ที่ได้รับเลือด'),
+              decoration: InputDecoration(hintText: 'ผู้ที่ได้รับโลหิต'),
             ),
           ))
         ],
@@ -321,9 +347,11 @@ class _RequestInfoState extends State<RequestInfo> {
           Expanded(
               child: Container(
             margin: EdgeInsets.only(right: 20, left: 10),
-            child: TextField(
-              onChanged: (value) => announceName = value.trim(),
-              decoration: InputDecoration(hintText: 'ชื่อประกาศ'),
+            child: TextFormField(
+              //onChanged: (value) => announceName = value.trim(),
+              initialValue:
+                  '${accountModel.firstName}  ${accountModel.lastName}',
+              decoration: InputDecoration(hintText: 'ชื่อผู้ประกาศ'),
             ),
           ))
         ],
@@ -375,9 +403,7 @@ class _RequestInfoState extends State<RequestInfo> {
         AccountModel model = AccountModel.fromJson(json);
         tokenUser = model.token;
         tokenUsers.add(tokenUser);
-
         print('tokenUser ========= $tokenUser');
-
         sendNotificationProject();
       }
     });
@@ -394,5 +420,77 @@ class _RequestInfoState extends State<RequestInfo> {
         'urlSendtoken = =========================================>>>>>$urlSendtoken');
     //sendNotificationProject(urlSendtoken);
     //then((value) => normalDialog(context, 'ประกาศขอรับบริจาคสำเร็จ'));
+  }
+
+  Future<void> showconDialog() async {
+    showDialog(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: Center(
+          child: Text(
+            'ยืนยันข้อมูล',
+            style: TextStyle(fontSize: 20, color: Colors.blueAccent),
+          ),
+        ),
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'ผู้ที่ได้รับเลือด: $recipName',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'โรงพยาบาล / สถานที่: $hospitalname',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'รายละเอียดเบืองต้น: $detail',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'ติดต่อ: $phone',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'หมู่เลือด: $selectedType',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'วันที่ลงประกาศ: ${datafors.format(timedate)}',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+
+          //Text('สถานที่เปิดรับบริจาค: $place'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  dataRequestUse();
+                  Navigator.pop(context);
+                },
+                child: Text('ยืนยัน'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

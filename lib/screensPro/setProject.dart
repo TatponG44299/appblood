@@ -34,6 +34,8 @@ class _EditdataProjectState extends State<EditdataProject> {
   ProjectModel projectModel;
   String tokenProject;
   Location location = Location();
+  var datafors = DateFormat.yMMMd();
+  var datafore = DateFormat.yMMMd();
 
   @override
   void initState() {
@@ -183,11 +185,11 @@ class _EditdataProjectState extends State<EditdataProject> {
           : SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  proName(),
+                  resName(),
                   SizedBox(
                     height: 5,
                   ),
-                  resName(),
+                  proName(),
                   SizedBox(
                     height: 5,
                   ),
@@ -286,7 +288,7 @@ class _EditdataProjectState extends State<EditdataProject> {
     return RaisedButton.icon(
         color: Colors.red,
         onPressed: () {
-          dataProject();
+          showconDialog();
         },
         icon: Icon(Icons.save, color: Colors.white),
         label: Text(
@@ -450,6 +452,70 @@ class _EditdataProjectState extends State<EditdataProject> {
                 print('6666666666666666666666666666666666666666666$values');
               },
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> showconDialog() async {
+    showDialog(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: Center(
+          child: Text(
+            'ยืนยันข้อมูล',
+            style: TextStyle(fontSize: 20, color: Colors.blueAccent),
+          ),
+        ),
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'ผู้รับผิดชอบ: $responsible',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'โครงการ: $projecctName',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'สถานที่เปิดรับบริจาค: $place',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'เริ่มวันที่: ${datafors.format(startDate)}',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'ถึงวันที่: ${datafors.format(endDate)}',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          //Text('สถานที่เปิดรับบริจาค: $place'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  dataProject();
+                  Navigator.pop(context);
+                },
+                child: Text('ยืนยัน'),
+              ),
+            ],
           ),
         ],
       ),
