@@ -4,6 +4,7 @@ import 'package:appblood/nuility/mySty.dart';
 import 'package:appblood/nuility/my_con.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:appblood/model/historyuse.dart';
 
@@ -17,6 +18,7 @@ var count;
 class _StatisticsState extends State<Statistics> {
   var res;
   var count;
+  var datafors = DateFormat.yMMMd();
 
   HistoryModel historyModl;
 
@@ -114,7 +116,7 @@ class _StatisticsState extends State<Statistics> {
               child: Title(
                 color: Colors.blue,
                 child: Text(
-                  'ผู้รับผิดชอบ',
+                  'วันที่',
                   style: TextStyle(fontSize: 18),
                 ),
               ),
@@ -133,7 +135,7 @@ class _StatisticsState extends State<Statistics> {
           children: <Widget>[
             Expanded(
               flex: 1,
-              child: Text('${index + 1}'),
+              child: Text('     ${index + 1}'),
             ),
             Expanded(
               flex: 2,
@@ -145,7 +147,8 @@ class _StatisticsState extends State<Statistics> {
             Expanded(
               flex: 1,
               child: Text(
-                res[index]['Responsible_Name'],
+                //datafors.format(timedate)
+                res[index]['Date'],
                 style: TextStyle(fontSize: 16),
               ),
             ),
