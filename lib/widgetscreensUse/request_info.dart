@@ -156,9 +156,19 @@ class _RequestInfoState extends State<RequestInfo> {
     return RaisedButton.icon(
         color: Colors.red,
         onPressed: () {
-          dataRequestUse();
-          notificationProject();
-          showconDialog();
+          if (recipName == null ||
+              recipName.isEmpty ||
+              hospitalname == null ||
+              hospitalname.isEmpty ||
+              detail == null ||
+              detail.isEmpty ||
+              phone == null ||
+              phone.isEmpty ||
+              selectedType == null) {
+            normalDialog(context, 'กรุณากรอกข้อมูลให้ครบ');
+          } else {
+            showconDialog();
+          }
         },
         icon: Icon(Icons.save, color: Colors.white),
         label: Text(
@@ -414,7 +424,7 @@ class _RequestInfoState extends State<RequestInfo> {
   Future<Null> sendNotificationProject() async {
     //text ใน notification
     String text =
-        'มีผู้ป่วย $announceName ต้องการหมู่เลือด $selectedType ที่ $hospitalname';
+        'มีผู้ป่วย $recipName ต้องการหมู่เลือด $selectedType ที่ $hospitalname';
     String urlSendtoken =
         '${Urlcon().domain}/GGB_BD/Line_notify.php?token=$tokenUser&text=$text';
     await Dio().get(urlSendtoken);
@@ -485,6 +495,7 @@ class _RequestInfoState extends State<RequestInfo> {
               FlatButton(
                 onPressed: () {
                   dataRequestUse();
+                  notificationProject();
                   Navigator.pop(context);
                 },
                 child: Text('ยืนยัน'),

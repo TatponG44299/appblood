@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Detaildonate extends StatefulWidget {
   final UseDonate useDonateModel;
-  const Detaildonate({ Key key ,this.useDonateModel}) : super(key: key);
+  const Detaildonate({Key key, this.useDonateModel}) : super(key: key);
 
   @override
   _DetaildonateState createState() => _DetaildonateState();
@@ -33,7 +33,7 @@ class _DetaildonateState extends State<Detaildonate> {
     //timedate = DateTime.now();
   }
 
-    Set<Marker> showMarker() {
+  Set<Marker> showMarker() {
     return <Marker>[
       Marker(
           markerId: MarkerId('projectID'),
@@ -48,27 +48,28 @@ class _DetaildonateState extends State<Detaildonate> {
     ].toSet();
   }
 
-
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('ต้องการบริจาคโลหิต'),
       ),
-      body: Stack(
-        children: <Widget>[
-          useDonateModel == null
-              ? MyStyle().showProgress()
-              : showDatainfo(),
-          //addUsedata(),
-        ],
+      body: SingleChildScrollView(
+        child: Stack(
+          children: <Widget>[
+            useDonateModel == null ? MyStyle().showProgress() : showDatainfo(),
+            //addUsedata(),
+          ],
+        ),
       ),
     );
   }
+
   Widget showDatainfo() => Column(
         children: <Widget>[
           nameShow(),
           nameShowre(),
+          detaildata(),
           contactCall(),
           bloodType(),
           //switButton1(),
@@ -81,12 +82,12 @@ class _DetaildonateState extends State<Detaildonate> {
         ],
       );
 
-    Padding nameShow() {
+  Padding nameShow() {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
       child: Row(
         children: <Widget>[
-          IconButton(icon: Icon(Icons.person), onPressed: null),
+          IconButton(icon: Icon(Icons.video_label), onPressed: null),
           Expanded(
               child: Container(
             margin: EdgeInsets.only(right: 20, left: 10),
@@ -108,7 +109,7 @@ class _DetaildonateState extends State<Detaildonate> {
     );
   }
 
-     Padding nameShowre() {
+  Padding nameShowre() {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
       child: Row(
@@ -123,7 +124,34 @@ class _DetaildonateState extends State<Detaildonate> {
                 style: TextStyle(fontSize: 18), // default text style
                 children: <TextSpan>[
                   TextSpan(
-                      text: '  ${useDonateModel.announceName}',
+                      text: '  ${useDonateModel.receiverName}',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                ],
+              ),
+            ),
+          ))
+        ],
+      ),
+    );
+  }
+
+  Padding detaildata() {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Row(
+        children: <Widget>[
+          IconButton(icon: Icon(Icons.details), onPressed: null),
+          Expanded(
+              child: Container(
+            margin: EdgeInsets.only(right: 20, left: 10),
+            child: Text.rich(
+              TextSpan(
+                text: 'รายละเอียดเบืองต้น:',
+                style: TextStyle(fontSize: 18), // default text style
+                children: <TextSpan>[
+                  TextSpan(
+                      text: '  ${useDonateModel.detail}',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                 ],
@@ -137,16 +165,16 @@ class _DetaildonateState extends State<Detaildonate> {
 
   Padding contactCall() {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+      padding: const EdgeInsets.only(left: 20, right: 20),
       child: Row(
         children: <Widget>[
-          IconButton(icon: Icon(Icons.person), onPressed: null),
+          IconButton(icon: Icon(Icons.phone), onPressed: null),
           Expanded(
               child: Container(
             margin: EdgeInsets.only(right: 20, left: 10),
             child: Text.rich(
               TextSpan(
-                text: 'ชื่อ:',
+                text: 'ติดต่อ:',
                 style: TextStyle(fontSize: 18), // default text style
                 children: <TextSpan>[
                   TextSpan(
@@ -162,7 +190,6 @@ class _DetaildonateState extends State<Detaildonate> {
     );
   }
 
-  
   Padding bloodType() {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
@@ -174,7 +201,7 @@ class _DetaildonateState extends State<Detaildonate> {
             margin: EdgeInsets.only(right: 20, left: 10),
             child: Text.rich(
               TextSpan(
-                text: 'ชื่อ:',
+                text: 'หมู่เลือด:',
                 style: TextStyle(fontSize: 18), // default text style
                 children: <TextSpan>[
                   TextSpan(
@@ -189,6 +216,7 @@ class _DetaildonateState extends State<Detaildonate> {
       ),
     );
   }
+
   Widget showMap() {
     double lat = double.parse(useDonateModel.lat);
     double lng = double.parse(useDonateModel.lng);

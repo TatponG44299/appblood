@@ -379,7 +379,15 @@ class _AddprojectState extends State<Addproject> {
     return RaisedButton.icon(
         color: Colors.red,
         onPressed: () {
-          showconDialog();
+          if (projecctName == null ||
+              projecctName.isEmpty ||
+              place == null ||
+              place.isEmpty) {
+            normalDialog(context, 'กรุณาตรวจสอบข้อมูล');
+          } else {
+            showconDialog();
+          }
+
           //sendNotificationProject();
           //_showNotification();
         },
@@ -501,7 +509,7 @@ class _AddprojectState extends State<Addproject> {
                 });
 
                 notificationProject();
-                print('6666666666666666666666666666666666666666666$values');
+                //print('6666666666666666666666666666666666666666666$values');
               },
             ),
           ),
@@ -525,7 +533,7 @@ class _AddprojectState extends State<Addproject> {
         AccountModel model = AccountModel.fromJson(json);
         tokenProject = model.token;
         sendNotificationProject();
-        print('tokenProject =======================> $tokenProject/////////');
+        //print('tokenProject =======================> $tokenProject/////////');
       }
     });
   }

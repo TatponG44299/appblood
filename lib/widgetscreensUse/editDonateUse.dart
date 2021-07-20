@@ -55,7 +55,7 @@ class _EditDonateUseState extends State<EditDonateUse> {
     //timedate = DateTime.now();
     s = useDonateModel.status;
     s == '0' ? values = false : values = true;
-
+    selectedType = useDonateModel.bloodType; 
     print('ค่าstatus**************' + s);
   }
 
