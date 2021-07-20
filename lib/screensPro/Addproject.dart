@@ -525,10 +525,9 @@ class _AddprojectState extends State<Addproject> {
       for (var json in result) {
         AccountModel model = AccountModel.fromJson(json);
         tokenProject = model.token;
-
+        sendNotificationProject();
         print('tokenProject =======================> $tokenProject/////////');
       }
-      sendNotificationProject();
     });
   }
 
