@@ -156,12 +156,9 @@ class _RequestInfoState extends State<RequestInfo> {
     return RaisedButton.icon(
         color: Colors.red,
         onPressed: () {
-<<<<<<< HEAD
           dataRequestUse();
           notificationProject();
-=======
           showconDialog();
->>>>>>> 7f04e53de4a8ada5bfe4d2ddc8f0aab422146e6d
         },
         icon: Icon(Icons.save, color: Colors.white),
         label: Text(

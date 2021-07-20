@@ -379,12 +379,9 @@ class _AddprojectState extends State<Addproject> {
     return RaisedButton.icon(
         color: Colors.red,
         onPressed: () {
-<<<<<<< HEAD
           dataProject();
           notificationProject();
-=======
           showconDialog();
->>>>>>> 7f04e53de4a8ada5bfe4d2ddc8f0aab422146e6d
           //sendNotificationProject();
           //_showNotification();
         },
