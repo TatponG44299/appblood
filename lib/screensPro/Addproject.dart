@@ -36,7 +36,8 @@ class _AddprojectState extends State<Addproject> {
   ProjectModel projectModel;
 
   AccountModel model;
-
+  var datafors = DateFormat.yMMMd();
+  var datafore = DateFormat.yMMMd();
   //field
   double lat, lng;
   bool values;
@@ -47,12 +48,13 @@ class _AddprojectState extends State<Addproject> {
   List<Marker> myMarker = [];
   List latall = [];
   List lngall = [];
-
+  AccountModel accountModel;
   //var _clusLatLng = LatLng(lat1, lng2),
 
   @override
   void initState() {
     super.initState();
+    readDataUser();
     findLatLng();
     readLocation();
     //notification();
@@ -78,6 +80,26 @@ class _AddprojectState extends State<Addproject> {
       );
     });
     print("====================================$lat***$lng");
+  }
+
+  Future<Null> readDataUser() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String id = preferences.getString('id');
+
+    String url =
+        '${Urlcon().domain}/GGB_BD/getUserWhereID.php?isAdd=true&ID=$id';
+    await Dio().get(url).then((value) {
+      print('Value = $value');
+      var result = json.decode(value.data);
+      print('result==$result');
+      for (var map in result) {
+        //print('fname == ${accountModel.firstName}');
+        setState(() {
+          accountModel = AccountModel.fromJson(map);
+        });
+      }
+      responsible = '${accountModel.firstName}';
+    });
   }
 
   Future<Null> findLatLng() async {
@@ -218,11 +240,11 @@ class _AddprojectState extends State<Addproject> {
       body: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
-            proName(),
+            resName(),
             SizedBox(
               height: 5,
             ),
-            resName(),
+            proName(),
             SizedBox(
               height: 5,
             ),
@@ -357,8 +379,12 @@ class _AddprojectState extends State<Addproject> {
     return RaisedButton.icon(
         color: Colors.red,
         onPressed: () {
+<<<<<<< HEAD
           dataProject();
           notificationProject();
+=======
+          showconDialog();
+>>>>>>> 7f04e53de4a8ada5bfe4d2ddc8f0aab422146e6d
           //sendNotificationProject();
           //_showNotification();
         },
@@ -430,8 +456,9 @@ class _AddprojectState extends State<Addproject> {
           Expanded(
               child: Container(
             margin: EdgeInsets.only(right: 20, left: 10),
-            child: TextField(
-              onChanged: (value) => responsible = value.trim(),
+            child: TextFormField(
+              //onChanged: (value) => responsible = value.trim(),
+              initialValue: '${accountModel.firstName}',
               decoration: InputDecoration(hintText: 'ผู้รับผิดชอบ'),
             ),
           ))
@@ -520,5 +547,70 @@ class _AddprojectState extends State<Addproject> {
         'urlSendtoken = =========================================>>>>>$urlSendtoken');
     //sendNotificationProject(urlSendtoken);
     //then((value) => normalDialog(context, 'ประกาศโครงการสำเร็จ'));
+  }
+
+  Future<void> showconDialog() async {
+    showDialog(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: Center(
+          child: Text(
+            'ยืนยันข้อมูล',
+            style: TextStyle(fontSize: 20, color: Colors.blueAccent),
+          ),
+        ),
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'ผู้รับผิดชอบ: $responsible',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'โครงการ: $projecctName',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'สถานที่เปิดรับบริจาค: $place',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'เริ่มวันที่: ${datafors.format(startDate)}',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              'ถึงวันที่: ${datafors.format(endDate)}',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          //Text('สถานที่เปิดรับบริจาค: $place'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  dataProject();
+                  Navigator.pop(context);
+                },
+                child: Text('ยืนยัน'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
