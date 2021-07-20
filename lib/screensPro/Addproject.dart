@@ -379,8 +379,6 @@ class _AddprojectState extends State<Addproject> {
     return RaisedButton.icon(
         color: Colors.red,
         onPressed: () {
-          dataProject();
-          notificationProject();
           showconDialog();
           //sendNotificationProject();
           //_showNotification();
@@ -600,6 +598,7 @@ class _AddprojectState extends State<Addproject> {
               FlatButton(
                 onPressed: () {
                   dataProject();
+                  notificationProject();
                   Navigator.pop(context);
                 },
                 child: Text('ยืนยัน'),
