@@ -56,7 +56,7 @@ class _AddprojectState extends State<Addproject> {
     super.initState();
     readDataUser();
     findLatLng();
-    readLocation();
+    //readLocation();
     //notification();
     startDate = DateTime.now();
     endDate = DateTime.now();
@@ -143,8 +143,8 @@ class _AddprojectState extends State<Addproject> {
       ///////////////////////////////////
     });
     print('1****************$lat1 + $lng1');
-    print('2****************$lat2 + $lng2');
-    print('3****************$lat3 + $lng3');
+    //print('2****************$lat2 + $lng2');
+    //print('3****************$lat3 + $lng3');
 
     // for (i = 0; i < int.parse(selectedClutter); i++) {
     //   setState(() {
@@ -264,12 +264,19 @@ class _AddprojectState extends State<Addproject> {
             SizedBox(
               height: 5,
             ),
+            clustertext(),
             //clustereDrop(),
             SizedBox(
               height: 5,
             ),
-            lat == null || lng1 == null ? MyStyle().showProgress() : showmap(),
-            //selectedClutter == null ? MyStyle().showProgress() : showmap(),
+            //lat == null || lng1 == null ? MyStyle().showProgress() : showmap(),
+            lng1 == null
+                ? Center(
+                    child: Text(
+                    'กรุณาค้นหา Cluster',
+                    style: TextStyle(color: Colors.redAccent),
+                  ))
+                : showmap(),
             SizedBox(
               height: 5,
             ),
@@ -410,6 +417,34 @@ class _AddprojectState extends State<Addproject> {
   //     )
   //   ].toSet();
   // }
+
+  Padding clustertext() {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Row(
+        children: <Widget>[
+          Text('ค้นหาจุดแนะนำโครงการ:', style: TextStyle(fontSize: 18)),
+          IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Colors.red,
+              ),
+              onPressed: () {
+                readLocation();
+              }),
+          // Expanded(
+          //     child: Container(
+          //   margin: EdgeInsets.only(right: 20, left: 10),
+          //   child: TextFormField(
+          //     //onChanged: (value) => responsible = value.trim(),
+          //     initialValue: '${accountModel.firstName}',
+          //     decoration: InputDecoration(hintText: 'ผู้รับผิดชอบ'),
+          //   ),
+          // ))
+        ],
+      ),
+    );
+  }
 
   Container showmap() {
     LatLng latLng = LatLng(lat, lng);
@@ -604,6 +639,7 @@ class _AddprojectState extends State<Addproject> {
               FlatButton(
                 onPressed: () {
                   dataProject();
+                  notificationProject();
                   Navigator.pop(context);
                 },
                 child: Text('ยืนยัน'),
