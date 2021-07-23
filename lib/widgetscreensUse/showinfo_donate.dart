@@ -52,7 +52,7 @@ class _DetaildonateState extends State<Detaildonate> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ต้องการบริจาคโลหิต'),
+        title: Text('รายละเอียดการขอโลหิตด่วน'),
       ),
       body: SingleChildScrollView(
         child: Stack(
